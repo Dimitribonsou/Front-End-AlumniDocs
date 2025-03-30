@@ -1,16 +1,14 @@
 import React from 'react';
-import './App.scss';
-import HomePage from './pages/homePage';
-
-
+import LoginPage from './pages/auth/LoginPage';
+import './App.css';
 
 function App() {
   return (
-    <div className="w-full">
-      {/* Appel du composant home page */}
-      <HomePage/>
+    <div className="App">
+       <LoginPage/>
     </div>
   );
 }
 
 export default App;
+ 
