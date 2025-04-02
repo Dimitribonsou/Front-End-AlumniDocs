@@ -24,13 +24,9 @@ const RegisterPage = () => {
     <div className="flex min-h-screen">
       {/* Partie gauche - fond rouge */}
       <div className="w-[40%] bg-[#CF3F3F] flex items-center justify-center">
-        <div className="absolute top-10 left-10 w-24 h-24">
-          <img
-            // src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Logo&font=Montserrat"
-            alt="Logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
+      <div className="absolute inset-0 flex items-center justify-start pl-10">
+        <img src="/assets/logo_1_alumnidocs.png" alt="Logo" className="px-28 h-72 object-contain" />
+      </div>
       </div>
 
       {/* Partie droite - fond blanc */}

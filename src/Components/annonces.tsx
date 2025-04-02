@@ -1,20 +1,31 @@
 import React from "react";
-interface AnnouncementCardProps {
-    title: string;
-    description: string;
-    date: string;
-    time: string;
-  }
 
-const AnnouncementCard = ({ title, description, date, time }: AnnouncementCardProps) => {
-    return (
-      <div className="bg-white shadow-md p-4 rounded-lg w-64">
-        <h3 className="font-bold text-red-600">{title}</h3>
-        <p className="text-gray-700 text-sm">{description}</p>
-        <p className="text-xs text-gray-500 mt-2">{date} - {time}</p>
+interface AnnouncementProps {
+  imageSrc: string;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+}
+
+const AnnouncementCard: React.FC<AnnouncementProps> = ({ imageSrc, title, description, date, time }) => {
+  return (
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full">
+      {/* Image */}
+      <img src={imageSrc} alt={title} className="w-full h-32 object-cover" />
+
+      {/* Contenu */}
+      <div className="p-4">
+        <h3 className="text-lg text-red-700 font-bold">{title}</h3>
+        <p className="text-gray-600 mt-2 text-sm">{description}</p>
+        <div className="flex justify-between text-xs text-gray-500 mt-2">
+          <span>{date}</span>
+          <span>{time}</span>
+        </div>
         <a href="#" className="text-blue-600 text-sm text-right mt-2 block">Voir plus</a>
       </div>
-    );
-  };
-export default AnnouncementCard;
+    </div>
+  );
+};
 
+export default AnnouncementCard;

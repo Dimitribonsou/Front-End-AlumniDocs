@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -37,4 +38,24 @@ code {
   height: 6px;
   background-color: black;
   border-radius: 50%;
+}
+.bg-watermark {
+  position: relative;
+  z-index: 0; /* Assure que le contenu reste au-dessus */
+}
+
+.bg-watermark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/3IAC.png'); /* Chemin vers votre image */
+  background-repeat: repeat;
+  background-position: center;
+  /* background-size: cover; Ajuste la taille de l'image */
+  /* filter: blur(8px); Applique un flou */
+  opacity: 0.3; /* Diminue l'opacité */
+  z-index: -1; /* Place l'image derrière le contenu */
 }
