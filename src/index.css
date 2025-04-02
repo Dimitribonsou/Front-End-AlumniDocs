@@ -17,3 +17,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.line-with-dots {
+  margin-top: 10px; /* Adjust spacing below the text */
+  width: 80%; /* Adjust the width of the line */
+  height: 1px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.line-with-dots::before,
+.line-with-dots::after {
+  content: '';
+  width: 6px; /* Size of the circles */
+  height: 6px;
+  background-color: black;
+  border-radius: 50%;
+}
