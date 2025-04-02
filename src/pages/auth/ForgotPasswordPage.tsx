@@ -15,12 +15,8 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#CF3F3F]">
-      <div className="absolute inset-0 w-full h-full">
-        <img
-          // src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Logo&font=Montserrat"
-          alt="Logo"
-          className="absolute top-10 left-10 w-24 h-24"
-        />
+      <div className="absolute inset-0 flex items-center justify-start pl-10">
+        <img src="/assets/logo_1_alumnidocs.png" alt="Logo" className="px-32 h-72 object-contain" />
       </div>
       <div className="absolute top-1/2 left-[70%] bg-white transform -translate-x-1/2 -translate-y-1/2 bg-gray shadow-lg rounded-lg p-10 w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center">Mot de passe oublié?<span className="ml-2 text-yellow-500 text-3xl">😊</span><div className="line-with-dots"></div></h2>

@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBullhorn, faArrowRight, faComments, faEnvelope, faSignOutAlt, faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
+
 
 // Profile Card Component
 const ProfileCard = () => {
   return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow-md w-[40%] flex flex-col justify-between">
+    <div className="bg-gray-100 p-4 shadow-md w-80  H flex flex-col justify-between">
       <div className="flex items-center space-x-4">
         <img src="../assets/1.jpg" alt="Profile" className="w-12 h-12 rounded-full" />
         <div>
@@ -22,7 +23,7 @@ const ProfileCard = () => {
 
       {/* Bouton Compléter avec Icône */}
       <button className="mt-4 bg-red-500 text-white w-full py-2 rounded-md flex items-center justify-center gap-2">
-        Compléter mon profil
+        <a href="/profile">Compléter mon profil </a>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
