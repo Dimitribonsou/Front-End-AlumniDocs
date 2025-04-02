@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [gender, setGender] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent) => {
@@ -18,50 +21,147 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-2xl font-semibold text-center">Créer un compte</h2>
-        <form className="mt-6" onSubmit={handleRegister}>
-          <div>
-            <label className="block mb-2 text-sm font-medium">Email</label>
-            <input
-              type="email"
-              className="w-full p-3 border rounded-md"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <label className="block mb-2 text-sm font-medium">Mot de passe</label>
-            <input
-              type="password"
-              className="w-full p-3 border rounded-md"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <label className="block mb-2 text-sm font-medium">Confirmer le mot de passe</label>
-            <input
-              type="password"
-              className="w-full p-3 border rounded-md"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full mt-6 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
-          >
-            S'inscrire
-          </button>
-        </form>
-        <p className="mt-4 text-sm text-center">
-          Déjà inscrit ? <a href="/" className="text-blue-600">Se connecter</a>
-        </p>
+    <div className="flex min-h-screen">
+      {/* Partie gauche - fond rouge */}
+      <div className="w-[40%] bg-[#CF3F3F] flex items-center justify-center">
+        <div className="absolute top-10 left-10 w-24 h-24">
+          <img
+            // src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Logo&font=Montserrat"
+            alt="Logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Partie droite - fond blanc */}
+      <div className="w-[60%] bg-white flex items-center justify-center">
+        <div className="w-full max-w-md p-10 bg-white shadow-lg rounded-lg">
+          <h2 className="text-4xl font-semibold text-center">
+            BIENVENUE
+            <p className="italic text-sm text-thin">Créer votre compte</p>
+            <div className="line-with-dots"></div>
+          </h2>
+
+          <form className="mt-6" onSubmit={handleRegister}>
+            <div>
+              <label className="block mb-2 text-sm font-medium">Nom</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="--Entrez votre nom--"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Prénom</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="--Entrez votre prénom--"
+                />
+              </div>
+            </div>
+
+            {/* Liste déroulante pour le sexe */}
+            <div>
+              <label className="block mb-2 text-sm font-medium">Sexe</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <select
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  required
+                >
+                  <option value="">--Sélectionnez votre sexe--</option>
+                  <option value="homme">Homme</option>
+                  <option value="femme">Femme</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Téléphone</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="--Entrez votre téléphone--"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Email</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="email"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="--Entrez votre email--"
+                />
+                <span className="p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faAt} />
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Mot de passe</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="password"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="--Écrire votre mot de passe--"
+                />
+                <span className="p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faLock} />
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Confirmation mot de passe</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="password"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  placeholder="--Réécrire votre mot de passe--"
+                />
+                <span className="p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faLock} />
+                </span>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-6">
+              <button
+                type="button"
+                className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-1/2 mr-2"
+              ><a href="/">Connexion</a>
+              </button>
+              <button
+                type="submit"
+                className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-md py-2 text-sm w-1/2 ml-2"
+              >
+                Envoyer
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
