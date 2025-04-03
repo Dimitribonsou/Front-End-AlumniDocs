@@ -52,10 +52,9 @@ code {
   width: 100%;
   height: 100%;
   background-image: url('assets/3IAC.png'); /* Chemin vers votre image */
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-position: center;
-  /* background-size: cover; Ajuste la taille de l'image */
-  /* filter: blur(8px); Applique un flou */
-  opacity: 0.3; /* Diminue l'opacité */
+  background-size: cover; 
+  filter: blur(5px); 
   z-index: -1; /* Place l'image derrière le contenu */
 }

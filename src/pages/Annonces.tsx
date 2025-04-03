@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../Components/navbar";
-import ProfileCard from "../Components/profilcard";
 import AnnouncementCard from "../Components/annonces";
 import Footer from "../Components/footer";
 
@@ -10,11 +9,10 @@ const Annonce = () => {
       <Navbar />
 
       {/* Conteneur principal centré */}
-      <div className="container mx-auto flex flex-col items-center mt-10 space-y-6">
-
+      <div className="container mx-auto flex flex-col items-center mt-10 space-y-6 px-4">
         {/* Section Annonces */}
         <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             <AnnouncementCard
               imageSrc="../assets/rm.jpeg"
               title="Réunion mobilité"
@@ -36,8 +34,6 @@ const Annonce = () => {
               date="05 Feb 2025"
               time="08:30"
             />
-          </div>
-          <div className="grid grid-cols-3 gap-4 mt-4">
             <AnnouncementCard
               imageSrc="../assets/rm.jpeg"
               title="Réunion mobilité"
@@ -59,8 +55,6 @@ const Annonce = () => {
               date="05 Feb 2025"
               time="08:30"
             />
-          </div>
-          <div className="grid grid-cols-3 gap-4 mt-4">
             <AnnouncementCard
               imageSrc="../assets/rm.jpeg"
               title="Réunion mobilité"

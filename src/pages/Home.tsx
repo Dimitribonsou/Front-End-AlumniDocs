@@ -10,15 +10,15 @@ const Home = () => {
       <Navbar />
 
       {/* Conteneur principal centré */}
-      <div className="container mx-auto flex flex-col items-center mt-10 space-y-6">
-
+      <div className="container mx-auto flex flex-col items-center mt-10 space-y-6 px-4">
         {/* Bloc supérieur (Bienvenue + Profil) en 50/50 */}
-        <div className="flex w-full max-w-4xl gap-4">
+        <div className="flex flex-col md:flex-row w-full max-w-4xl gap-0">
           {/* Section Bienvenue (50%) */}
-          <div className="w-1/2 shadow-lg p-6 h-auto rounded-lg bg-white">
-            <h2 className="text-xl font-bold">Bienvenue JOE</h2>
+          <div className="w-full md:w-1/2 shadow-lg p-6 h-auto md:h-full  bg-white flex flex-col">
+            <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2>
             <p className="text-gray-600 mt-2">
-              Beaucoup d'étudiants ayant complété leur profil consultent régulièrement <span className="text-[#CF3F3F] font-semibold">AlumniDocs</span>.
+              Beaucoup d'étudiants ayant complété leur profil consultent régulièrement{" "}
+              <span className="text-[#CF3F3F] font-semibold">AlumniDocs</span>.
             </p>
             <p className="text-gray-600 mt-2">
               Ne sois pas parmi les étudiants qui ne sont pas informés.
@@ -28,25 +28,25 @@ const Home = () => {
               <h3 className="text-lg font-bold">Annonces récentes</h3>
             </div>
 
-            <div className="flex justify-between mt-4">
-              <button className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-1/2 mr-2">
+            <div className="flex flex-col md:flex-row justify-between mt-4">
+              <button className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0">
                 <a href="/Annonce">Annonces</a>
               </button>
-              <button className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-1/2 ml-2">
+              <button className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:ml-2">
                 <a href="#">Notifications</a>
               </button>
             </div>
           </div>
 
           {/* Section Profil (50%) */}
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2 shadow-lg p-6 h-auto md:h-full bg-gray-100 flex flex-col">
             <ProfileCard />
           </div>
         </div>
 
         {/* Section Annonces */}
         <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             <AnnouncementCard
               imageSrc="../assets/rm.jpeg"
               title="Réunion mobilité"

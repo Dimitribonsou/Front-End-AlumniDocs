@@ -5,9 +5,9 @@ import { faHome, faBullhorn, faArrowRight, faComments, faEnvelope, faSignOutAlt,
 // Profile Card Component
 const ProfileCard = () => {
   return (
-    <div className="bg-gray-100 p-4 shadow-md w-80  H flex flex-col justify-between">
+    <div className="bg-gray-100 p-4  w-80  H flex flex-col justify-between">
       <div className="flex items-center space-x-4">
-        <img src="../assets/1.jpg" alt="Profile" className="w-12 h-12 rounded-full" />
+        <img src="../assets/et.jpeg" alt="Profile" className="w-12 h-12 rounded-full" />
         <div>
           <p className="font-semibold">JOE DALTON</p>
           <p className="text-sm text-gray-500">Joe.dalton@example.com</p>
