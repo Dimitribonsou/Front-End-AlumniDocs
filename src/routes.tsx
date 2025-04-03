@@ -5,6 +5,7 @@ import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import HomePage from "./pages/Home";
 import Profile from "./pages/Profile";
 import Annonce from "./pages/Annonces";
+import RequetePage from "./pages/Requete";
 
 
 const AppRoutes = () => {
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Annonce" element={<Annonce />} />
+        <Route path="/requetes" element={<RequetePage />} />
       </Routes>
     </Router>
   );

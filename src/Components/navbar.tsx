@@ -9,11 +9,14 @@ import {
   faSignOutAlt,
   faEdit,
   faUser,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [active, setActive] = useState("Accueil");
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
@@ -35,7 +38,7 @@ const Navbar = () => {
           />
         </a>
 
-        {/* Menu en grand écran */}
+        {/* Menu pour les grands écrans */}
         <ul className="hidden md:flex space-x-6 text-white font-medium">
           {navItems.map((item) => (
             <li key={item.name}>
@@ -55,8 +58,41 @@ const Navbar = () => {
           ))}
         </ul>
 
+        {/* Bouton pour le menu mobile */}
+        <button
+          className="md:hidden text-white text-2xl"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} />
+        </button>
+
+        {/* Menu mobile */}
+        {isMobileMenuOpen && (
+          <ul className="absolute top-16 left-0 w-full bg-[#1e2494] text-white font-medium flex flex-col space-y-4 py-4 px-6 md:hidden">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <a
+                  href={item.route}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
+                    active === item.name
+                      ? "bg-blue-800 text-yellow-300 shadow-md"
+                      : "hover:bg-blue-700"
+                  }`}
+                  onClick={() => {
+                    setActive(item.name);
+                    setIsMobileMenuOpen(false); // Ferme le menu après un clic
+                  }}
+                >
+                  <FontAwesomeIcon icon={item.icon} />
+                  <span>{item.name}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+
         {/* User Menu */}
-        <div>
+        <div className="relative">
           <button
             className="w-10 h-10 rounded-full bg-white flex items-center justify-center"
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
