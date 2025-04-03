@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FileInput from '../Components/fileinput'; 
 import Navbar from '../Components/navbar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faFile, faBell, faPlus,faEnvelope, faSignOutAlt, faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFile, faBell, faPlus,faPencil, faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 
 import Footer from '../Components/footer';
 
@@ -46,7 +46,7 @@ const ProfilePage: React.FC = () => {
             <p className="text-gray-600">CS13-DLW</p>
           </div>
           <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            Modifier le profil
+          <FontAwesomeIcon icon={faPencil} /> Modifier le profil
           </button>
         </div>
       </div>
@@ -73,7 +73,7 @@ const ProfilePage: React.FC = () => {
                   name={doc.name}
                   onChange={(file) => handleFileChange(doc.name, file)}
                 />
-                <button className="mt-2 px-4  bg-blue-600 text-white rounded-md hover:bg-blue-700 w-[50%] h-10">
+                <button className="mt-2 px-4  bg-blue-700 text-white rounded-md hover:bg-blue-700 w-[50%] h-10">
                   Modifier
                 </button>
               </div>

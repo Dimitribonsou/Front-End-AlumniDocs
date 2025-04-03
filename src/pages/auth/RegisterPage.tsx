@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,37 +7,30 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
-  const navigate = useNavigate();
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas !");
-      return;
-    }
-    console.log("Inscription réussie !");
-    navigate("/");
-  };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       {/* Partie gauche - fond rouge */}
-      <div className="w-[40%] bg-[#CF3F3F] flex items-center justify-center">
-      <div className="absolute inset-0 flex items-center justify-start pl-10">
-        <img src="/assets/logo_1_alumnidocs.png" alt="Logo" className="px-28 h-72 object-contain" />
-      </div>
+      <div className="w-full md:w-[40%] bg-[#CF3F3F] flex items-center justify-center relative">
+        <div className="absolute top-4 left-4 md:static md:pl-10">
+          <img
+            src="/assets/logo_1_alumnidocs.png"
+            alt="Logo"
+            className="h-16 md:h-72 object-contain"
+          />
+        </div>
       </div>
 
       {/* Partie droite - fond blanc */}
-      <div className="w-[60%] bg-white flex items-center justify-center">
+      <div className="w-full  md:w-[60%] bg-white flex items-center justify-center">
         <div className="w-full max-w-md p-10 bg-white shadow-lg rounded-lg">
-          <h2 className="text-4xl font-semibold text-center">
+          <h2 className="text-2xl md:text-4xl font-semibold text-center">
             BIENVENUE
             <p className="italic text-sm text-thin">Créer votre compte</p>
             <div className="line-with-dots"></div>
           </h2>
 
-          <form className="mt-6" onSubmit={handleRegister}>
+          <form className="mt-6">
             <div>
               <label className="block mb-2 text-sm font-medium">Nom</label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
@@ -143,15 +135,16 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            <div className="flex justify-between mt-6">
+            <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
                 type="button"
-                className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-1/2 mr-2"
-              ><a href="/">Connexion</a>
+                className="bg-[#161B70] h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
+              >
+                <a href="/">Connexion</a>
               </button>
               <button
                 type="submit"
-                className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-md py-2 text-sm w-1/2 ml-2"
+                className="bg-[#161B70] h-9 hover:bg-blue-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"
               >
                 Envoyer
               </button>
