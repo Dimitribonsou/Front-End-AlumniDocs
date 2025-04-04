@@ -28,8 +28,8 @@ const RequetePage: React.FC = () => {
               <input
                 type="text"
                 name="libelle"
-                className="w-full p-2 border rounded-md"
-                placeholder="--entrez le libelle--"
+                className="w-full p-2 h-9 border rounded-md"
+                placeholder="Entrez le libelle"
               />
             </div>
 
@@ -39,7 +39,7 @@ const RequetePage: React.FC = () => {
               <input
                 type="file"
                 name="file"
-                className="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+                className="mt-1 block h-9 text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
               />
               
             </div>
@@ -50,7 +50,7 @@ const RequetePage: React.FC = () => {
               <textarea
                 name="description"
                 className="w-full p-2 border rounded-md"
-                placeholder="--entrez une explication--"
+                placeholder="Entrez une explication de votre requete"
               ></textarea>
             </div>
 
