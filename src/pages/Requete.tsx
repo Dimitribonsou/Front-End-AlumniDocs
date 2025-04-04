@@ -39,7 +39,7 @@ const RequetePage: React.FC = () => {
               <input
                 type="file"
                 name="file"
-                className="mt-1 block h-9 text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+                className="mt-1 block text-sm w-full h-9  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
               />
               
             </div>
