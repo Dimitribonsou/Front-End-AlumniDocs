@@ -16,18 +16,25 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange }) => {
   };
 
   return (
-    <div className="mb-4">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label} <span className='text-red-600 font-bold'>*</span>
+    <div className="mb-4 w-full">
+      <label
+        htmlFor={name}
+        className="block text-sm font-medium text-gray-700 sm:text-base md:text-lg"
+      >
+        {label} <span className="text-red-600 font-bold">*</span>
       </label>
       <input
         type="file"
         id={name}
         name={name}
-        className="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        className="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
         onChange={handleFileChange}
       />
-      {fileName && <p className="mt-2 text-sm text-gray-500">Fichier sélectionné : {fileName}</p>}
+      {fileName && (
+        <p className="mt-2 text-sm text-gray-500 sm:text-base md:text-lg">
+          Fichier sélectionné : <span className="font-semibold">{fileName}</span>
+        </p>
+      )}
     </div>
   );
 };

@@ -22,7 +22,7 @@ const AnnouncementCard: React.FC<AnnouncementProps> = ({ imageSrc, title, descri
           <span>{date}</span>
           <span>{time}</span>
         </div>
-        <a href="#" className="text-blue-600 text-sm text-right mt-2 block">Voir plus</a>
+        <a href="/annonce/:id" className="text-blue-600 text-sm text-right mt-2 block">Voir plus</a>
       </div>
     </div>
   );

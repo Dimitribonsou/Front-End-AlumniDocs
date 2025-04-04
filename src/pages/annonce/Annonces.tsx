@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../Components/navbar";
-import AnnouncementCard from "../Components/annonces";
-import Footer from "../Components/footer";
+import Navbar from "../../Components/navbar";
+import AnnouncementCard from "../../Components/annonces";
+import Footer from "../../Components/footer";
 
 const Annonce = () => {
   return (

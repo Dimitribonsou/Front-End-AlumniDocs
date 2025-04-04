@@ -4,9 +4,10 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import HomePage from "./pages/Home";
 import Profile from "./pages/Profile";
-import Annonce from "./pages/Annonces";
+import Annonce from "./pages/annonce/Annonces";
 import RequetePage from "./pages/Requete";
 import ForumPage from "./pages/Forum";
+import AnnonceDetailsPage from "./pages/annonce/AnnonceDetail";
 
 
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/Annonce" element={<Annonce />} />
         <Route path="/requetes" element={<RequetePage />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
       </Routes>
     </Router>
   );

@@ -82,7 +82,7 @@ const ProfilePage: React.FC = () => {
                     name={doc.name}
                     onChange={(file) => handleFileChange(doc.name, file)}
                   />
-                  <button className="mt-2 px-4 bg-blue-700 text-white rounded-md hover:bg-blue-600 w-full sm:w-auto">
+                  <button className="mt-2 px-4 bg-blue-700 text-white rounded-md hover:bg-blue-600 w-full sm:w-auto md:h-20 text-sm sm:text-base md:text-lg py-2 sm:py-3">
                     Modifier
                   </button>
                 </div>
