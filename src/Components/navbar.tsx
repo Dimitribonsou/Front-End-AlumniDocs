@@ -17,6 +17,15 @@ const Navbar = () => {
   const [active, setActive] = useState("Accueil");
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // État pour le spinner
+
+  const handleNavigation = (route: string) => {
+    setIsLoading(true); // Active le spinner
+    setTimeout(() => {
+      window.location.href = route; // Navigue vers la page
+      setIsLoading(false); // Désactive le spinner après la navigation
+    }, 500); // Simule un délai de chargement
+  };
 
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
@@ -38,22 +47,33 @@ const Navbar = () => {
           />
         </a>
 
+        {/* Spinner de chargement */}
+        {isLoading && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        )}
+
         {/* Menu pour les grands écrans */}
         <ul className="hidden md:flex space-x-6 text-white font-medium">
           {navItems.map((item) => (
             <li key={item.name}>
-              <a
-                href={item.route}
+              <button
+                onClick={() => handleNavigation(item.route)}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
                   active === item.name
                     ? "bg-blue-800 text-yellow-300 shadow-md"
                     : "hover:bg-blue-700"
                 }`}
-                onClick={() => setActive(item.name)}
               >
                 <FontAwesomeIcon icon={item.icon} />
                 <span>{item.name}</span>
-              </a>
+              </button>
             </li>
           ))}
         </ul>
@@ -71,21 +91,17 @@ const Navbar = () => {
           <ul className="absolute top-16 left-0 w-full bg-[#1e2494] text-white font-medium flex flex-col space-y-4 py-4 px-6 md:hidden">
             {navItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.route}
+                <button
+                  onClick={() => handleNavigation(item.route)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
                     active === item.name
                       ? "bg-blue-800 text-yellow-300 shadow-md"
                       : "hover:bg-blue-700"
                   }`}
-                  onClick={() => {
-                    setActive(item.name);
-                    setIsMobileMenuOpen(false); // Ferme le menu après un clic
-                  }}
                 >
                   <FontAwesomeIcon icon={item.icon} />
                   <span>{item.name}</span>
-                </a>
+                </button>
               </li>
             ))}
           </ul>

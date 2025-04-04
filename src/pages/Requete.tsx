@@ -3,27 +3,7 @@ import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 
 const RequetePage: React.FC = () => {
-//   const [formData, setFormData] = useState({
-//     libelle: '',
-//     file: null,
-//     description: ''
-//   });
 
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.files) {
-//       setFormData((prev) => ({ ...prev, file: e.target.files[0] }));
-//     }
-//   };
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     console.log('Données soumises:', formData);
-//   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col ">

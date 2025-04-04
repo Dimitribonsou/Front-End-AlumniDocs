@@ -46,7 +46,7 @@ const LoginPage = () => {
                 type="text"
                 id="username"
                 name="username"
-                placeholder="--Entrez votre matricule ou email--"
+                placeholder="Entrez votre matricule ou email"
                 className="w-full py-2 px-3 text-sm md:text-base focus:outline-none focus:border-blue-500"
                 autoComplete="off"
               />
@@ -64,7 +64,7 @@ const LoginPage = () => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="--Entrez votre mot de passe--"
+                placeholder="Entrez votre mot de passe"
                 className="w-full py-2 px-3 text-sm md:text-base focus:outline-none focus:border-blue-500"
                 autoComplete="off"
               />

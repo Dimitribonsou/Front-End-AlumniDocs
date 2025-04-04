@@ -1,20 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/navbar";
 import ProfileCard from "../Components/profilcard";
 import AnnouncementCard from "../Components/annonces";
 import Footer from "../Components/footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    setIsLoading(true); // Active le spinner
+    setTimeout(() => {
+      navigate(path); // Navigue vers la page après un délai
+      setIsLoading(false); // Désactive le spinner après la navigation
+    }, 500); // Simule un délai de chargement
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
 
+      {/* Spinner de chargement */}
+      {isLoading && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="spinner">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+)}
+
       {/* Conteneur principal centré */}
       <div className="container mx-auto flex flex-col items-center mt-10 space-y-6 px-4">
         {/* Bloc supérieur (Bienvenue + Profil) en 50/50 */}
-        <div className="flex flex-col md:flex-row w-full max-w-4xl gap-0">
+        <div className="flex flex-col md:flex-row w-full max-w-4xl gap-4">
           {/* Section Bienvenue (50%) */}
-          <div className="w-full md:w-1/2 shadow-lg p-6 h-auto md:h-full  bg-white flex flex-col">
+          <div className="w-full md:w-1/2 shadow-lg p-6 h-auto rounded-lg bg-white">
             <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2>
             <p className="text-gray-600 mt-2">
               Beaucoup d'étudiants ayant complété leur profil consultent régulièrement{" "}
@@ -29,19 +55,35 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col md:flex-row justify-between mt-4">
-              <button className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0">
-                <a href="/Annonce">Annonces</a>
+              <button
+                onClick={() => handleNavigation("/annonce")}
+                className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
+              >
+                Annonces
               </button>
-              <button className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:ml-2">
-                <a href="#">Notifications</a>
+              <button
+                onClick={() => handleNavigation("/notifications")}
+                className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:ml-2"
+              >
+                Notifications
               </button>
             </div>
           </div>
 
           {/* Section Profil (50%) */}
-          <div className="w-full md:w-1/2 shadow-lg p-6 h-auto md:h-full bg-gray-100 flex flex-col">
+          <div className="w-full md:w-1/2">
             <ProfileCard />
           </div>
+        </div>
+
+        {/* Bouton Voir Plus */}
+        <div className="mt-6 flex w-full">
+          <button
+            onClick={() => handleNavigation("/annonce")}
+            className="flex items-center ml-auto justify-center bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-full px-6 py-3 text-sm"
+          >
+            Voir plus <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+          </button>
         </div>
 
         {/* Section Annonces */}
