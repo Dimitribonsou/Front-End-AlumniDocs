@@ -17,8 +17,8 @@ const RequetePage: React.FC = () => {
         {/* Form Section */}
         <div className="w-full md:w-1/2 p-6">
           <h2 className="text-2xl font-bold text-center md:text-left">REQUETE</h2>
-          <p className="text-gray-500 text-center md:text-left">
-            ENVOYEZ VOTRE REQUETE
+          <p className="text-gray-500 text-center italic md:text-left">
+            Envoyer votre requete
           </p>
 
           <form className="mt-4 space-y-4">
