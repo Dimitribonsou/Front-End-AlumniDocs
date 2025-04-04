@@ -38,7 +38,7 @@ const RegisterPage = () => {
                   type="text"
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
-                  placeholder="--Entrez votre nom--"
+                  placeholder="Entrez votre nom"
                 />
               </div>
             </div>
@@ -50,7 +50,7 @@ const RegisterPage = () => {
                   type="text"
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
-                  placeholder="--Entrez votre prénom--"
+                  placeholder="Entrez votre prénom"
                 />
               </div>
             </div>
@@ -65,7 +65,7 @@ const RegisterPage = () => {
                   onChange={(e) => setGender(e.target.value)}
                   required
                 >
-                  <option value="">--Sélectionnez votre sexe--</option>
+                  <option value="">Sélectionnez votre sexe</option>
                   <option value="homme">Homme</option>
                   <option value="femme">Femme</option>
                 </select>
@@ -79,7 +79,7 @@ const RegisterPage = () => {
                   type="text"
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
-                  placeholder="--Entrez votre téléphone--"
+                  placeholder="Entrez votre téléphone"
                 />
               </div>
             </div>
@@ -93,7 +93,7 @@ const RegisterPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  placeholder="--Entrez votre email--"
+                  placeholder="Entrez votre email"
                 />
                 <span className="p-3 text-gray-600">
                   <FontAwesomeIcon icon={faAt} />
@@ -110,7 +110,7 @@ const RegisterPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="--Écrire votre mot de passe--"
+                  placeholder="Écrire votre mot de passe"
                 />
                 <span className="p-3 text-gray-600">
                   <FontAwesomeIcon icon={faLock} />
@@ -127,7 +127,7 @@ const RegisterPage = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  placeholder="--Réécrire votre mot de passe--"
+                  placeholder="Réécrire votre mot de passe"
                 />
                 <span className="p-3 text-gray-600">
                   <FontAwesomeIcon icon={faLock} />

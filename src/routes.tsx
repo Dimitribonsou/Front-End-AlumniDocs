@@ -6,6 +6,7 @@ import HomePage from "./pages/Home";
 import Profile from "./pages/Profile";
 import Annonce from "./pages/Annonces";
 import RequetePage from "./pages/Requete";
+import ForumPage from "./pages/Forum";
 
 
 const AppRoutes = () => {
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/Annonce" element={<Annonce />} />
         <Route path="/requetes" element={<RequetePage />} />
+        <Route path="/forum" element={<ForumPage />} />
       </Routes>
     </Router>
   );

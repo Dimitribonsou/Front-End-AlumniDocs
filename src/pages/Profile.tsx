@@ -26,10 +26,10 @@ const ProfilePage: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
       <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-        <h1 className="text-lg font-semibold text-gray-800 text-center">
+        <p className="text-lg italic text-red-600 text-center">
           Complétez votre profil est une phase primordiale en tant qu'utilisateur de AlumniDocs.
           Rassurez-vous de soumettre tous les documents requis.
-        </h1>
+        </p>
 
         {/* Informations Personnelles */}
         <div className="mt-6 border-b pb-4">
@@ -38,7 +38,7 @@ const ProfilePage: React.FC = () => {
           </h2>
           <div className="mt-3 flex flex-col md:flex-row items-center gap-4">
             <img
-              src="#"
+              src="../assets/et.jpeg"
               alt="Profil"
               className="w-20 h-20 rounded-full object-cover border"
             />
