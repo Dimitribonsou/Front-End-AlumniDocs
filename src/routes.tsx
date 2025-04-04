@@ -10,6 +10,7 @@ import ForumPage from "./pages/Forum";
 import AnnonceDetailsPage from "./pages/annonce/AnnonceDetail";
 
 
+
 const AppRoutes = () => {
   return (
     <Router>

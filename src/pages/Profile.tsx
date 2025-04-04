@@ -12,6 +12,7 @@ import Footer from "../Components/footer";
 
 const ProfilePage: React.FC = () => {
   const [files, setFiles] = useState<{ [key: string]: File | null }>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFileChange = (name: string, file: File | null) => {
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
@@ -25,7 +26,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
-      <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <div className="max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-lg">
         <p className="text-lg italic text-red-600 text-center">
           Complétez votre profil est une phase primordiale en tant qu'utilisateur de AlumniDocs.
           Rassurez-vous de soumettre tous les documents requis.
@@ -48,11 +49,60 @@ const ProfilePage: React.FC = () => {
               <p className="text-gray-600">+237 654606328</p>
               <p className="text-gray-600">CS13-DLW</p>
             </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <button onClick={() => setIsModalOpen(true)}  className="px-4 py-2 bg-[#1e2494] text-white rounded-md hover:bg-blue-700">
               <FontAwesomeIcon icon={faPencil} /> Modifier le profil
             </button>
           </div>
         </div>
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+              <h2 className="text-xl font-bold mb-4">Modifier ses infos personnelles</h2>
+              <form>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Nom</label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded-md"
+                    placeholder="Entrez votre nom"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Email</label>
+                  <input
+                    type="email"
+                    className="w-full p-2 border rounded-md"
+                    placeholder="Entrez votre email"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Téléphone</label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded-md"
+                    placeholder="Entrez votre numéro de téléphone"
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+                    onClick={() => setIsModalOpen(false)} // Ferme la modal
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-[#1e2494] text-white rounded-md hover:bg-blue-700"
+                  >
+                    Enregistrer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         {/* Documents Requis */}
         <div className="mt-6">
@@ -82,7 +132,7 @@ const ProfilePage: React.FC = () => {
                     name={doc.name}
                     onChange={(file) => handleFileChange(doc.name, file)}
                   />
-                  <button className="mt-2 px-4 bg-blue-700 text-white rounded-md hover:bg-blue-600 w-full sm:w-auto md:h-20 text-sm sm:text-base md:text-lg py-2 sm:py-3">
+                  <button className="mt-2 w-full h-9 bg-[#1e2494] text-white rounded-md hover:bg-blue-600 text-base font-semibold">
                     Modifier
                   </button>
                 </div>

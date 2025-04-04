@@ -50,20 +50,17 @@ const Home = () => {
               Ne sois pas parmi les étudiants qui ne sont pas informés.
             </p>
 
-            <div className="mt-4">
-              <h3 className="text-lg font-bold">Annonces récentes</h3>
-            </div>
 
             <div className="flex flex-col md:flex-row justify-between mt-4">
               <button
                 onClick={() => handleNavigation("/annonce")}
-                className="bg-[#161B70] hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
+                className="bg-[#161B70] h-9 hover:bg-gray-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
               >
                 Annonces
               </button>
               <button
                 onClick={() => handleNavigation("/notifications")}
-                className="bg-[#161B70] hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:ml-2"
+                className="bg-[#161B70] h-9 hover:bg-blue-600 text-white font-semibold rounded-3xl py-2 text-sm w-full md:w-1/2 md:ml-2"
               >
                 Notifications
               </button>
