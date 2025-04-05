@@ -22,16 +22,6 @@ const RequetePage: React.FC = () => {
           </p>
 
           <form className="mt-4 space-y-4">
-            {/* Libelle Input */}
-            <div>
-              <label className="block text-gray-700">Libelle</label>
-              <input
-                type="text"
-                name="libelle"
-                className="w-full p-2 border rounded-md"
-                placeholder="--entrez le libelle--"
-              />
-            </div>
 
             {/* Pièce Jointe Input */}
             <div>
@@ -39,9 +29,19 @@ const RequetePage: React.FC = () => {
               <input
                 type="file"
                 name="file"
-                className="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+                className="mt-1 block text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
               />
               
+            </div>
+            {/* Libelle Input */}
+            <div>
+              <label className="block text-gray-700">Libelle</label>
+              <input
+                type="text"
+                name="libelle"
+                className="w-full p-2 h-9 border rounded-md"
+                placeholder="Entrez le libelle"
+              />
             </div>
 
             {/* Description Textarea */}
@@ -50,7 +50,7 @@ const RequetePage: React.FC = () => {
               <textarea
                 name="description"
                 className="w-full p-2 border rounded-md"
-                placeholder="--entrez une explication--"
+                placeholder="Entrez une explication de votre requete"
               ></textarea>
             </div>
 
