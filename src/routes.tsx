@@ -8,7 +8,7 @@ import Annonce from "./pages/annonce/Annonces";
 import RequetePage from "./pages/Requete";
 import ForumPage from "./pages/Forum";
 import AnnonceDetailsPage from "./pages/annonce/AnnonceDetail";
-
+import Notif from "./pages/Notif";
 
 
 const AppRoutes = () => {
@@ -24,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/requetes" element={<RequetePage />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
+        <Route path="/notifications" element={<Notif />} />
       </Routes>
     </Router>
   );
