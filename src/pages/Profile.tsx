@@ -106,22 +106,18 @@ const ProfilePage: React.FC = () => {
 
         {/* Documents Requis */}
         <div className="mt-6">
-          <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-            <FontAwesomeIcon icon={faFile} /> Documents Requis
-          </h2>
-          <p className="text-sm text-gray-600">
-            Les champs portant <span className="text-red-600 font-bold">*</span>{" "}
-            sont obligatoires
-          </p>
           <form onSubmit={handleSubmit} className="mt-4 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { label: "Acte de naissance", name: "birthCertificate" },
-                { label: "Relevé BAC", name: "bacTranscript" },
-                { label: "CNI", name: "cni" },
-                { label: "R1", name: "r1" },
-                { label: "R2", name: "r2" },
-                { label: "Reçu Scolarité", name: "schoolReceipt" },
+                { label: "CNI", name: "cni", required: true },
+                { label: "Passeport", name: "passeport", required: false },
+                { label: "Acte de naissance", name: "birthCertificate", required: true },
+                { label: "Relevé BAC (relévé ou diplôme)", name: "bacTranscript", required: true },
+                { label: "Relevé du niveau 1", name: "r1", required: false },
+                { label: "Relevé du niveau 2", name: "r2", required: false },
+                { label: "Relevé du niveau 3", name: "r3", required: false },
+                { label: "Relevé du niveau 4", name: "r4", required: false },
+                { label: "Relevé du niveau 5", name: "r5", required: false },
               ].map((doc) => (
                 <div
                   key={doc.name}
@@ -131,6 +127,7 @@ const ProfilePage: React.FC = () => {
                     label={doc.label}
                     name={doc.name}
                     onChange={(file) => handleFileChange(doc.name, file)}
+                    required={doc.required} // Utilisation de la propriété `required`
                   />
                   <button className="mt-2 w-full h-9 bg-[#1e2494] text-white rounded-md hover:bg-blue-600 text-base font-semibold">
                     Modifier
@@ -138,13 +135,18 @@ const ProfilePage: React.FC = () => {
                 </div>
               ))}
             </div>
-
-            <div className="text-center mt-6">
+            <div className="flex flex-col md:flex-row justify-between mt-6">
+              <button
+                type="button"
+                className="bg-gray-600 h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
+              >
+                <a href="/home">Quitter sans enregistrer</a>
+              </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-red-600 text-white font-bold rounded-md hover:bg-red-700"
+                className="bg-red-600 h-9 hover:bg-red-700 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"
               >
-                <FontAwesomeIcon icon={faPlus} /> Soumettre
+                <FontAwesomeIcon icon={faPlus} />Soumettre
               </button>
             </div>
           </form>
