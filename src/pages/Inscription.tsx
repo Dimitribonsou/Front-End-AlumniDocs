@@ -5,6 +5,7 @@ import Footer from "../Components/footer";
 export default function Inscription() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
+    civilité: "",
     nom: "",
     prenom: "",
     email: "",
@@ -62,11 +63,31 @@ export default function Inscription() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Informations personnelles</h3>
               <div>
+                {renderLabel("civilité")}
+                <select name="" id="" 
+                  className="w-full border p-2 rounded">
+                  <option value=""></option>
+                  <option value="">Mr</option>
+                  <option value="">Mme</option>
+                  <option value="">Mlle</option>
+                </select>
+              </div>
+              <div>
                 {renderLabel("Nom")}
                 <input
                   type="text"
                   name="nom"
-                  placeholder="Nom"
+                  value={formData.nom}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Nom Marital")}
+                <input
+                  type="text"
+                  name="nom"
                   value={formData.nom}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -78,7 +99,6 @@ export default function Inscription() {
                 <input
                   type="text"
                   name="prenom"
-                  placeholder="Prénom"
                   value={formData.prenom}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -90,7 +110,6 @@ export default function Inscription() {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -102,6 +121,28 @@ export default function Inscription() {
                 <input
                   type="tel"
                   name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Nationalité")}
+                <input
+                  type="text"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Date de naissance")}
+                <input
+                  type="Date"
+                  name="telephone"
                   placeholder="Téléphone"
                   value={formData.telephone}
                   onChange={handleChange}
@@ -109,6 +150,63 @@ export default function Inscription() {
                   required
                 />
               </div>
+              <div>
+                {renderLabel("Region de naissance")}
+                <input
+                  type="text"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Lieu de naissance")}
+                <input
+                  type="text"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Departement de naissance")}
+                <input
+                  type="text"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              
+              <div>
+                {renderLabel("Quartier")}
+                <input
+                  type="text"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+              <div>
+                {renderLabel("Photo")}
+                <input
+                  type="File"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                  required
+                />
+              </div>
+
             </div>
           )}
 

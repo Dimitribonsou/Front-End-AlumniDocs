@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../../Components/Siderbar';
 import Navbar_admin from '../../Components/Navbar_admin';
 
 const Annonces: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const annonces = [
     { id: 1, titre: "Réunion de rentrée", auteur: "Admin", date: "2025-04-01" },
     { id: 2, titre: "Résultats disponibles", auteur: "Responsable", date: "2025-03-28" },
@@ -10,12 +12,18 @@ const Annonces: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
+      {/* Sidebar */}
+      <Sidebar  />
+
+      {/* Main Content */}
       <div className="flex flex-col flex-1">
+        {/* Navbar */}
         <Navbar_admin />
+
         <main className="p-6 overflow-auto">
           <h1 className="text-2xl font-bold mb-6 text-center md:text-left">Gestion des Annonces</h1>
           <div className="bg-white shadow-md rounded-lg p-4">
+            {/* Responsive Table Wrapper */}
             <div className="overflow-x-auto">
               <table className="min-w-full table-auto">
                 <thead>
