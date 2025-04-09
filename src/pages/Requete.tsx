@@ -22,25 +22,14 @@ const RequetePage: React.FC = () => {
           </p>
 
           <form className="mt-4 space-y-4">
-
-            {/* Pièce Jointe Input */}
-            <div>
-              <label className="block text-gray-700">Pièce Jointe</label>
-              <input
-                type="file"
-                name="file"
-                className="mt-1 block text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
-              />
-              
-            </div>
             {/* Libelle Input */}
             <div>
-              <label className="block text-gray-700">Libelle</label>
+              <label className="block text-gray-700">Objet</label>
               <input
                 type="text"
-                name="libelle"
+                name="Objet"
                 className="w-full p-2 h-9 border rounded-md"
-                placeholder="Entrez le libelle"
+                placeholder="Entrez le Objet"
               />
             </div>
 
@@ -52,6 +41,25 @@ const RequetePage: React.FC = () => {
                 className="w-full p-2 border rounded-md"
                 placeholder="Entrez une explication de votre requete"
               ></textarea>
+            </div>
+            <div>
+              <label className="block text-gray-700">Categorie</label>
+              <select name="" id="" className="w-full p-2 h-9 border rounded-md">
+                <option value=""></option>
+                <option value="">Notes</option>
+                <option value="">Absence</option>
+              </select>
+            </div>
+
+            {/* Pièce Jointe Input */}
+            <div>
+              <label className="block text-gray-700">Pièce Jointe</label>
+              <input
+                type="file"
+                name="file"
+                className="mt-1 block text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+              />
+              
             </div>
 
             {/* Submit Button */}
