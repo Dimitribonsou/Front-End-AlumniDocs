@@ -2,8 +2,80 @@ import React from "react";
 import Sidebar from "../../Components/Siderbar";
 import StatCard from "../../Components/StatCard";
 import Navbar_admin from "../../Components/Navbar_admin";
+import { Bar, Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+
+// Enregistrer les composants nécessaires pour Chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const Dashboard = () => {
+  // Données pour le graphique en barres
+  const barData = {
+    labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+    datasets: [
+      {
+        label: "Étudiants inscrits",
+        data: [50, 75, 100, 125, 150, 200],
+        backgroundColor: "rgba(54, 162, 235, 0.6)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Options pour le graphique en barres
+  const barOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Étudiants inscrits par mois",
+      },
+    },
+  };
+
+  // Données pour le graphique en secteurs
+  const pieData = {
+    labels: ["Étudiants", "Admins", "Annonces"],
+    datasets: [
+      {
+        label: "Répartition des données",
+        data: [350, 5, 48],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.6)",
+          "rgba(54, 162, 235, 0.6)",
+          "rgba(255, 206, 86, 0.6)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <div className="flex">
       <Sidebar />
@@ -22,6 +94,17 @@ const Dashboard = () => {
             <li>Admin2 - 05/04/2025 à 12:15</li>
             <li>Admin3 - 04/04/2025 à 20:45</li>
           </ul>
+        </div>
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Graphique en barres */}
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <Bar data={barData} options={barOptions} />
+          </div>
+
+          {/* Graphique en secteurs */}
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <Pie data={pieData} />
+          </div>
         </div>
       </div>
     </div>

@@ -251,9 +251,9 @@ export default function Inscription() {
                   required
                 >
                   <option value="">Sélectionnez une classe</option>
-                  <option value="L1">L1</option>
-                  <option value="L2">L2</option>
-                  <option value="L3">L3</option>
+                  <option value="L1">CSI3 DLW</option>
+                  <option value="L2">3IL2</option>
+                  <option value="L3">ERIS4</option>
                 </select>
               </div>
               <div>
