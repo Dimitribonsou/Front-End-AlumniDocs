@@ -79,7 +79,6 @@ const Annonce = () => {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

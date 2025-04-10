@@ -4,9 +4,10 @@ type FileInputProps = {
   label: string;
   name: string;
   onChange: (file: File | null) => void;
+  required?: boolean; // Ajout d'une propriété pour indiquer si le champ est obligatoire
 };
 
-const FileInput: React.FC<FileInputProps> = ({ label, name, onChange }) => {
+const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required = false }) => {
   const [fileName, setFileName] = useState<string>('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,7 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange }) => {
         htmlFor={name}
         className="block text-sm font-medium text-gray-700 sm:text-base md:text-lg"
       >
-        {label} <span className="text-red-600 font-bold">*</span>
+        {label} {required && <span className="text-red-600 font-bold">*</span>}
       </label>
       <input
         type="file"
