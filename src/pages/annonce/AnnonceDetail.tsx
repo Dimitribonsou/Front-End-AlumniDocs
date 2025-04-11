@@ -55,7 +55,6 @@ const AnnonceDetailsPage: React.FC = () => {
           />
         </div>
       </div>
-
       <Footer />
     </div>
   );

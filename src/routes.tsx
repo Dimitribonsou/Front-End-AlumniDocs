@@ -1,5 +1,7 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
+import Inscription from "./pages/Inscription";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import HomePage from "./pages/Home";
@@ -10,15 +12,18 @@ import ForumPage from "./pages/Forum";
 import AnnonceDetailsPage from "./pages/annonce/AnnonceDetail";
 import Notif from "./pages/Notif";
 import Ilogin from "./types/Ilogin";
-
-
+import Dashboard from "./pages/admni/Dashboard";
+import Annonces from "./pages/admni/Annonces";
+import AnnoncesSignalees from "./pages/admni/AnnoncesSignalees";
+import App from "./App";
+// import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 const AppRoutes = () => {
   // recuperer les elements du localstorage afin de savoir si l'utilisateur est connecte
   const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<App />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         {/* // faire le test sur la variable islogin */}

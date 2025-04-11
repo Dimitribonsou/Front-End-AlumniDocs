@@ -98,7 +98,7 @@ useEffect(()=>{
          <p className="text-center text-red-500 my-2">{error}</p>
         <form className="mt-6" onSubmit={handleLogin}>
           <div>
-            <label className="block mb-2 text-sm md:text-base font-medium">
+            <label className="block mb-2 text-left text-sm md:text-base font-medium">
               Identifiant
             </label>
             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-10">
@@ -118,7 +118,7 @@ useEffect(()=>{
             </div>
           </div>
           <div className="mt-4">
-            <label className="block mb-2 text-sm md:text-base font-medium">
+            <label className="block mb-2 text-left text-sm md:text-base font-medium">
               Mot de passe
             </label>
             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-10">

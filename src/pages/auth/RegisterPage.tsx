@@ -119,6 +119,13 @@ const RegisterPage = () => {
     return isValid;
   };
 
+  const renderLabel = (text: string, isRequired: boolean = true) => (
+    <label className="block mb-2 text-sm font-medium">
+      {text}
+      {isRequired && <span className="text-red-500 ml-1">*</span>}
+    </label>
+  );
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Partie gauche - fond rouge */}
@@ -133,18 +140,36 @@ const RegisterPage = () => {
       </div>
 
       {/* Partie droite - fond blanc */}
-      <div className="w-full  md:w-[60%] bg-white flex items-center justify-center">
+      <div className="w-full md:w-[60%] bg-white flex items-center justify-center">
         <div className="w-full max-w-md p-10 bg-white shadow-lg rounded-lg">
           <h2 className="text-2xl md:text-4xl font-semibold text-center">
             BIENVENUE
             <p className="italic text-sm text-thin">Créer votre compte</p>
             <div className="line-with-dots"></div>
           </h2>
+
             <p className="  text-center ">Veuillez remplir tout les champs du formulaire</p>
             <span className="mt-2 text-green-500 font-medium block text-center ">{serverMessage}</span>
           <form className="mt-6" >
             <div>
-              <label className="block mb-2 text-sm font-medium">Nom</label>
+              {renderLabel("Civilité")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <select
+                  name=""
+                  id=""
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                >
+                  <option value=""></option>
+                  <option value="Mr">Mr</option>
+                  <option value="Mme">Mme</option>
+                  <option value="Mlle">Mlle</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Nom */}
+            <div>
+              {renderLabel("Nom")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="text"
@@ -157,8 +182,21 @@ const RegisterPage = () => {
               </div>
             </div>
 
+            {/* Nom Marital */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Prénom</label>
+              {renderLabel("Nom Marital", false)}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  placeholder="Entrez votre nom marital"
+                />
+              </div>
+            </div>
+
+            {/* Prénom */}
+            <div>
+              {renderLabel("Prénom")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="text"
@@ -171,9 +209,9 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Liste déroulante pour le sexe */}
+            {/* Sexe */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Sexe</label>
+              {renderLabel("Sexe")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <select
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
@@ -181,15 +219,16 @@ const RegisterPage = () => {
                   onChange={(e) => setGender(e.target.value)}
                   required
                 >
-                  <option value="">Sélectionnez votre sexe</option>
+                  <option value=""></option>
                   <option value="homme">Homme</option>
                   <option value="femme">Femme</option>
                 </select>
               </div>
             </div>
 
+            {/* Téléphone */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Téléphone</label>
+              {renderLabel("Téléphone")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="text"
@@ -202,8 +241,9 @@ const RegisterPage = () => {
               </div>
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Email</label>
+              {renderLabel("Email")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="email"
@@ -219,8 +259,70 @@ const RegisterPage = () => {
               </div>
             </div>
 
+            {/* Nationalité */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Mot de passe</label>
+              {renderLabel("Nationalité")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="Entrez votre nationalité"
+                />
+              </div>
+            </div>
+
+            {/* Date de naissance */}
+            <div>
+              {renderLabel("Date de naissance")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="date"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Lieu de naissance */}
+            <div>
+              {renderLabel("Lieu de naissance")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="Entrez votre lieu de naissance"
+                />
+              </div>
+            </div>
+
+            {/* Quartier */}
+            <div>
+              {renderLabel("Quartier")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  required
+                  placeholder="Entrez votre quartier"
+                />
+              </div>
+            </div>
+            <div>
+              {renderLabel("Photo")}
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+                <input
+                  type="file"
+                  className="w-full  focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Mot de passe */}
+            <div>
+              {renderLabel("Mot de passe")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="password"
@@ -236,8 +338,9 @@ const RegisterPage = () => {
               </div>
             </div>
 
+            {/* Confirmation mot de passe */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Confirmation mot de passe</label>
+              {renderLabel("Confirmation mot de passe")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
                 <input
                   type="password"
@@ -253,6 +356,7 @@ const RegisterPage = () => {
               </div>
             </div>
 
+            {/* Boutons */}
             <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
                 type="button"

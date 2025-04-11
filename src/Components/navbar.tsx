@@ -11,6 +11,7 @@ import {
   faUser,
   faBars,
   faTimes,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
 // fonction permettant a un utilisateur de se deconnecter
 const logOut=()=>{
@@ -26,6 +27,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
+    { name: "Document", icon: faFile, route: "/profile" },
     { name: "Requetes", icon: faEnvelope, route: "/requetes" },
     { name: "Annonces", icon: faBullhorn, route: "/annonce" },
     { name: "Forum", icon: faComments, route: "/forum" },
@@ -104,7 +106,7 @@ const Navbar = () => {
 
         {/* User Menu */}
         {isUserMenuOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-800">
+          <div className="absolute right-0 mt-40 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-800">
             <p className="text-center text-bold">Joe Dalton</p>
             <p className="px-4 py-2 text-italic text-center text-xs border-b">
               Joe.dalton@gmail.com

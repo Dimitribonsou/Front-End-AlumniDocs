@@ -25,7 +25,7 @@ const ProfileCard = (props:Ilogin) => {
       </div>
       {/* Bouton Compléter avec Icône */}
       <button className="mt-4 bg-red-500 text-white w-full py-2 rounded-md flex items-center justify-center gap-2">
-        <a href="/profile">Compléter mon profil </a>
+        <a href="/inscription">Inscription</a>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
