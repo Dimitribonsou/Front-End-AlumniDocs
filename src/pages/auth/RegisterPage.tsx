@@ -1,12 +1,130 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
+  const [serverMessage, setServerMessage] = useState("");
+  //renitialiser le contenu du formulaire
+  const resetFormData= ()=>{
+  setEmail("");
+  setNom("");
+  setPrenom("");
+  setPhone("");
+  setPassword("");
+  setConfirmPassword("");
+  setGender("");
+  }
+// envoyer les donnees du formulaire au back-end
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const isValid = validateForm();
+    setIsFormValid(isValid);
+  }, [nom, prenom, email, phone, password, confirmPassword, gender]);
+
+  const handleSubmit = async () => {
+    // if (!isFormValid) return;
+      // recuperer les donnees saisi dans le formulaire
+      const data = {
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        telephone: phone,
+        password: password,
+        genre: gender,
+        message: "",
+      };
+  
+      try {
+        const response = await fetch('http://localhost:5000/AlumniDocs-API/NewAccount', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+  
+        if (!response.ok) {
+          throw new Error('la reponse du serveur est pas correct.');
+        }
+  
+        const result = await response.text();
+        console.log(result);
+        // mettre a jour le message retourner par le serveur
+        setServerMessage(result);
+        // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
+        resetFormData();
+        // Handle success as needed
+        alert('Votre compte a été créé avec succès!');
+      } catch (error) {
+        console.log('There was a problem with the fetch operation:', error);
+        // Handle error as needed
+      }
+  };
+  const validateForm = () => {
+    let isValid = true;
+
+    // Validation for nom
+    if (nom.trim() === "") {
+      console.log("le nom est obligatoire");
+      isValid = false;
+    }
+
+    // Validation for prenom
+    if (prenom.trim() === "") {
+      console.log("le prenom est obligatoire");
+      isValid = false;
+    }
+
+    // Validation for email
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+      console.log("format email invalide");
+      isValid = false;
+    }
+
+    // Validation for phone
+    const phoneRegex = /^\+?([0-9]{1,3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(phone)) {
+      console.log("format de numero de telphone incorrect");
+      isValid = false;
+    }
+
+    // Validation for password
+    if (password.trim() === "") {
+      console.log("mot de passe  est obligatoire.");
+      isValid = false;
+    }
+
+    // Validation for confirmPassword
+    if (confirmPassword.trim() !== password) {
+      console.log("les mots de passe ne correspondent pas .");
+      isValid = false;
+    }
+
+    // Validation for gender
+    if (gender.trim() === "") {
+      console.log("le Genre est obligatoire");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const renderLabel = (text: string, isRequired: boolean = true) => (
+    <label className="block mb-2 text-sm font-medium">
+      {text}
+      {isRequired && <span className="text-red-500 ml-1">*</span>}
+    </label>
+  );
 
   const renderLabel = (text: string, isRequired: boolean = true) => (
     <label className="block mb-2 text-sm font-medium">
@@ -36,10 +154,9 @@ const RegisterPage = () => {
             <p className="italic text-sm text-thin">Créer votre compte</p>
             <div className="line-with-dots"></div>
           </h2>
-
+            <p className="  text-center ">Veuillez remplir tout les champs du formulaire</p>
+            <span className="mt-2 text-green-500 font-medium block text-center ">{serverMessage}</span>
           <form className="mt-6 space-y-4">
-            
-
             {/* Nom */}
             <div>
               {renderLabel("Nom")}
@@ -49,10 +166,11 @@ const RegisterPage = () => {
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
                   placeholder="Entrez votre nom"
+                  value={nom}
+                  onChange={(e)=>setNom(e.target.value)}
                 />
               </div>
             </div>
-
             {/* Prénom */}
             <div>
               {renderLabel("Prénom")}
@@ -62,6 +180,8 @@ const RegisterPage = () => {
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
                   placeholder="Entrez votre prénom"
+                  value={prenom}
+                  onChange={(e)=>setPrenom(e.target.value)}
                 />
               </div>
             </div>
@@ -92,10 +212,11 @@ const RegisterPage = () => {
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
                   placeholder="Entrez votre téléphone"
+                  value={phone}
+                  onChange={(e)=>setPhone(e.target.value)}
                 />
               </div>
             </div>
-
             {/* Email */}
             <div>
               {renderLabel("Email")}
@@ -113,7 +234,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Mot de passe */}
             <div>
               {renderLabel("Mot de passe")}
@@ -131,7 +251,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Confirmation mot de passe */}
             <div>
               {renderLabel("Confirmation mot de passe")}
@@ -149,7 +268,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Boutons */}
             <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
@@ -159,8 +277,10 @@ const RegisterPage = () => {
                 <a href="/">Connexion</a>
               </button>
               <button
-                type="submit"
-                className="bg-[#161B70] h-9 hover:bg-blue-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                className={ !isFormValid ? "bg-gray-500 h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2" : "bg-[#161B70] h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"}
               >
                 Envoyer
               </button>

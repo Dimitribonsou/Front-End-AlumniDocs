@@ -12,9 +12,15 @@ import {
   faBars,
   faTimes,
   faFile,
-  faPencil,
+  faPencil
 } from "@fortawesome/free-solid-svg-icons";
-
+// fonction permettant a un utilisateur de se deconnecter
+const logOut=()=>{
+// suprimer la variable loginData du localstorage
+localStorage.removeItem('loginData');
+//rediriger vers la page de connexion
+window.location.href = '/';
+}
 const Navbar = () => {
   const [active, setActive] = useState("Accueil");
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -111,7 +117,7 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faEdit} className="mr-2" /> Modifier
             </a>
             <a
-              href="/"
+              onClick={logOut}
               className="block px-4 py-2 text-red-600 hover:bg-gray-200"
             >
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />{" "}
