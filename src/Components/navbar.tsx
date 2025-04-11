@@ -12,7 +12,7 @@ import {
   faBars,
   faTimes,
   faFile,
-  faPencil,
+  faPencil
 } from "@fortawesome/free-solid-svg-icons";
 // fonction permettant a un utilisateur de se deconnecter
 const logOut=()=>{

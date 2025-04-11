@@ -78,31 +78,35 @@ const ProfilePage: React.FC = () => {
                   </div>
                 ))}
               </div>
-        
-              {/* Colonne de droite */}
-              <div className="space-y-4">
-                {[
-                  { label: "Baccalauréat (relévé ou diplôme)", name: "bacTranscript", required: true },
-                  { label: "Relevé du niveau 1", name: "r1", required: false },
-                  { label: "Relevé du niveau 2", name: "r2", required: false },
-                  { label: "Relevé du niveau 4", name: "r4", required: false },
-                ].map((doc) => (
-                  <div
-                    key={doc.name}
-                    className="bg-white p-4 rounded-md shadow-md flex flex-col items-center"
-                  >
-                    <FileInput
-                      label={doc.label}
-                      name={doc.name}
-                      onChange={(file) => handleFileChange(doc.name, file)}
-                      required={doc.required}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-        
+       
             {/* Boutons */}
+              {[
+                { label: "CNI", name: "cni", required: true },
+                { label: "Passeport", name: "passeport", required: false },
+                { label: "Acte de naissance", name: "birthCertificate", required: true },
+                { label: "Relevé BAC (relévé ou diplôme)", name: "bacTranscript", required: true },
+                { label: "Relevé du niveau 1", name: "r1", required: false },
+                { label: "Relevé du niveau 2", name: "r2", required: false },
+                { label: "Relevé du niveau 3", name: "r3", required: false },
+                { label: "Relevé du niveau 4", name: "r4", required: false },
+                { label: "Relevé du niveau 5", name: "r5", required: false },
+              ].map((doc) => (
+                <div
+                  key={doc.name}
+                  className="bg-white p-4 rounded-md shadow-md flex flex-col items-center"
+                >
+                  <FileInput
+                    label={doc.label}
+                    name={doc.name}
+                    onChange={(file) => handleFileChange(doc.name, file)}
+                    required={doc.required} // Utilisation de la propriété `required`
+                  />
+                  <button className="mt-2 w-full h-9 bg-[#1e2494] text-white rounded-md hover:bg-blue-600 text-base font-semibold">
+                    Modifier
+                  </button>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
                 type="button"
@@ -114,7 +118,7 @@ const ProfilePage: React.FC = () => {
                 type="submit"
                 className="bg-red-600 h-9 hover:bg-red-700 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"
               >
-                <FontAwesomeIcon icon={faPlus} /> Soumettre
+                <FontAwesomeIcon icon={faPlus} />Soumettre
               </button>
             </div>
           </form>
