@@ -35,14 +35,14 @@ const Navbar_admin = () => {
               <p className="px-4 py-2 text-xs text-gray-500 border-b">admin@alumnidocs.com</p>
               <a
                 href="/settings"
-                className="block px-4 py-2 hover:bg-gray-100 flex items-center gap-2"
+                className=" px-4 py-2 hover:bg-gray-100 flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={faCog} />
                 Paramètres
               </a>
               <a
                 href="/logout"
-                className="block px-4 py-2 text-red-600 hover:bg-gray-100 flex items-center gap-2"
+                className=" px-4 py-2 text-red-600 hover:bg-gray-100 flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={faSignOutAlt} />
                 Déconnexion

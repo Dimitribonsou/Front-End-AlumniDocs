@@ -14,9 +14,12 @@ import Notif from "./pages/Notif";
 import Ilogin from "./types/Ilogin";
 import Dashboard from "./pages/admni/Dashboard";
 import Annonces from "./pages/admni/Annonces";
-import AnnoncesSignalees from "./pages/admni/AnnoncesSignalees";
 import App from "./App";
 import Compte from "./pages/Compte";
+import Promotions from "./pages/admni/Promotions";
+import Filieres from "./pages/admni/Filieres";
+import Classes from "./pages/admni/Classes";
+import Forums from "./pages/admni/Forums";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 const AppRoutes = () => {
@@ -28,6 +31,13 @@ const AppRoutes = () => {
         <Route path="/" element={<App />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin/annonces" element={<Annonces />} />
+        <Route path="/admin/promotions" element={<Promotions />} />
+        <Route path="/admin/filieres" element={<Filieres />} />
+        <Route path="/admin/classes" element={<Classes />} />
+        <Route path="/admin/forums" element={<Forums />} />
+            
         {/* // faire le test sur la variable islogin */}
         {data.islogin ? (
           <>
@@ -38,9 +48,6 @@ const AppRoutes = () => {
             <Route path="/forum" element={<ForumPage />} />
             <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
             <Route path="/notifications" element={<Notif />} />
-            <Route path="/admin" element={<Dashboard />} />
-            <Route path="/admin/annonces" element={<Annonces />} />
-            <Route path="/admin/annonces-signalées" element={<AnnoncesSignalees />} />
             <Route path="/inscription" element={<Inscription />} />
           </>
           // rediriger vers le formulaire de connexion
