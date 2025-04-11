@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
@@ -9,22 +9,41 @@ import RequetePage from "./pages/Requete";
 import ForumPage from "./pages/Forum";
 import AnnonceDetailsPage from "./pages/annonce/AnnonceDetail";
 import Notif from "./pages/Notif";
+import Ilogin from "./types/Ilogin";
 
 
 const AppRoutes = () => {
+  // recuperer les elements du localstorage afin de savoir si l'utilisateur est connecte
+  const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/Annonce" element={<Annonce />} />
-        <Route path="/requetes" element={<RequetePage />} />
-        <Route path="/forum" element={<ForumPage />} />
-        <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
-        <Route path="/notifications" element={<Notif />} />
+        {/* // faire le test sur la variable islogin */}
+        {data.islogin ? (
+          <>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/Annonce" element={<Annonce />} />
+            <Route path="/requetes" element={<RequetePage />} />
+            <Route path="/forum" element={<ForumPage />} />
+            <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
+            <Route path="/notifications" element={<Notif />} />
+          </>
+          // rediriger vers le formulaire de connexion
+        ) : (
+          <>
+            <Route path="/home" element={<Navigate replace to="/" />} />
+            <Route path="/profile" element={<Navigate replace to="/" />} />
+            <Route path="/Annonce" element={<Navigate replace to="/" />} />
+            <Route path="/requetes" element={<Navigate replace to="/" />} />
+            <Route path="/forum" element={<Navigate replace to="/" />} />
+            <Route path="/annonce/:id" element={<Navigate replace to="/" />} />
+            <Route path="/notifications" element={<Navigate replace to="/" />} />
+          </>
+        )}
       </Routes>
     </Router>
   );
