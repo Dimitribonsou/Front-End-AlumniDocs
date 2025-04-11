@@ -33,81 +33,53 @@ const ProfilePage: React.FC = () => {
         </p>
 
         {/* Informations Personnelles */}
-        <div className="mt-6 border-b pb-4">
-          <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+        <div className="mt-6 border-b pb-4 text-center">
+          <h2 className="text-xl font-semibold text-gray-800 flex items-center justify-center gap-2">
             <FontAwesomeIcon icon={faUser} /> Informations Personnelles
           </h2>
-          <div className="mt-3 flex flex-col md:flex-row items-center gap-4">
+          <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
             <img
               src="../assets/et.jpeg"
               alt="Profil"
               className="w-20 h-20 rounded-full object-cover border"
             />
-            <div className="text-center md:text-left">
+            <div>
               <p className="font-bold">Joe Dalton</p>
               <p className="text-gray-600">joe.dalton@gmail.com</p>
               <p className="text-gray-600">+237 654606328</p>
               <p className="text-gray-600">CS13-DLW</p>
             </div>
-            <button onClick={() => setIsModalOpen(true)}  className="px-4 py-2 bg-[#1e2494] text-white rounded-md hover:bg-blue-700">
-              <FontAwesomeIcon icon={faPencil} /> Modifier le profil
-            </button>
           </div>
         </div>
-        {/* Modal */}
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-              <h2 className="text-xl font-bold mb-4">Modifier ses infos personnelles</h2>
-              <form>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Nom</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border rounded-md"
-                    placeholder="Entrez votre nom"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Email</label>
-                  <input
-                    type="email"
-                    className="w-full p-2 border rounded-md"
-                    placeholder="Entrez votre email"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Téléphone</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border rounded-md"
-                    placeholder="Entrez votre numéro de téléphone"
-                  />
-                </div>
-                <div className="flex justify-end gap-2">
-                  <button
-                    type="button"
-                    className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
-                    onClick={() => setIsModalOpen(false)} // Ferme la modal
-                  >
-                    Annuler
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-[#1e2494] text-white rounded-md hover:bg-blue-700"
-                  >
-                    Enregistrer
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
 
         {/* Documents Requis */}
         <div className="mt-6">
           <form onSubmit={handleSubmit} className="mt-4 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Colonne de gauche */}
+              <div className="space-y-4">
+                {[
+                  { label: "Acte de naissance", name: "birthCertificate", required: true },
+                  { label: "CNI", name: "cni", required: true },
+                  { label: "Passeport", name: "passeport", required: false },
+                  { label: "Relevé du niveau 3", name: "r3", required: false },
+                  { label: "Relevé du niveau 5", name: "r5", required: false },
+                ].map((doc) => (
+                  <div
+                    key={doc.name}
+                    className="bg-white p-4 rounded-md shadow-md flex flex-col items-center"
+                  >
+                    <FileInput
+                      label={doc.label}
+                      name={doc.name}
+                      onChange={(file) => handleFileChange(doc.name, file)}
+                      required={doc.required}
+                    />
+                  </div>
+                ))}
+              </div>
+       
+            {/* Boutons */}
               {[
                 { label: "CNI", name: "cni", required: true },
                 { label: "Passeport", name: "passeport", required: false },

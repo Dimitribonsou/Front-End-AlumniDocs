@@ -4,6 +4,36 @@ import { faAt } from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [sendSuccess, setSendSuccess] = useState(false);
+
+  const handleSendResetLink = async () => {
+    setIsSending(true);
+    try {
+      const response = await fetch('/api/send-reset-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send reset link');
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        setSendSuccess(true);
+      } else {
+        console.error('Failed to send reset link');
+      }
+    } catch (error) {
+      console.error('Error sending reset link:', error);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   const handleResetPassword = (e: React.FormEvent) => {
     e.preventDefault();
