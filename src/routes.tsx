@@ -39,7 +39,6 @@ const AppRoutes = () => {
             <Route path="/notifications" element={<Notif />} />
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/annonces" element={<Annonces />} />
-            <Route path="/admin/annonces-signalées" element={<AnnoncesSignalees />} />
             <Route path="/inscription" element={<Inscription />} />
           </>
           // rediriger vers le formulaire de connexion
