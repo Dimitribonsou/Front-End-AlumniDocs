@@ -4,35 +4,37 @@ import Navbar_admin from "../../Components/Navbar_admin";
 
 const Annonces: React.FC = () => {
   const [annonces, setAnnonces] = useState([
-    { id: 1, titre: "Réunion de rentrée", auteur: "Admin", date: "2025-04-01" },
-    { id: 2, titre: "Résultats disponibles", auteur: "Responsable", date: "2025-03-28" },
+    { id: 1, libelle: "Réunion de rentrée", auteur: "Admin", date: "2025-04-01" },
+    { id: 2, libelle: "Résultats disponibles", auteur: "Responsable", date: "2025-03-28" },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newAnnonce, setNewAnnonce] = useState({ titre: "", auteur: "" });
-  const [selectedClasse, setSelectedClasse] = useState("");
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+  const [newAnnonce, setNewAnnonce] = useState({ libelle: "", description: "", auteur: "" });
+  const [selectedFiliere, setSelectedFiliere] = useState("");
 
-  const classes = ["CSI3 DLW", "3IL2", "ERIS4"]; // Liste des classes
+  const filieres = ["Informatique", "Génie Civil", "Électronique"]; // Liste des filières
 
   const handleAddAnnonce = () => {
-    if (newAnnonce.titre && newAnnonce.auteur) {
+    if (newAnnonce.libelle && newAnnonce.description && newAnnonce.auteur) {
       setAnnonces([
         ...annonces,
         {
           id: annonces.length + 1,
-          titre: newAnnonce.titre,
+          libelle: newAnnonce.libelle,
           auteur: newAnnonce.auteur,
           date: new Date().toISOString().split("T")[0], // Date actuelle
         },
       ]);
-      setNewAnnonce({ titre: "", auteur: "" });
+      setNewAnnonce({ libelle: "", description: "", auteur: "" });
       setIsModalOpen(false);
     }
   };
 
   const handlePublish = (id: number) => {
-    console.log(`Annonce ${id} publiée pour la classe : ${selectedClasse}`);
-    setSelectedClasse(""); // Réinitialiser la sélection après publication
+    console.log(`Annonce ${id} publiée pour la filière : ${selectedFiliere}`);
+    setSelectedFiliere(""); // Réinitialiser la sélection après publication
+    setIsPublishModalOpen(false);
   };
 
   return (
@@ -53,7 +55,7 @@ const Annonces: React.FC = () => {
               <table className="min-w-full table-auto">
                 <thead>
                   <tr className="bg-gray-100 text-left">
-                    <th className="p-3">Titre</th>
+                    <th className="p-3">Libellé</th>
                     <th className="p-3">Auteur</th>
                     <th className="p-3">Date</th>
                     <th className="p-3">Actions</th>
@@ -62,30 +64,16 @@ const Annonces: React.FC = () => {
                 <tbody>
                   {annonces.map((annonce) => (
                     <tr key={annonce.id} className="border-b hover:bg-gray-50">
-                      <td className="p-3">{annonce.titre}</td>
+                      <td className="p-3">{annonce.libelle}</td>
                       <td className="p-3">{annonce.auteur}</td>
                       <td className="p-3">{annonce.date}</td>
                       <td className="p-3 flex flex-col sm:flex-row gap-2">
-                        <div className="flex items-center gap-2">
-                          <select
-                            className="border border-gray-300 p-2 rounded text-sm"
-                            value={selectedClasse}
-                            onChange={(e) => setSelectedClasse(e.target.value)}
-                          >
-                            <option value="">Choisir une classe</option>
-                            {classes.map((classe) => (
-                              <option key={classe} value={classe}>
-                                {classe}
-                              </option>
-                            ))}
-                          </select>
-                          <button
-                            onClick={() => handlePublish(annonce.id)}
-                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm"
-                          >
-                            Publier
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => setIsPublishModalOpen(true)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm"
+                        >
+                          Publier
+                        </button>
                         <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
                           Supprimer
                         </button>
@@ -113,24 +101,24 @@ const Annonces: React.FC = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold mb-4">Ajouter une Annonce</h2>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Libellé</label>
               <input
                 type="text"
                 className="w-full border border-gray-300 p-2 rounded"
-                value={newAnnonce.titre}
-                onChange={(e) => setNewAnnonce({ ...newAnnonce, titre: e.target.value })}
-                placeholder="Entrez le titre de l'annonce"
+                value={newAnnonce.libelle}
+                onChange={(e) => setNewAnnonce({ ...newAnnonce, libelle: e.target.value })}
+                placeholder="Entrez le libellé de l'annonce"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Auteur</label>
-              <input
-                type="text"
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
                 className="w-full border border-gray-300 p-2 rounded"
-                value={newAnnonce.auteur}
-                onChange={(e) => setNewAnnonce({ ...newAnnonce, auteur: e.target.value })}
-                placeholder="Entrez le nom de l'auteur"
-              />
+                value={newAnnonce.description}
+                onChange={(e) => setNewAnnonce({ ...newAnnonce, description: e.target.value })}
+                placeholder="Entrez la description de l'annonce"
+                rows={3}
+              ></textarea>
             </div>
             <div className="flex justify-end gap-2">
               <button
@@ -144,6 +132,44 @@ const Annonces: React.FC = () => {
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
               >
                 Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal pour publier une annonce */}
+      {isPublishModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Publier une Annonce</h2>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Filière</label>
+              <select
+                className="w-full border border-gray-300 p-2 rounded"
+                value={selectedFiliere}
+                onChange={(e) => setSelectedFiliere(e.target.value)}
+              >
+                <option value="">Sélectionnez une filière</option>
+                {filieres.map((filiere) => (
+                  <option key={filiere} value={filiere}>
+                    {filiere}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setIsPublishModalOpen(false)}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => handlePublish(1)} // Remplacez "1" par l'ID de l'annonce sélectionnée
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Publier
               </button>
             </div>
           </div>
