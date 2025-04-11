@@ -18,6 +18,7 @@ import AnnoncesSignalees from "./pages/admni/AnnoncesSignalees";
 import App from "./App";
 import Compte from "./pages/Compte";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
+// import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 const AppRoutes = () => {
   // recuperer les elements du localstorage afin de savoir si l'utilisateur est connecte
   const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
@@ -27,7 +28,6 @@ const AppRoutes = () => {
         <Route path="/" element={<App />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-
         {/* // faire le test sur la variable islogin */}
         {data.islogin ? (
           <>
@@ -38,6 +38,10 @@ const AppRoutes = () => {
             <Route path="/forum" element={<ForumPage />} />
             <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
             <Route path="/notifications" element={<Notif />} />
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/annonces" element={<Annonces />} />
+            <Route path="/admin/annonces-signalées" element={<AnnoncesSignalees />} />
+            <Route path="/inscription" element={<Inscription />} />
           </>
           // rediriger vers le formulaire de connexion
         ) : (

@@ -126,6 +126,13 @@ const RegisterPage = () => {
     </label>
   );
 
+  const renderLabel = (text: string, isRequired: boolean = true) => (
+    <label className="block mb-2 text-sm font-medium">
+      {text}
+      {isRequired && <span className="text-red-500 ml-1">*</span>}
+    </label>
+  );
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Partie gauche - fond rouge */}
@@ -149,8 +156,8 @@ const RegisterPage = () => {
           </h2>
             <p className="  text-center ">Veuillez remplir tout les champs du formulaire</p>
             <span className="mt-2 text-green-500 font-medium block text-center ">{serverMessage}</span>
-          <form className="mt-6" >
-           
+          <form className="mt-6 space-y-4">
+            {/* Nom */}
             <div>
               {renderLabel("Nom")}
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
@@ -164,7 +171,6 @@ const RegisterPage = () => {
                 />
               </div>
             </div>
-
             {/* Prénom */}
             <div>
               {renderLabel("Prénom")}
@@ -211,7 +217,6 @@ const RegisterPage = () => {
                 />
               </div>
             </div>
-
             {/* Email */}
             <div>
               {renderLabel("Email")}
@@ -229,7 +234,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Mot de passe */}
             <div>
               {renderLabel("Mot de passe")}
@@ -247,7 +251,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Confirmation mot de passe */}
             <div>
               {renderLabel("Confirmation mot de passe")}
@@ -265,7 +268,6 @@ const RegisterPage = () => {
                 </span>
               </div>
             </div>
-
             {/* Boutons */}
             <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
