@@ -44,7 +44,7 @@ const RegisterPage = () => {
       };
   
       try {
-        const response = await fetch('http://localhost:5000/AlumniDocs-API/NewAccount', {
+        const response = await fetch('http://172.20.10.3:5000/AlumniDocs-API/NewAccount', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -118,13 +118,6 @@ const RegisterPage = () => {
 
     return isValid;
   };
-
-  const renderLabel = (text: string, isRequired: boolean = true) => (
-    <label className="block mb-2 text-sm font-medium">
-      {text}
-      {isRequired && <span className="text-red-500 ml-1">*</span>}
-    </label>
-  );
 
   const renderLabel = (text: string, isRequired: boolean = true) => (
     <label className="block mb-2 text-sm font-medium">

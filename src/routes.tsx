@@ -16,6 +16,9 @@ import Dashboard from "./pages/admni/Dashboard";
 import Annonces from "./pages/admni/Annonces";
 import App from "./App";
 import Compte from "./pages/Compte";
+import Promotions from "./pages/admni/Promotions";
+import Filieres from "./pages/admni/Filieres";
+import Classes from "./pages/admni/Classes";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 const AppRoutes = () => {
@@ -39,6 +42,9 @@ const AppRoutes = () => {
             <Route path="/notifications" element={<Notif />} />
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/annonces" element={<Annonces />} />
+            <Route path="/admin/promotions" element={<Promotions />} />
+            <Route path="/admin/filieres" element={<Filieres />} />
+            <Route path="/admin/classes" element={<Classes />} />
             <Route path="/inscription" element={<Inscription />} />
           </>
           // rediriger vers le formulaire de connexion
