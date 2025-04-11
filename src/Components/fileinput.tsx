@@ -17,7 +17,7 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
   };
 
   return (
-    <div className="mb-4 w-full">
+    <div className="mb-4 w-full max-w-sm mx-auto">
       <label
         htmlFor={name}
         className="block text-sm font-medium text-gray-700 sm:text-base md:text-lg"

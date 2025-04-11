@@ -13,6 +13,7 @@ import Dashboard from "./pages/admni/Dashboard";
 import Annonces from "./pages/admni/Annonces";
 import AnnoncesSignalees from "./pages/admni/AnnoncesSignalees";
 import App from "./App";
+import Compte from "./pages/Compte";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 
 
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/annonces" element={<Annonces />} />
         <Route path="/admin/annonces-signalées" element={<AnnoncesSignalees />} />
+        <Route path="/compte" element={<Compte />} />
         <Route path="/inscription" element={<Inscription />} />
         {/* <Route path="/admin/etudiant" element={<AdminEtudiantsParClasse />} /> */}
       </Routes>

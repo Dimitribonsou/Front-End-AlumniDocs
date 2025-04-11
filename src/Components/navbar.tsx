@@ -12,6 +12,7 @@ import {
   faBars,
   faTimes,
   faFile,
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
@@ -21,6 +22,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
+    { name: "Inscription", icon: faPencil, route: "/inscription" },
     { name: "Document", icon: faFile, route: "/profile" },
     { name: "Requetes", icon: faEnvelope, route: "/requetes" },
     { name: "Annonces", icon: faBullhorn, route: "/annonce" },

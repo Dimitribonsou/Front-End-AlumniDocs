@@ -38,22 +38,7 @@ const RegisterPage = () => {
           </h2>
 
           <form className="mt-6 space-y-4">
-            {/* Civilité */}
-            <div>
-              {renderLabel("Civilité")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <select
-                  name=""
-                  id=""
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                >
-                  <option value=""></option>
-                  <option value="Mr">Mr</option>
-                  <option value="Mme">Mme</option>
-                  <option value="Mlle">Mlle</option>
-                </select>
-              </div>
-            </div>
+            
 
             {/* Nom */}
             <div>
@@ -64,18 +49,6 @@ const RegisterPage = () => {
                   className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
                   required
                   placeholder="Entrez votre nom"
-                />
-              </div>
-            </div>
-
-            {/* Nom Marital */}
-            <div>
-              {renderLabel("Nom Marital", false)}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  placeholder="Entrez votre nom marital"
                 />
               </div>
             </div>
@@ -138,67 +111,6 @@ const RegisterPage = () => {
                 <span className="p-3 text-gray-600">
                   <FontAwesomeIcon icon={faAt} />
                 </span>
-              </div>
-            </div>
-
-            {/* Nationalité */}
-            <div>
-              {renderLabel("Nationalité")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre nationalité"
-                />
-              </div>
-            </div>
-
-            {/* Date de naissance */}
-            <div>
-              {renderLabel("Date de naissance")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="date"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Lieu de naissance */}
-            <div>
-              {renderLabel("Lieu de naissance")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre lieu de naissance"
-                />
-              </div>
-            </div>
-
-            {/* Quartier */}
-            <div>
-              {renderLabel("Quartier")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre quartier"
-                />
-              </div>
-            </div>
-            <div>
-              {renderLabel("Photo")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="file"
-                  className="w-full  focus:outline-none focus:border-blue-500"
-                  required
-                />
               </div>
             </div>
 
