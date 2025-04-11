@@ -16,6 +16,7 @@ import Dashboard from "./pages/admni/Dashboard";
 import Annonces from "./pages/admni/Annonces";
 import AnnoncesSignalees from "./pages/admni/AnnoncesSignalees";
 import App from "./App";
+import Compte from "./pages/Compte";
 // import AdminEtudiantsParClasse from "./pages/admni/Etudiant";
 const AppRoutes = () => {
   // recuperer les elements du localstorage afin de savoir si l'utilisateur est connecte
@@ -26,6 +27,7 @@ const AppRoutes = () => {
         <Route path="/" element={<App />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
         {/* // faire le test sur la variable islogin */}
         {data.islogin ? (
           <>
