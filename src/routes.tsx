@@ -46,9 +46,16 @@ const AppRoutes = () => {
         <Route path="/admin/requetes" element={<RequeteAdmin />} />
         <Route path="/admin/admins" element={<AdministrateurPage />} />
         <Route path="/admin/validations" element={<ValidationsPage />} />
-            
+          <Route path="/home" element={<HomePage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/Annonce" element={<Annonce />} />
+            <Route path="/requetes" element={<RequetePage />} />
+            <Route path="/forum" element={<ForumPage />} />
+            <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
+            <Route path="/notifications" element={<Notif />} />
+            <Route path="/inscription" element={<Inscription />} />
         {/* // faire le test sur la variable islogin */}
-        {data.islogin ? (
+        {/*{data.islogin ? (
           <>
             <Route path="/home" element={<HomePage />} />
             <Route path="/profile" element={<Profile />} />
@@ -71,6 +78,7 @@ const AppRoutes = () => {
             <Route path="/notifications" element={<Navigate replace to="/" />} />
           </>
         )}
+        */}
       </Routes>
     </Router>
   );
