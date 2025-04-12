@@ -74,6 +74,7 @@ useEffect(()=>{
         navigate("/home");
       }
     } catch (error) {
+       navigate("/home");
       console.error('Erreur lors de l\'opération de récupération des données :', error);
       setError("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
     }
