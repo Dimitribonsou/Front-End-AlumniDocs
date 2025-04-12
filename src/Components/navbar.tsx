@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom"; // Import de useLocation
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -12,17 +13,19 @@ import {
   faBars,
   faTimes,
   faFile,
-  faPencil
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-// fonction permettant a un utilisateur de se deconnecter
-const logOut=()=>{
-// suprimer la variable loginData du localstorage
-localStorage.removeItem('loginData');
-//rediriger vers la page de connexion
-window.location.href = '/';
-}
+
+// Fonction permettant à un utilisateur de se déconnecter
+const logOut = () => {
+  // Supprimer la variable loginData du localStorage
+  localStorage.removeItem("loginData");
+  // Rediriger vers la page de connexion
+  window.location.href = "/";
+};
+
 const Navbar = () => {
-  const [active, setActive] = useState("Accueil");
+  const location = useLocation(); // Hook pour obtenir l'URL actuelle
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -55,11 +58,10 @@ const Navbar = () => {
               <a
                 href={item.route}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
-                  active === item.name
+                  location.pathname === item.route
                     ? "bg-blue-800 text-yellow-300 shadow-md"
                     : "hover:bg-blue-700"
                 }`}
-                onClick={() => setActive(item.name)}
               >
                 <FontAwesomeIcon icon={item.icon} />
                 <span>{item.name}</span>
@@ -92,11 +94,10 @@ const Navbar = () => {
                 <a
                   href={item.route}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
-                    active === item.name
+                    location.pathname === item.route
                       ? "bg-blue-800 text-yellow-300 shadow-md"
                       : "hover:bg-blue-700"
                   }`}
-                  onClick={() => setActive(item.name)}
                 >
                   <FontAwesomeIcon icon={item.icon} />
                   <span>{item.name}</span>
@@ -113,7 +114,7 @@ const Navbar = () => {
             <p className="px-4 py-2 text-italic text-center text-xs border-b">
               Joe.dalton@gmail.com
             </p>
-            <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+            <a href="/compte" className="block px-4 py-2 hover:bg-gray-200">
               <FontAwesomeIcon icon={faEdit} className="mr-2" /> Modifier
             </a>
             <a
