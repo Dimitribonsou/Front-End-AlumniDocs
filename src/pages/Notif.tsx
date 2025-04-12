@@ -3,6 +3,7 @@ import Navbar from "../Components/navbar";
 import NotificationCard from "../Components/notification";
 import Footer from "../Components/footer";
 import constant from "../data/constant";
+import Ilogin from "../types/Ilogin";
 
 interface Inotif{
   id_notification:number,
@@ -19,8 +20,8 @@ const Notif = () => {
       getNotification();
   },[]);
   const getNotification = async ()=>{
-
-   const id_etudiant=34;
+    const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+   const id_etudiant=data.iduser;
     const response = await fetch(`http://${constant.host}/AlumniDocs-API/getStudentNotification/${id_etudiant}`);
     if(!response.ok)
     {
@@ -43,7 +44,7 @@ const Notif = () => {
         <h2 className="text-xl font-bold text-center bg-red-800 text-white py-2 rounded">
           ACCUEIL/NOTIFICATIONS
         </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4"> 
+          <div className={  notifications && notifications.length > 0  ?    "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4" : "grid grid-cols-1"  }> 
             {notifications && notifications.length > 0 ? (
           notifications.map((notification: Inotif) => (
             <NotificationCard
@@ -55,8 +56,9 @@ const Notif = () => {
               titleColor={notification.statut === 'success' ? 'text-blue-800' : 'text-red-600'} 
             />
           ))
+          
         ) : (
-          <p className="text-center font-medium text-blue-800">Aucune notification disponible pour l'instant.</p>
+          <p className="text-center font-medium text-blue-800 w-full my-2 text-2xl">Aucune notification disponible pour l'instant.</p>
         )}
           </div>
       </div>
