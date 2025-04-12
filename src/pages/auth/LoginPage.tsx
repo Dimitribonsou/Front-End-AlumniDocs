@@ -45,7 +45,7 @@ useEffect(()=>{
   }
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`http://${constant.host}:5000/AlumniDocs-API/Loginjwt`, {
+      const response = await fetch(`http://${constant.host}/AlumniDocs-API/Loginjwt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,8 @@ useEffect(()=>{
       if (data.message) {
         setError(data.message);
       } 
-      if(data.islogin) {
+      if(data.islogin)
+      {
         // console.log("Connexion réussie !");
         // sauvegarder les elements dans la une variable
         setLoginData(data);

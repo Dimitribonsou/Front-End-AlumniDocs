@@ -22,7 +22,6 @@ const Sidebar = () => {
   const links = [
     { name: 'Accueil', path: '/admin', icon: faHome },
     { name: 'Annonces', path: '/admin/annonces', icon: faBullhorn },
-    { name: 'Signalements', path: '/admin/annonces-signalées', icon: faFlag },
     { name: 'Étudiants', path: '/admin/etudiant', icon: faUserGraduate },
     { name: 'Validations', path: '/admin/validations', icon: faCheckCircle },
     { name: 'Requêtes', path: '/admin/requetes', icon: faEnvelope },
@@ -37,7 +36,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-white h-full p-4">
+    <div className="w-64 bg-[#161B70]  p-4 text-white">
       {/* Titre avec l'image */}
       <div className="flex items-center gap-2 mb-4">
         <img
@@ -54,9 +53,9 @@ const Sidebar = () => {
           <li key={link.path}>
             <a
               href={link.path}
-              className="flex items-center gap-2 p-2 rounded hover:bg-[#ec5d5d] "
+              className="flex items-center gap-2 p-2 rounded hover:bg-[#ec5d5d]"
             >
-              <FontAwesomeIcon icon={link.icon} className="text-gray-600" />
+              <FontAwesomeIcon icon={link.icon} className="text-white" />
               <span>{link.name}</span>
             </a>
           </li>
@@ -66,15 +65,15 @@ const Sidebar = () => {
         <li>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center justify-between w-full p-2 rounded hover:bg-gray-200"
+            className="flex items-center justify-between w-full p-2 rounded hover:bg-[#ec5d5d]"
           >
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faGraduationCap} className="text-gray-600" />
+              <FontAwesomeIcon icon={faGraduationCap} className="text-white" />
               <span>Gestion</span>
             </div>
             <FontAwesomeIcon
               icon={isDropdownOpen ? faChevronUp : faChevronDown}
-              className="text-gray-600"
+              className="text-white"
             />
           </button>
           {isDropdownOpen && (
@@ -83,9 +82,9 @@ const Sidebar = () => {
                 <li key={link.path}>
                   <a
                     href={link.path}
-                    className="flex items-center gap-2 p-2 rounded hover:bg-gray-200"
+                    className="flex items-center gap-2 p-2 rounded hover:bg-[#ec5d5d]"
                   >
-                    <FontAwesomeIcon icon={link.icon} className="text-gray-600" />
+                    <FontAwesomeIcon icon={link.icon} className="text-white" />
                     <span>{link.name}</span>
                   </a>
                 </li>
@@ -94,7 +93,7 @@ const Sidebar = () => {
           )}
         </li>
       </ul>
-    </aside>
+    </div>
   );
 };
 

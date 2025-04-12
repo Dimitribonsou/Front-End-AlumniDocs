@@ -44,7 +44,7 @@ const Navbar = () => {
           <img
             src="/assets/logo_1_alumnidocs.png"
             alt="Logo"
-            className="h-12 object-contain"
+            className="h-14 w-20  scale-150 object-contain"
           />
         </a>
 

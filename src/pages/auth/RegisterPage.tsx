@@ -43,9 +43,8 @@ const RegisterPage = () => {
         genre: gender,
         message: "",
       };
-  
       try {
-        const response = await fetch(`http://${constant.host}:5000/AlumniDocs-API/NewAccount`, {
+        const response = await fetch(`http://${constant.host}/AlumniDocs-API/NewAccount`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -117,15 +116,13 @@ const RegisterPage = () => {
       isValid = false;
     }
     return isValid;
-  );
-
+  };
   const renderLabel = (text: string, isRequired: boolean = true) => (
     <label className="block mb-2 text-sm font-medium">
       {text}
       {isRequired && <span className="text-red-500 ml-1">*</span>}
-    </label>
-  );
-
+    </label>
+  );
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Partie gauche - fond rouge */}
