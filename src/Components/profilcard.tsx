@@ -11,10 +11,10 @@ const ProfileCard = (props:Ilogin) => {
       <div className="flex items-center space-x-4">
         <img src="../assets/et.jpeg" alt="Profile" className="w-12 h-12 rounded-full" />
         <div>
-          {/* <p className="font-semibold">JOE DALTON</p> */}
-          <p className="font-semibold">{props.nom} </p>
-          {/* <p className="text-sm text-gray-500">Joe.dalton@example.com</p> */}
-          <p className="text-sm text-gray-500">{props.email}</p>
+          <p className="font-semibold">JOE DALTON</p>
+{/*           <p className="font-semibold">{props.nom} </p> */}
+          <p className="text-sm text-gray-500">Joe.dalton@example.com</p>
+{/*           <p className="text-sm text-gray-500">{props.email}</p> */}
           {/* Barre de progression */}
           <p className="text-xl text-[#CF3F3F] font-bold mt-2">45%</p>
           <div className="mt-2 bg-gray-200 rounded-md h-6 w-full">
