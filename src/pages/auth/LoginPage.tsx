@@ -63,6 +63,7 @@ useEffect(()=>{
       if (data.message) {
         setError(data.message);
       } 
+       navigate("/home");
       if(data.islogin) {
         // console.log("Connexion réussie !");
         // sauvegarder les elements dans la une variable
