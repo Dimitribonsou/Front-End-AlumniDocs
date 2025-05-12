@@ -43,8 +43,8 @@ console.log(data.nom);
         <div className="flex flex-col md:flex-row w-full max-w-4xl gap-4">
           {/* Section Bienvenue (50%) */}
           <div className="w-full md:w-1/2 shadow-lg p-6 h-auto rounded-lg bg-white">
-            <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2>
-{/*             <h2 className="text-xl md:text-2xl font-bold">Bienvenue {data.nom}</h2> */}
+            {/* <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2> */}
+            <h2 className="text-xl md:text-2xl font-bold capitalize">Bienvenue {data.nom}</h2>
             <p className="text-gray-600 mt-2">
               Beaucoup d'étudiants ayant complété leur profil consultent régulièrement{" "}
               <span className="text-[#CF3F3F] font-semibold">AlumniDocs</span>.

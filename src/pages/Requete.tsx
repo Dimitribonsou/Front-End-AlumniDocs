@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
+import constant from '../data/constant';
+import Ilogin from '../types/Ilogin';
 
 const RequetePage: React.FC = () => {
+  const [serverMessage, setServerMessage] = useState('');
+  const [objet, setObjet] = useState("");
+  const [description, setDescription] = useState("");
+  const [categorie, setCategorie] = useState<any>();
+  const [fichier, setFichier] =useState<any>();
+  const handleSubmit = async (e: React.FormEvent) => {
+    const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+    const idEtudiant=dataLogin.iduser;
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('objet', objet);
+    formData.append('description', description);
+    formData.append('id_categorie', categorie);
+    formData.append('piece_jointe', fichier);
+    formData.append('id_etudiant', idEtudiant);
+    try {
+      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newRequest`, {
+        method: 'POST',
+        body: formData
+      });
+      console.log(formData);
+      if (!response.ok) {
+        throw new Error('La réponse du serveur n\'est pas valide.');
+      }
+
+      const result = await response.text();
+      setServerMessage(result);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de la requête :', error);
+      setServerMessage('Une erreur est survenue lors de l\'envoi de votre requête.');
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
@@ -20,37 +54,33 @@ const RequetePage: React.FC = () => {
           <p className="text-gray-500 text-center italic md:text-left">
             Envoyer votre requete
           </p>
-
-          <form className="mt-4 space-y-4">
+          <p className='font-medium text-center   mt-1 text-green-500 rounded-sm'>{serverMessage}</p>
+          <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
             {/* Libelle Input */}
             <div>
               <label className="block text-gray-700">Objet</label>
               <input
                 type="text"
                 name="Objet"
-                className="w-full p-2 h-9 border rounded-md"
+                className="w-full p-2 h-9 border rounded-md outline-none"
                 placeholder="Entrez le Objet"
+                required={true}
+                value={objet}
+                onChange={(e)=>setObjet(e.target.value)}
               />
-            </div>
-
-            {/* Description Textarea */}
-            <div>
-              <label className="block text-gray-700">Description</label>
-              <textarea
-                name="description"
-                className="w-full p-2 border rounded-md"
-                placeholder="Entrez une explication de votre requete"
-              ></textarea>
             </div>
             <div>
               <label className="block text-gray-700">Categorie</label>
-              <select name="" id="" className="w-full p-2 h-9 border rounded-md">
-                <option value=""></option>
-                <option value="">Notes</option>
-                <option value="">Absence</option>
+              <select name="" id="" className="w-full p-2 h-9 border rounded-md outline-none" 
+               required={true}
+               value={categorie}
+               onChange={(e:any)=>setCategorie(e.target.value)}
+               >
+                <option value="">Categorie requete</option>
+                <option value="1">Note</option>
+                <option value="2">Absence</option>
               </select>
             </div>
-
             {/* Pièce Jointe Input */}
             <div>
               <label className="block text-gray-700">Pièce Jointe</label>
@@ -58,10 +88,22 @@ const RequetePage: React.FC = () => {
                 type="file"
                 name="file"
                 className="mt-1 block text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+                required={true}
+                onChange={(e:any)=>e.target.files && setFichier(e.target.files[0])}
               />
-              
             </div>
-
+            {/* Description Textarea */}
+            <div>
+              <label className="block text-gray-700">Description</label>
+              <textarea
+                name="description"
+                className="w-full p-2 border rounded-md outline-none"
+                placeholder="Entrez une explication de votre requete"
+                required={true}
+                value={description}
+                onChange={(e)=>setDescription(e.target.value)}
+              ></textarea>
+            </div>
             {/* Submit Button */}
             <button
               type="submit"
