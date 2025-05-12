@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom"; // Import de useLocation
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -12,20 +13,26 @@ import {
   faBars,
   faTimes,
   faFile,
-  faPencil
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-// fonction permettant a un utilisateur de se deconnecter
-const logOut=()=>{
-// suprimer la variable loginData du localstorage
-localStorage.removeItem('loginData');
-//rediriger vers la page de connexion
-window.location.href = '/';
-}
+import Ilogin from "../types/Ilogin";
+
+// Fonction permettant à un utilisateur de se déconnecter
+const logOut = () => {
+  // Supprimer la variable loginData du localStorage
+  localStorage.removeItem("loginData");
+  // Rediriger vers la page de connexion
+  window.location.href = "/";
+};
+
 const Navbar = () => {
-  const [active, setActive] = useState("Accueil");
+  const location = useLocation(); // Hook pour obtenir l'URL actuelle
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+ //recuperer l'id de l'etudiant connecter 
+ const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+ const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
+ const email_etudiant=dataLogin.email;
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
     { name: "Inscription", icon: faPencil, route: "/inscription" },
@@ -44,7 +51,7 @@ const Navbar = () => {
           <img
             src="/assets/logo_1_alumnidocs.png"
             alt="Logo"
-            className="h-12 object-contain"
+            className="h-14 w-20  scale-150 object-contain"
           />
         </a>
 
@@ -55,11 +62,10 @@ const Navbar = () => {
               <a
                 href={item.route}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
-                  active === item.name
+                  location.pathname === item.route
                     ? "bg-blue-800 text-yellow-300 shadow-md"
                     : "hover:bg-blue-700"
                 }`}
-                onClick={() => setActive(item.name)}
               >
                 <FontAwesomeIcon icon={item.icon} />
                 <span>{item.name}</span>
@@ -92,11 +98,10 @@ const Navbar = () => {
                 <a
                   href={item.route}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition duration-300 ${
-                    active === item.name
+                    location.pathname === item.route
                       ? "bg-blue-800 text-yellow-300 shadow-md"
                       : "hover:bg-blue-700"
                   }`}
-                  onClick={() => setActive(item.name)}
                 >
                   <FontAwesomeIcon icon={item.icon} />
                   <span>{item.name}</span>
@@ -109,11 +114,15 @@ const Navbar = () => {
         {/* User Menu */}
         {isUserMenuOpen && (
           <div className="absolute right-0 mt-40 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-800">
-            <p className="text-center text-bold">Joe Dalton</p>
-            <p className="px-4 py-2 text-italic text-center text-xs border-b">
+            {/* <p className="text-center text-bold">Joe Dalton</p> */}
+            <p className="text-center text-bold capitalize">{nom_complet}</p>
+            {/* <p className="px-4 py-2 text-italic text-center text-xs border-b">
               Joe.dalton@gmail.com
+            </p> */}
+            <p className="px-4 py-2 text-italic text-center text-xs border-b">
+              {email_etudiant}
             </p>
-            <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+            <a href="/compte" className="block px-4 py-2 hover:bg-gray-200">
               <FontAwesomeIcon icon={faEdit} className="mr-2" /> Modifier
             </a>
             <a

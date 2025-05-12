@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
+import constant from "../../data/constant";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -42,9 +43,8 @@ const RegisterPage = () => {
         genre: gender,
         message: "",
       };
-  
       try {
-        const response = await fetch('http://localhost:5000/AlumniDocs-API/NewAccount', {
+        const response = await fetch(`http://${constant.host}/AlumniDocs-API/NewAccount`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -115,18 +115,15 @@ const RegisterPage = () => {
       console.log("le Genre est obligatoire");
       isValid = false;
     }
-
     return isValid;
   };
-
- 
 
   const renderLabel = (text: string, isRequired: boolean = true) => (
     <label className="block mb-2 text-sm font-medium">
       {text}
       {isRequired && <span className="text-red-500 ml-1">*</span>}
-    </label>
-  );
+    </label>
+  );
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">

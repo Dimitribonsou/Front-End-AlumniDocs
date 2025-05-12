@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-
+import constant from './../../data/constant'
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +45,7 @@ useEffect(()=>{
   }
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/AlumniDocs-API/Loginjwt', {
+      const response = await fetch(`http://${constant.host}/AlumniDocs-API/Loginjwt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,8 @@ useEffect(()=>{
       if (data.message) {
         setError(data.message);
       } 
-      if(data.islogin) {
+      if(data.islogin)
+      {
         // console.log("Connexion réussie !");
         // sauvegarder les elements dans la une variable
         setLoginData(data);
@@ -72,6 +73,7 @@ useEffect(()=>{
         navigate("/home");
       }
     } catch (error) {
+       navigate("/home");
       console.error('Erreur lors de l\'opération de récupération des données :', error);
       setError("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
     }

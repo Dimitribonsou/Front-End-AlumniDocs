@@ -1,453 +1,272 @@
-import { useState } from "react";
-import Navbar from "../Components/navbar";
-import Footer from "../Components/footer";
+import React from 'react';
+import Navbar from '../Components/navbar';
+import Footer from '../Components/footer';
+import constant from '../data/constant';
+import Ilogin from '../types/Ilogin';
 
-export default function Inscription() {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    civilité: "",
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    anneeAcademique: "",
-    matricule: "",
-    classe: "",
-    bac: "",
-    anneeObtentionBac: "",
-    diplomeEntree: "",
-    anneeObtentionDiplome: "",
-    nomPere: "",
-    telPere: "",
-    emailPere: "",
-    professionPere: "",
-    nomMere: "",
-    telMere: "",
-    emailMere: "",
-    professionMere: "",
-  });
+const Inscription: React.FC = () => {
+  const renderLabel = (text: string) => (
+    <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
+  );
+  const [matricule, setMatricule] = React.useState('');
+  const [idClasse, setIdClasse] = React.useState('');
+  const [bac, setBac] = React.useState('');
+  const [anneeObtensionBac, setAnneeObtensionBac] = React.useState('');
+  const [diplomeEntrer, setDiplomeEntrer] = React.useState('');
+  const [anneeObtensionDiplome, setAnneeObtensionDiplome] = React.useState('');
+  const [etsObtentionBac, setEtsObtentionBac] = React.useState('');
+  // const [idEtudiant, setIdEtudiant] = React.useState('');
+  const [serieBac, setSerieBac] = React.useState('');
+  // const [anneeAcademique, setSerieBac] = React.useState('');
+  const [error, setError] = React.useState('');
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      //recuperer l'id de l'etudiant connecter 
+      const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+      const idEtudiant=dataLogin.iduser;
+  
+      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newIncription`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "matricule": matricule,
+          "id_classe": idClasse,
+          "bac": bac,
+          "annee_obtension_bac": anneeObtensionBac,
+          "etablissement_bac": anneeObtensionBac,
+          "diplome_entrer": diplomeEntrer,
+          "annee_obtension_diplome": anneeObtensionDiplome,
+          "id_etudiant": idEtudiant,
+          "serie_bac": serieBac
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Réponse du réseau non valide');
+      }
+
+      const message = await response.text();
+      console.log(message);
+      if (message) {
+        setError(message);
+      } else {
+        console.log("Inscription réussie !");
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'opération de récupération des données :', error);
+      setError("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
+    }
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
 
-  const totalSteps = 3; // Nombre total d'étapes
-  const progressPercentage = (step / totalSteps) * 100; // Calcul de la progression
-
-  const renderLabel = (text: string) => (
-    <label className="block mb-2 ">
-      {text} 
-    </label>
-  );
 
   return (
-    <div className="min-h-screen flex flex-col bg-watermark">
+    <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
-        <div className="w-full max-w-2xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
-        <h2 className="text-2xl font-bold mb-6 text-center">Inscription Étudiant</h2>
+      <div className="flex flex-col max-w-3xl w-full bg-white shadow-lg mt-10 p-6 rounded-lg mx-auto">
+        {/* Form Section */}
+        <div className="w-full p-6">
+          <h2 className="text-2xl font-bold text-center">INSCRIPTION</h2>
 
-        {/* Barre de progression */}
-        <div className="relative w-full h-2 bg-gray-200 rounded-full mb-6">
-          <div
-            className="absolute top-0 left-0 h-2 bg-blue-500 rounded-full transition-all duration-300"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
-        </div>
+          {/* Conteneur sans défilement */}
+          <div className="mt-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Infos académiques */}
+              <div className="space-y-4">
+                <hr />
+                <span className='text-center text-green-500 my-2 block text-base font-medium'>{error}</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* <div>
+                    {renderLabel("Année académique")}
+                    <select
+                      name="anneeAcademique"
+                      className="w-full border p-2 rounded"
+                    >
+                      <option value="">Sélectionnez une année</option>
+                      <option value="2024-2025">2024-2025</option>
+                      <option value="2023-2024">2023-2024</option>
+                    </select>
+                   </div> */}
+                    <div>
+                    {renderLabel("Matricule")}
+                      <input
+                        type="text"
+                        name="matricule"
+                        placeholder="Entrer le matricule"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={matricule}
+                        onChange={(e) => setMatricule(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                    {renderLabel("Classe")}
+                      <select
+                        name="classe"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={idClasse}
+                        onChange={(e) => setIdClasse(e.target.value)}
+                      >
+                        <option value="">Sélectionnez une classe</option>
+                        <option value="1">CSI3 DLW</option>
+                        <option value="2">3IL2</option>
+                        <option value="2">ERIS4</option>
+                      </select>
+                    </div>
+                    <div>
+                    {renderLabel("Type de Bac")}
+                      <select
+                        name="bac"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={bac}
+                        onChange={(e) => setBac(e.target.value)}
+                      >
+                        <option value="">Sélectionnez un type de Bac</option>
+                        <option value="Scientifique">Scientifique</option>
+                        <option value="Littéraire">Littéraire</option>
+                        <option value="Autres">Autres</option>
+                      </select>
+                    </div>
+                    <div>
+                    {renderLabel("Serie du  Bac")}
+                        <input
+                          type="text"
+                          name="serieBac"
+                          placeholder="Entrer la série du Bac"
+                          className="w-full border p-2 rounded"
+                          required
+                          value={serieBac}
+                          onChange={(e) => setSerieBac(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                    {renderLabel("Année d'obtention du Bac")}
+                        <input
+                          type="text"
+                          name="anneeObtensionBac"
+                          placeholder="Entrer l'année d'obtention du Bac"
+                          className="w-full border p-2 rounded"
+                          required
+                          value={anneeObtensionBac}
+                          onChange={(e) => setAnneeObtensionBac(e.target.value)}
+                        />
+                  </div>
+                  {/* <div>
+                      {renderLabel("Classe")}
+                      <select
+                        name="classe"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={idClasse}
+                        onChange={(e) => setIdClasse(e.target.value)}
+                      >
+                        <option value="">Sélectionnez une classe</option>
+                        <option value="1">CSI3 DLW</option>
+                        <option value="2">3IL2</option>
+                        <option value="3">ERIS4</option>
+                      </select>
+                  </div> */}
+                  {/* <div>
+                      {renderLabel("Baccalauréat")}
+                      <select
+                        name="bac"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={bac}
+                        onChange={(e) => setBac(e.target.value)}
+                      >
+                        <option value="">Sélectionnez un type de Bac</option>
+                        <option value="Scientifique">Scientifique</option>
+                        <option value="Littéraire">Littéraire</option>
+                        <option value="Autres">Autres</option>
+                      </select>
+                  </div> */}
+                  {/* <div>
+                        {renderLabel("Série du Bac")}
+                        <input
+                          type="text"
+                          name="serieBac"
+                          placeholder="Entrer la série du Bac"
+                          className="w-full border p-2 rounded"
+                          required
+                          value={serieBac}
+                          onChange={(e) => setSerieBac(e.target.value)}
+                        />
+                  </div>
+                  <div>
+                      {renderLabel("Année d'obtention du Bac")}
+                      <input
+                        type="text"
+                        name="anneeObtentionBac"
+                        placeholder="Entrer l'année d'obtention du Bac"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={anneeObtensionBac}
+                        onChange={(e) => setAnneeObtensionBac(e.target.value)}
+                      />
+                  </div> */}
+                  <div>
+                        {renderLabel("Etablissement d'obtention du Bac")}
+                        <input
+                          type="text"
+                          name="etsObtentionBac"
+                          placeholder="Entrer l'établissement d'obtention du Bac"
+                          className="w-full border p-2 rounded"
+                          required
+                          value={etsObtentionBac}
+                          onChange={(e) => setEtsObtentionBac(e.target.value)}
+                        />
+                  </div>
+                  <div>
+                      {renderLabel("Diplôme d'entrée")}
+                      <input
+                        type="text"
+                        name="diplomeEntree"
+                        placeholder="Entrer le diplôme d'entrée"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={diplomeEntrer}
+                        onChange={(e) => setDiplomeEntrer(e.target.value)}
+                      />
+                  </div>
+                  <div>
+                      {renderLabel("Année d'obtention du diplôme")}
+                      <input
+                        type="text"
+                        name="anneeObtentionDiplome"
+                        placeholder="Entrer l'année d'obtention du diplôme"
+                        className="w-full border p-2 rounded"
+                        required
+                        value={anneeObtensionDiplome}
+                        onChange={(e) => setAnneeObtensionDiplome(e.target.value)}
+                      />
+                  </div>
+                </div>
+              </div>
 
-        <form>
-          {/* Étape 1 : Informations personnelles */}
-          {step === 1 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Informations personnelles</h3>
-              <div>
-                {renderLabel("civilité")}
-                <select name="" id="" 
-                  className="w-full border p-2 rounded">
-                  <option value=""></option>
-                  <option value="">Mr</option>
-                  <option value="">Mme</option>
-                  <option value="">Mlle</option>
-                </select>
-              </div>
-              <div>
-                {renderLabel("Nom")}
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Nom Marital")}
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Prénom")}
-                <input
-                  type="text"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Email")}
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Téléphone")}
-                <input
-                  type="tel"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Nationalité")}
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Date de naissance")}
-                <input
-                  type="Date"
-                  name="telephone"
-                  placeholder="Téléphone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Region de naissance")}
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Lieu de naissance")}
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Departement de naissance")}
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              
-              <div>
-                {renderLabel("Quartier")}
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Photo")}
-                <input
-                  type="File"
-                  name="photo"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-
-            </div>
-          )}
-
-          {/* Étape 2 : Infos académiques */}
-          {step === 2 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Infos académiques</h3>
-              <hr />
-              <div>
-                {renderLabel("Année académique")}
-                <select
-                  name="anneeAcademique"
-                  value={formData.anneeAcademique}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
+              {/* Submit Button */}
+              <div className="max-w-sm mx-auto">
+                <button
+                  type="submit"
+                  className="w-full bg-blue-900 text-white p-2 rounded-md hover:bg-blue-700"
                 >
-                  <option value="">Sélectionnez une année</option>
-                  <option value="2024-2025">2024-2025</option>
-                  <option value="2023-2024">2023-2024</option>
-                </select>
+                  Envoyer
+                </button>
               </div>
-              <div>
-                {renderLabel("Matricule")}
-                <input
-                  type="text"
-                  name="matricule"
-                  placeholder="Matricule"
-                  value={formData.matricule}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Classe")}
-                <select
-                  name="classe"
-                  value={formData.classe}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                >
-                  <option value="">Sélectionnez une classe</option>
-                  <option value="L1">CSI3 DLW</option>
-                  <option value="L2">3IL2</option>
-                  <option value="L3">ERIS4</option>
-                </select>
-              </div>
-              <div>
-                {renderLabel("Bac")}
-                <select
-                  name="bac"
-                  value={formData.bac}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                >
-                  <option value="">Sélectionnez un type de Bac</option>
-                  <option value="Scientifique">Scientifique</option>
-                  <option value="Littéraire">Littéraire</option>
-                  <option value="Autres">Autres</option>
-                </select>
-              </div>
-              <div>
-                {renderLabel("Année d'obtention du Bac")}
-                <input
-                  type="text"
-                  name="anneeObtentionBac"
-                  placeholder="Année d'obtention du Bac"
-                  value={formData.anneeObtentionBac}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Diplôme d'entrée")}
-                <input
-                  type="text"
-                  name="diplomeEntree"
-                  placeholder="Diplôme d'entrée"
-                  value={formData.diplomeEntree}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Année d'obtention du diplôme")}
-                <input
-                  type="text"
-                  name="anneeObtentionDiplome"
-                  placeholder="Année d'obtention du diplôme"
-                  value={formData.anneeObtentionDiplome}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Étape 3 : Infos parent */}
-          {step === 3 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Informations des parents</h3>
-              <hr />
-              <div>
-                {renderLabel("Nom du père ou tuteur")}
-                <input
-                  type="text"
-                  name="nomPere"
-                  placeholder="Nom du père ou tuteur"
-                  value={formData.nomPere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Téléphone ")}
-                <input
-                  type="tel"
-                  name="telPere"
-                  placeholder="Téléphone du père ou tuteur"
-                  value={formData.telPere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Email ")}
-                <input
-                  type="email"
-                  name="emailPere"
-                  placeholder="Email du père ou tuteur"
-                  value={formData.emailPere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Profession")}
-                <input
-                  type="text"
-                  name="professionPere"
-                  placeholder="Profession du père ou tuteur"
-                  value={formData.professionPere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div> <br />
-              <hr /> <br />
-              <div>
-                {renderLabel("Nom de la mère ou tutrice")}
-                <input
-                  type="text"
-                  name="nomMere"
-                  placeholder="Nom de la mère ou tutrice"
-                  value={formData.nomMere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Téléphone")}
-                <input
-                  type="tel"
-                  name="telMere"
-                  placeholder="Téléphone de la mère ou tutrice"
-                  value={formData.telMere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Email")}
-                <input
-                  type="email"
-                  name="emailMere"
-                  placeholder="Email de la mère ou tutrice"
-                  value={formData.emailMere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-              <div>
-                {renderLabel("Profession")}
-                <input
-                  type="text"
-                  name="professionMere"
-                  placeholder="Profession de la mère ou tutrice"
-                  value={formData.professionMere}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Boutons navigation */}
-          <div className="flex justify-between mt-6">
-            {step > 1 && (
-              <button
-                type="button"
-                onClick={prevStep}
-                className="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded"
-              >
-                Précédent
-              </button>
-            )}
-            {step < totalSteps && (
-              <button
-                type="button"
-                onClick={nextStep}
-                className="ml-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-              >
-                Suivant
-              </button>
-            )}
-            {step === totalSteps && (
-              <button
-                type="submit"
-                className="ml-auto bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-              >
-                Soumettre
-              </button>
-            )}
+            </form>
           </div>
-        </form>
+        </div>
       </div>
+
       <Footer />
     </div>
   );
-}
+};
 
+export default Inscription;

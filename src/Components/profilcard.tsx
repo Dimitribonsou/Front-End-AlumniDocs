@@ -12,7 +12,7 @@ const ProfileCard = (props:Ilogin) => {
         <img src="../assets/et.jpeg" alt="Profile" className="w-12 h-12 rounded-full" />
         <div>
           {/* <p className="font-semibold">JOE DALTON</p> */}
-          <p className="font-semibold">{props.nom} </p>
+          <p className="font-semibold capitalize">{props.nom} </p>
           {/* <p className="text-sm text-gray-500">Joe.dalton@example.com</p> */}
           <p className="text-sm text-gray-500">{props.email}</p>
           {/* Barre de progression */}
@@ -25,7 +25,7 @@ const ProfileCard = (props:Ilogin) => {
       </div>
       {/* Bouton Compléter avec Icône */}
       <button className="mt-4 bg-red-500 text-white w-full py-2 rounded-md flex items-center justify-center gap-2">
-        <a href="/compte">Modifier le profil</a>
+        <a href="/compte">Completer mon profil</a>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
