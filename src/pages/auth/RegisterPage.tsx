@@ -119,12 +119,7 @@ const RegisterPage = () => {
     return isValid;
   };
 
-  const renderLabel = (text: string, isRequired: boolean = true) => (
-    <label className="block mb-2 text-sm font-medium">
-      {text}
-      {isRequired && <span className="text-red-500 ml-1">*</span>}
-    </label>
-  );
+ 
 
   const renderLabel = (text: string, isRequired: boolean = true) => (
     <label className="block mb-2 text-sm font-medium">

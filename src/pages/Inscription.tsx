@@ -199,7 +199,7 @@ export default function Inscription() {
                 {renderLabel("Photo")}
                 <input
                   type="File"
-                  name="telephone"
+                  name="photo"
                   value={formData.telephone}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
