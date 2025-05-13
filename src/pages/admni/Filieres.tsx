@@ -1,14 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
+import constant from "../../data/constant";
+import { FiliereType } from "../../types/FiliereType";
 
 const Filieres = () => {
-  const filieres = [
-    { id: 1, name: "CSI" },
-    { id: 2, name: "Génie Logiciel"},
-    { id: 3, name: "Prepar 3IL" },
-  ];
-
+  // const filieres = [
+  //   { id: 1, name: "CSI" },
+  //   { id: 2, name: "Génie Logiciel"},
+  //   { id: 3, name: "Prepar 3IL" },
+  // ];
+  const  [libelle,setLibelle]=useState('');
+  const  [errorMessage,setErrorMessage]=useState('');
+  const  [filieres,setFilieres]=useState<FiliereType[]>([]);
+  useEffect(()=>{
+    getFiliere();
+  },[])
+  //fonction pour enregistrer une filiere
+   const handleSubmit= async ()=>{
+         try {
+          const data={
+             libelle:libelle
+          }
+                 const response =await fetch(`${constant.host}/AlumniDocs-API/NewFiliere`,{
+                    method:'POST',
+                    headers:{
+                      "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify(data)
+                 })
+                 if(response.ok)
+                 {
+                    console.log("Filiere enregistrer avec success !")
+                    const message:any= await response.text();
+                    console.log(message)
+                    setErrorMessage(message);
+                 }
+                 console.log("Erreur lors de l'enregistrement de la filiere")
+         } catch (error) {
+          console.log("Une erreur est survenu : "+error)
+         }
+   }
+  //  fonction pour afficher la liste des filieres disponibles
+  const getFiliere=async ()=>{
+    const response = await fetch(`${constant.host}/AlumniDocs-API/FiliereList`);
+    if(response.ok)
+    {
+      //mettre a jour la liste des classe
+      setFilieres(await response.json());
+    }
+    else
+    {
+       console.log("erreur lors de la recuperation de la classe");
+    }
+  }
   return (
     <div className="flex ">
       {/* Sidebar */}
@@ -36,9 +81,9 @@ const Filieres = () => {
               </thead>
               <tbody>
                 {filieres.map((filiere) => (
-                  <tr key={filiere.id} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 p-2">{filiere.id}</td>
-                    <td className="border border-gray-300 p-2">{filiere.name}</td>
+                  <tr key={filiere.id_filiere} className="hover:bg-gray-100">
+                    <td className="border border-gray-300 p-2">{filiere.id_filiere}</td>
+                    <td className="border border-gray-300 p-2">{filiere.libelle}</td>
                     <td className="border border-gray-300 p-2">
                       <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
                         Modifier
@@ -56,18 +101,23 @@ const Filieres = () => {
           {/* Ajouter une nouvelle filière */}
           <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ajouter une Nouvelle Filière</h2>
-            <form>
+            <form >
+              <p className={errorMessage.length>0 ? "text-center  py-2 bg-green-400 text-white rounded-sm my-2" :""}>{errorMessage}</p>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nom de la Filière</label>
                 <input
                   type="text"
                   className="w-full border border-gray-300 p-2 rounded"
                   placeholder="Entrez le nom de la filière"
+                  value={libelle}
+                  onChange={(e=>setLibelle(e.target.value))}
+                  required={true}
                 />
               </div>
               <button
-                type="submit"
+                type="button"
                 className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                onClick={handleSubmit}
               >
                 Ajouter
               </button>

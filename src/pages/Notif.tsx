@@ -22,7 +22,7 @@ const Notif = () => {
   const getNotification = async ()=>{
     const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
    const id_etudiant=data.iduser;
-    const response = await fetch(`http://${constant.host}/AlumniDocs-API/getStudentNotification/${id_etudiant}`);
+    const response = await fetch(`${constant.host}/AlumniDocs-API/getStudentNotification/${id_etudiant}`);
     if(!response.ok)
     {
        console.log("erreur lors de la recuperation des notifications .");
