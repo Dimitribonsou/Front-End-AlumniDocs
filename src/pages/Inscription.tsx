@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 import constant from '../data/constant';
@@ -15,6 +15,8 @@ const Inscription: React.FC = () => {
   const [diplomeEntrer, setDiplomeEntrer] = React.useState('');
   const [anneeObtensionDiplome, setAnneeObtensionDiplome] = React.useState('');
   const [etsObtentionBac, setEtsObtentionBac] = React.useState('');
+  // liste des classes existante 
+  const [listClass, setClasseListe]=useState([]);
   // const [idEtudiant, setIdEtudiant] = React.useState('');
   const [serieBac, setSerieBac] = React.useState('');
   // const [anneeAcademique, setSerieBac] = React.useState('');
@@ -61,8 +63,21 @@ const Inscription: React.FC = () => {
       setError("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
     }
   };
-
-
+  useEffect(()=>{
+    getClasse();
+  },[]);
+const getClasse= async ()=>{
+  const response = await fetch(`${constant.host}/AlumniDocs-API/ClassList`);
+  if(response.ok)
+  {
+    //mettre a jour la liste des classe
+     setClasseListe(await response.json());
+  }
+  else
+  {
+     console.log("erreur lors de la recuperation de la classe");
+  }
+}
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
@@ -113,9 +128,10 @@ const Inscription: React.FC = () => {
                         onChange={(e) => setIdClasse(e.target.value)}
                       >
                         <option value="">Sélectionnez une classe</option>
-                        <option value="1">CSI3 DLW</option>
-                        <option value="2">3IL2</option>
-                        <option value="2">ERIS4</option>
+                        {/* afficher la liste des classes  */}
+                        {listClass.map((classe:any) => (
+                              <option key={classe.id_classe} value={classe.id_classe}>{classe.libelle}</option>
+                        ))}
                       </select>
                     </div>
                     <div>

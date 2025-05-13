@@ -1,24 +1,25 @@
-import React, { useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import FileInput from "../Components/fileinput";
 import Navbar from "../Components/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUser,
-  faFile,
   faPlus,
-  faPencil,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/footer";
 import Ilogin from "../types/Ilogin";
+import IclassInfo from "../types/IclasseInfo";
 
 const ProfilePage: React.FC = () => {
   const [files, setFiles] = useState<{ [key: string]: File | null }>({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
    //recuperer l'id de l'etudiant connecter 
  const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+ const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
  const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
  const email_etudiant=dataLogin.email;
  const telephone=dataLogin.telephone;
+ // recuperer la classe de l'etudiant
+ const classe=classeInfo[0].libelle_classe || "CSI3-DLW";
   const handleFileChange = (name: string, file: File | null) => {
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
   };
@@ -39,6 +40,7 @@ const ProfilePage: React.FC = () => {
      // traiter le fichier image ici
      console.log(event.target.files)
    }
+   
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
@@ -65,7 +67,7 @@ const ProfilePage: React.FC = () => {
               <p className="font-bold capitalize">{nom_complet}</p>
               <p className="text-gray-600">{email_etudiant}</p>
               <p className="text-gray-600">{telephone}</p>
-              <p className="text-gray-600">CS13-DLW</p>
+              <p className="text-gray-600">{classe}</p>
             </div>
           </div>
         </div>

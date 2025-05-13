@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/navbar";
 import ProfileCard from "../Components/profilcard";
@@ -7,9 +7,11 @@ import Footer from "../Components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Ilogin from "../types/Ilogin";
+import constant from "../data/constant";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
 console.log(data.nom);
@@ -20,7 +22,24 @@ console.log(data.nom);
       setIsLoading(false); // Désactive le spinner après la navigation
     }, 500); // Simule un délai de chargement
   };
-
+  useEffect(()=>{
+    getStudentClassInfo();
+  },[]);
+const getStudentClassInfo= async ()=>{
+  const idEtudiant=data.iduser;
+  const response = await fetch(`${constant.host}/AlumniDocs-API/getStudentClass/${idEtudiant}`);
+  if(response.ok)
+  {
+    const data=await response.json()
+    console.log(data)
+    // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
+    localStorage.setItem("classInfo",JSON.stringify(data));
+  }
+  else
+  {
+     console.log("erreur lors de la recuperation de la classe");
+  }
+}
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
