@@ -44,7 +44,7 @@ const RegisterPage = () => {
         message: "",
       };
       try {
-        const response = await fetch(`http://${constant.host}/AlumniDocs-API/NewAccount`, {
+        const response = await fetch(`${constant.host}/AlumniDocs-API/NewAccount`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -127,7 +127,7 @@ const Navbar = () => {
             </a>
             <a
               onClick={logOut}
-              className="block px-4 py-2 text-red-600 hover:bg-gray-200"
+              className="block px-4 py-2 text-red-600 hover:bg-gray-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />{" "}
               Déconnexion

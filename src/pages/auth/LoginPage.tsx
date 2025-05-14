@@ -45,7 +45,7 @@ useEffect(()=>{
   }
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`http://${constant.host}/AlumniDocs-API/Loginjwt`, {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/Loginjwt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
