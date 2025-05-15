@@ -2,9 +2,23 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import constant from "../../data/constant";
 
+// Toast component
+const Toast = ({ message, type, onClose }: { message: string; type: "success" | "error"; onClose: () => void }) => (
+  <div
+    className={`fixed top-6 right-6 z-50 px-4 py-3 rounded shadow-lg text-white transition-all duration-300
+      ${type === "success" ? "bg-green-600" : "bg-gray-700"}
+    `}
+  >
+    <div className="flex items-center gap-2">
+      <span>{message}</span>
+      <button className="ml-2 text-lg" onClick={onClose}>&times;</button>
+    </div>
+  </div>
+);
+
 const VerifyCodePage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const navigate = useNavigate();
@@ -31,11 +45,11 @@ const VerifyCodePage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (code.some((c) => c === "")) {
-      setError("Veuillez entrer le code complet.");
+      setToast({ message: "Veuillez entrer le code complet.", type: "error" });
       return;
     }
     setIsSubmitting(true);
-    setError("");
+    setToast(null);
     try {
       const response = await fetch(`${constant.host}/AlumniDocs-API/verify-code`, {
         method: "POST",
@@ -44,18 +58,31 @@ const VerifyCodePage = () => {
       });
       const data = await response.json();
       if (data.success) {
-        navigate("/home");
+        setToast({ message: "Code vérifié avec succès !", type: "success" });
+        setTimeout(() => navigate("/home"), 1200);
       } else {
-        setError(data.message || "Code incorrect.");
+        setToast({ message: data.message || "Code incorrect.", type: "error" });
       }
     } catch {
-      setError("Erreur lors de la vérification.");
+      setToast({ message: "Erreur lors de la vérification.", type: "error" });
     }
     setIsSubmitting(false);
   };
 
+  const handleResend = () => {
+    setToast({ message: "Code de vérification renvoyé !", type: "success" });
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#CF3F3F] px-4">
+      {/* Toast */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       {/* Logo */}
       <div className="absolute top-4 left-4 md:inset-0 md:flex md:items-center md:justify-start md:pl-10">
         <img
@@ -89,7 +116,6 @@ const VerifyCodePage = () => {
               />
             ))}
           </div>
-          {error && <p className="text-red-500 mb-2 text-center">{error}</p>}
           <button
             type="submit"
             disabled={isSubmitting}
@@ -103,7 +129,7 @@ const VerifyCodePage = () => {
           <button
             type="button"
             className="text-[#9B1E1E] underline"
-            onClick={() => alert("Code de vérification renvoyé !")}
+            onClick={handleResend}
           >
             Renvoyer
           </button>
