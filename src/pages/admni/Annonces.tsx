@@ -38,7 +38,7 @@ const Annonces: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar />
 
@@ -98,7 +98,7 @@ const Annonces: React.FC = () => {
       {/* Modal pour ajouter une annonce */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
             <h2 className="text-xl font-bold mb-4">Ajouter une Annonce</h2>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Libellé</label>
@@ -141,7 +141,7 @@ const Annonces: React.FC = () => {
       {/* Modal pour publier une annonce */}
       {isPublishModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4">
             <h2 className="text-xl font-bold mb-4">Publier une Annonce</h2>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Filière</label>
