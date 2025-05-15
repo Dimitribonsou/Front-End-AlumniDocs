@@ -70,10 +70,9 @@ useEffect(()=>{
         //sauvegarder ces infomations dans le local storage
         localStorage.setItem('loginData', JSON.stringify(data));
         //naviger vers la page d'acceuil
-        navigate("/home");
+        navigate("/otp");
       }
     } catch (error) {
-       navigate("/home");
       console.error('Erreur lors de l\'opération de récupération des données :', error);
       setError("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
     }

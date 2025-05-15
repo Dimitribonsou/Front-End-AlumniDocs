@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import constant from "../../data/constant";
+import Ilogin from "../../types/Ilogin";
 
 // Toast component
 const Toast = ({ message, type, onClose }: { message: string; type: "success" | "error"; onClose: () => void }) => (
@@ -51,14 +52,28 @@ const VerifyCodePage = () => {
     setIsSubmitting(true);
     setToast(null);
     try {
-      const response = await fetch(`${constant.host}/AlumniDocs-API/verify-code`, {
+      const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+      const id_user=dataLogin.iduser;
+      
+      const response = await fetch(`${constant.host}/AlumniDocs-API/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: code.join("") }),
+        body: JSON.stringify({ otp: code.join(""),id_utilisateur:id_user }),
       });
       const data = await response.json();
+      console.log(data.success)
       if (data.success) {
-        setToast({ message: "Code vérifié avec succès !", type: "success" });
+        console.log("autentification reussie")
+        setToast({ message:"Authentificatin reussie", type: "success" });
+        console.log(data.user.role)
+       console.log("gestion role !")
+        if(data.user.role ==="admin" || data.user.role ==="super-admin")
+        {
+          console.log("admin")
+          setTimeout(() => navigate("/admin"), 1200);
+          return;
+        }
+        console.log("etudiant")
         setTimeout(() => navigate("/home"), 1200);
       } else {
         setToast({ message: data.message || "Code incorrect.", type: "error" });
