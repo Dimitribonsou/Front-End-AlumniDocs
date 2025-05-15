@@ -4,6 +4,8 @@ export default interface Ilogin{
     token?:string,
     iduser?:number,
     nom?: string,
+    prenom?: string,
+    telephone?: string,
     email?: string,
     message: string
   }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/navbar";
 import ProfileCard from "../Components/profilcard";
@@ -7,9 +7,11 @@ import Footer from "../Components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Ilogin from "../types/Ilogin";
+import constant from "../data/constant";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
 console.log(data.nom);
@@ -20,7 +22,24 @@ console.log(data.nom);
       setIsLoading(false); // Désactive le spinner après la navigation
     }, 500); // Simule un délai de chargement
   };
-
+  useEffect(()=>{
+    getStudentClassInfo();
+  },[]);
+const getStudentClassInfo= async ()=>{
+  const idEtudiant=data.iduser;
+  const response = await fetch(`${constant.host}/AlumniDocs-API/getStudentClass/${idEtudiant}`);
+  if(response.ok)
+  {
+    const data=await response.json()
+    console.log(data)
+    // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
+    localStorage.setItem("classInfo",JSON.stringify(data));
+  }
+  else
+  {
+     console.log("erreur lors de la recuperation de la classe");
+  }
+}
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
@@ -43,8 +62,8 @@ console.log(data.nom);
         <div className="flex flex-col md:flex-row w-full max-w-4xl gap-4">
           {/* Section Bienvenue (50%) */}
           <div className="w-full md:w-1/2 shadow-lg p-6 h-auto rounded-lg bg-white">
-            <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2>
-{/*             <h2 className="text-xl md:text-2xl font-bold">Bienvenue {data.nom}</h2> */}
+            {/* <h2 className="text-xl md:text-2xl font-bold">Bienvenue JOE</h2> */}
+            <h2 className="text-xl md:text-2xl font-bold capitalize">Bienvenue {data.nom}</h2>
             <p className="text-gray-600 mt-2">
               Beaucoup d'étudiants ayant complété leur profil consultent régulièrement{" "}
               <span className="text-[#CF3F3F] font-semibold">AlumniDocs</span>.

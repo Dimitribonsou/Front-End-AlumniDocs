@@ -15,6 +15,7 @@ import {
   faFile,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
+import Ilogin from "../types/Ilogin";
 
 // Fonction permettant à un utilisateur de se déconnecter
 const logOut = () => {
@@ -28,7 +29,10 @@ const Navbar = () => {
   const location = useLocation(); // Hook pour obtenir l'URL actuelle
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+ //recuperer l'id de l'etudiant connecter 
+ const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+ const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
+ const email_etudiant=dataLogin.email;
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home" },
     { name: "Inscription", icon: faPencil, route: "/inscription" },
@@ -47,7 +51,7 @@ const Navbar = () => {
           <img
             src="/assets/logo_1_alumnidocs.png"
             alt="Logo"
-            className="h-12 object-contain"
+            className="h-14 w-20  scale-150 object-contain"
           />
         </a>
 
@@ -110,16 +114,20 @@ const Navbar = () => {
         {/* User Menu */}
         {isUserMenuOpen && (
           <div className="absolute right-0 mt-40 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-800">
-            <p className="text-center text-bold">Joe Dalton</p>
-            <p className="px-4 py-2 text-italic text-center text-xs border-b">
+            {/* <p className="text-center text-bold">Joe Dalton</p> */}
+            <p className="text-center text-bold capitalize">{nom_complet}</p>
+            {/* <p className="px-4 py-2 text-italic text-center text-xs border-b">
               Joe.dalton@gmail.com
+            </p> */}
+            <p className="px-4 py-2 text-italic text-center text-xs border-b">
+              {email_etudiant}
             </p>
             <a href="/compte" className="block px-4 py-2 hover:bg-gray-200">
               <FontAwesomeIcon icon={faEdit} className="mr-2" /> Modifier
             </a>
             <a
               onClick={logOut}
-              className="block px-4 py-2 text-red-600 hover:bg-gray-200"
+              className="block px-4 py-2 text-red-600 hover:bg-gray-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />{" "}
               Déconnexion

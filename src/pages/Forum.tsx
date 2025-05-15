@@ -30,7 +30,6 @@ const ForumPage: React.FC = () => {
           ))}
         </div>
       </div>
-
       {/* Footer */}
       <Footer />
     </div>

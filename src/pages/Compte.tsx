@@ -1,22 +1,33 @@
 import { useState } from "react";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/footer";
+import constant from "../data/constant";
+import Ilogin from "../types/Ilogin";
 
 export default function Compte() {
+  const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+  const nomEtd=dataLogin.nom;
+  const emailEtd=dataLogin.email;
+  const idEtudiant=dataLogin.iduser;
+  const telephoneEtudiant=dataLogin.telephone;
+  const prenomEtudiant=dataLogin.prenom;
   const [step, setStep] = useState(1);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     civilité: "",
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    anneeAcademique: "",
-    matricule: "",
-    classe: "",
-    bac: "",
-    anneeObtentionBac: "",
-    diplomeEntree: "",
-    anneeObtentionDiplome: "",
+    id_etudiant:idEtudiant,
+    nom:nomEtd,
+    nomMarital: "",
+    prenom:prenomEtudiant,
+    email:emailEtd,
+    telephone:telephoneEtudiant,
+    nationalite: "",
+    lieu_naissance: "",
+    date_naissance: "",
+    quartier: "",
+    dep_naissance: "",
+    region_naissance: "",
+    photo: "",
     nomPere: "",
     telPere: "",
     emailPere: "",
@@ -26,6 +37,33 @@ export default function Compte() {
     emailMere: "",
     professionMere: "",
   });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newProfil`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Réponse du réseau non valide');
+      }
+
+      const message = await response.text();
+      console.log(message);
+      if (message) {
+        setError(message);
+      } else {
+        console.log("Profil mis à jour avec succès !");
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'opération de récupération des données :', error);
+      setError("Une erreur est survenue lors de la mise à jour du profil. Veuillez réessayer.");
+    }
+  };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,12 +71,28 @@ export default function Compte() {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
+  const thisStep = () => setStep((prev) => prev );
 
   const totalSteps = 2; // Nombre total d'étapes
   const progressPercentage = (step / totalSteps) * 100; // Calcul de la progression
+  // fonction permettant de valider les champs du formulaire
+  const isFormValid = () => {
+    if (step === 1) {
+      const requiredFields = [ "civilité","nationalite", "lieu_naissance", "date_naissance", "quartier", "dep_naissance"];
+      return requiredFields.every((field) => {
+        // // Validation améliorée de l'email
+        // if (field === "email") {
+        //   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        //   return regex.test(formData[field as keyof typeof formData]);
+        // }
+        return formData[field as keyof typeof formData] !== "";
+      });
+    }
+    return false;
+  };
 
-  const renderLabel = (text: string) => (
-    <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
+  const renderLabel = (text: string,icon:string="") => (
+    <label className="block mb-2 text-sm font-medium text-gray-700">{text} <sup className="text-red-500 font-bold ">{icon}</sup></label>
   );
 
   return (
@@ -46,7 +100,7 @@ export default function Compte() {
       <Navbar />
       <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Profile Étudiant</h2>
-
+        <p className='font-medium text-center   my-1 text-green-500 rounded-sm'>{error}</p>
         {/* Barre de progression */}
         <div className="relative w-full h-2 bg-gray-200 rounded-full mb-6">
           <div
@@ -55,12 +109,12 @@ export default function Compte() {
           ></div>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Étape 1 : Informations personnelles */}
           {step === 1 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                {renderLabel("Civilité")}
+                {renderLabel("Civilité","*")}
                 <select
                   name="civilité"
                   value={formData.civilité}
@@ -82,19 +136,18 @@ export default function Compte() {
                   value={formData.nom}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
+                  
                 />
               </div>
               <div>
                 {renderLabel("Nom Marital")}
                 <input
                   type="text"
-                  name="nom"
+                  name="nomMarital"
                   placeholder="Entrer le nom marital"
-                  value={formData.nom}
+                  value={formData.nomMarital}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -106,7 +159,7 @@ export default function Compte() {
                   value={formData.prenom}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
+                  
                 />
               </div>
               <div>
@@ -118,7 +171,7 @@ export default function Compte() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
+                  
                 />
               </div>
               <div>
@@ -130,76 +183,76 @@ export default function Compte() {
                   value={formData.telephone}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
+                  
                 />
               </div>
               <div>
-                {renderLabel("Nationalité")}
+                {renderLabel("Nationalité","*")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="nationalite"
                   placeholder="Entrer la nationalité"
-                  value={formData.telephone}
+                  value={formData.nationalite}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
                 />
               </div>
               <div>
-                {renderLabel("Date de naissance")}
+                {renderLabel("Date de naissance","*")}
                 <input
                   type="date"
-                  name="telephone"
+                  name="date_naissance"
                   placeholder="Entrer la date de naissance"
-                  value={formData.telephone}
+                  value={formData.date_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
                 />
               </div>
               <div>
-                {renderLabel("Région de naissance")}
+                {renderLabel("Région de naissance","*")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="region_naissance"
                   placeholder="Entrer la région de naissance"
-                  value={formData.telephone}
+                  value={formData.region_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
                 />
               </div>
               <div>
-                {renderLabel("Lieu de naissance")}
+                {renderLabel("Lieu de naissance","*")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="lieu_naissance"
                   placeholder="Entrer le lieu de naissance"
-                  value={formData.telephone}
+                  value={formData.lieu_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
                 />
               </div>
               <div>
-                {renderLabel("Département de naissance")}
+                {renderLabel("Département de naissance","*")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="dep_naissance"
                   placeholder="Entrer le département de naissance"
-                  value={formData.telephone}
+                  value={formData.dep_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
                 />
               </div>
               <div>
-                {renderLabel("Quartier")}
+                {renderLabel("Quartier","*")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="quartier"
                   placeholder="Entrer le quartier"
-                  value={formData.telephone}
+                  value={formData.quartier}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                   required
@@ -209,22 +262,20 @@ export default function Compte() {
                 {renderLabel("Photo")}
                 <input
                   type="file"
-                  name="telephone"
+                  name="photo"
                   placeholder="Télécharger une photo"
-                  value={formData.telephone}
+                  value={formData.photo}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
             </div>
           )}
-
           {/* Étape 2 : Infos parent */}
           {step === 2 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                {renderLabel("Nom du père ou tuteur")}
+                {renderLabel("Nom du père ou tuteur","*")}
                 <input
                   type="text"
                   name="nomPere"
@@ -236,7 +287,7 @@ export default function Compte() {
                 />
               </div>
               <div>
-                {renderLabel("Téléphone")}
+                {renderLabel("Téléphone du père","*")}
                 <input
                   type="tel"
                   name="telPere"
@@ -248,19 +299,18 @@ export default function Compte() {
                 />
               </div>
               <div>
-                {renderLabel("Email")}
+                {renderLabel("Email du père")}
                 <input
                   type="email"
                   name="emailPere"
                   placeholder="Entrer l'email du père ou tuteur"
                   value={formData.emailPere}
                   onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                  required
+                  className="w-full border p-2 rounded" 
                 />
               </div>
               <div>
-                {renderLabel("Profession")}
+                {renderLabel("Profession","*")}
                 <input
                   type="text"
                   name="professionPere"
@@ -272,7 +322,7 @@ export default function Compte() {
                 />
               </div>
               <div>
-                {renderLabel("Nom de la mère ou tutrice")}
+                {renderLabel("Nom de la mère ou tutrice","*")}
                 <input
                   type="text"
                   name="nomMere"
@@ -284,7 +334,7 @@ export default function Compte() {
                 />
               </div>
               <div>
-                {renderLabel("Téléphone")}
+                {renderLabel("Téléphone e la mère","*")}
                 <input
                   type="tel"
                   name="telMere"
@@ -296,7 +346,7 @@ export default function Compte() {
                 />
               </div>
               <div>
-                {renderLabel("Email")}
+                {renderLabel("Email de la mère")}
                 <input
                   type="email"
                   name="emailMere"
@@ -304,11 +354,11 @@ export default function Compte() {
                   value={formData.emailMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
+                  
                 />
               </div>
               <div>
-                {renderLabel("Profession")}
+                {renderLabel("Profession de la mère","*")}
                 <input
                   type="text"
                   name="professionMere"
@@ -336,8 +386,9 @@ export default function Compte() {
             {step < totalSteps && (
               <button
                 type="button"
-                onClick={nextStep}
-                className="ml-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                disabled={!isFormValid()}
+                onClick={isFormValid() ? nextStep : thisStep}
+                className={ isFormValid() ? "ml-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded" : "ml-auto bg-gray-500 text-white font-semibold py-2 px-4 rounded"}
               >
                 Suivant
               </button>

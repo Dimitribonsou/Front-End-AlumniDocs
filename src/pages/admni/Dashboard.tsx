@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import StatCard from "../../Components/StatCard";
 import Navbar_admin from "../../Components/Navbar_admin";
@@ -12,7 +12,9 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  Colors,
 } from "chart.js";
+import constant from "../../data/constant";
 
 // Enregistrer les composants nécessaires pour Chart.js
 ChartJS.register(
@@ -26,75 +28,135 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  // Données pour le graphique en barres
-  const barData = {
-    labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
-    datasets: [
-      {
-        label: "Étudiants inscrits",
-        data: [50, 75, 100, 125, 150, 200],
-        backgroundColor: "rgba(54, 162, 235, 0.6)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
 
-  // Options pour le graphique en barres
-  const barOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
+  useEffect(()=>{
+   getStatInfos();
+   getChartInfos();
+  },[])
+  const [result,setResult]=useState<any>({})
+  const [chartResult,setChartResult]=useState<any>({})
+  const getChartInfos= async ()=>{
+    try {   
+      //envoyer la requete vers l'API
+           const response = await fetch(`${constant.host}/AlumniDocs-API/StatChartJS`);
+           if (!response.ok) {
+             console.error("Failed to fetch statInfos");
+             return;
+           }
+           const res = await response.json();
+           console.log(res);
+           if (res.success) {
+            setChartResult(res.data);
+           } else {
+             console.error(res.message);
+           }
+    } catch (error) {
+       console.log("une erreur c'est produite : "+error)
+    }
+  }
+  const getStatInfos= async ()=>{
+    try {   
+      //envoyer la requete vers l'API
+           const response = await fetch(`${constant.host}/AlumniDocs-API/statInfos`);
+           if (!response.ok) {
+             console.error("Failed to fetch statInfos");
+             return;
+           }
+           const res = await response.json();
+           console.log(res);
+           if (res.success) {
+             setResult(res.data);
+           } else {
+             console.error(res.message);
+           }
+    } catch (error) {
+       console.log("une erreur c'est produite : "+error)
+    }
+  }
+    // Données pour le graphique en barres
+    const barData = {
+      // labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+      labels: chartResult.mois,
+      datasets: [
+        {
+          label: "Étudiants inscrits",
+          // data: [50, 75, 100, 125, 150, 200],
+          data: chartResult.inscriptions,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
+        },
+      ],
+    };
+  
+    // Options pour le graphique en barres
+    const barOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top" as const,
+        },
+        title: {
+          display: true,
+          text: "Étudiants inscrits par mois",
+        },
       },
-      title: {
-        display: true,
-        text: "Étudiants inscrits par mois",
+    };
+    const PieOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top" as const,
+        },
+        title: {
+          display: true,
+          text: "Nombre requête reçu par catégorie"
+        },
       },
-    },
-  };
-
-  // Données pour le graphique en secteurs
-  const pieData = {
-    labels: ["Étudiants", "Admins", "Annonces"],
-    datasets: [
-      {
-        label: "Répartition des données",
-        data: [350, 5, 48],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.6)",
-          "rgba(54, 162, 235, 0.6)",
-          "rgba(255, 206, 86, 0.6)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
+    };
+  
+    // Données pour le graphique en secteurs
+    const pieData = {
+      // labels: ["Étudiants", "Admins", "Annonces"],
+      labels: chartResult.categories,
+      datasets: [
+        {
+          label: "Répartition des données",
+          // data: [350, 5, 48],
+          data: chartResult.valeurs,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.6)",
+            "rgba(54, 162, 235, 0.6)",
+            "rgba(255, 206, 86, 0.6)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex-1 bg-gray-100 min-h-screen">
         <Navbar_admin  />
         <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <StatCard title="Étudiants inscrits" value="350" icon="🎓" />
-          <StatCard title="Annonces publiées" value="48" icon="📢" />
-          <StatCard title="Admins actifs" value="5" icon="🛠️" />
+          <StatCard title="Étudiants inscrits" value={result.total_inscriptions} icon="🎓" />
+          <StatCard title="Annonces publiées" value={result.total_annonces} icon="📢" />
+          <StatCard title="Requete non traité " value={result.requetes_en_attente}  icon="🛠️" />
         </div>
 
-        <div className="p-6">
+        {/* <div className="p-6">
           <h2 className="text-xl font-bold mb-4">Dernières connexions</h2>
           <ul className="bg-white p-4 rounded-lg shadow-md">
             <li>Admin1 - 05/04/2025 à 14:30</li>
             <li>Admin2 - 05/04/2025 à 12:15</li>
             <li>Admin3 - 04/04/2025 à 20:45</li>
           </ul>
-        </div>
+        </div> */}
         <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Graphique en barres */}
           <div className="bg-white p-4 rounded-lg shadow-md">
@@ -103,7 +165,7 @@ const Dashboard = () => {
 
           {/* Graphique en secteurs */}
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <Pie data={pieData} />
+            <Pie data={pieData} options={PieOptions} />
           </div>
         </div>
       </div>

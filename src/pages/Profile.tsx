@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, {  useRef, useState } from "react";
 import FileInput from "../Components/fileinput";
 import Navbar from "../Components/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUser,
-  faFile,
   faPlus,
-  faPencil,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/footer";
+import Ilogin from "../types/Ilogin";
+import IclassInfo from "../types/IclasseInfo";
 
 const ProfilePage: React.FC = () => {
   const [files, setFiles] = useState<{ [key: string]: File | null }>({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+   //recuperer l'id de l'etudiant connecter 
+ const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+ const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
+ const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
+ const email_etudiant=dataLogin.email;
+ const telephone=dataLogin.telephone;
+ // recuperer la classe de l'etudiant
+ const classe=classeInfo[0].libelle_classe || "CSI3-DLW";
   const handleFileChange = (name: string, file: File | null) => {
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
   };
@@ -22,7 +28,19 @@ const ProfilePage: React.FC = () => {
     e.preventDefault();
     console.log("Fichiers soumis :", files);
   };
-
+  // definir une reference pour l'input avec un type specifique
+  const inputRef=useRef<HTMLInputElement>(null) ;
+   const FileClick=()=>{
+       // select the image on click
+       if(inputRef.current) {
+           inputRef.current.click();
+       }
+   }
+   const handleChange=(event: React.ChangeEvent<HTMLInputElement>)=>{
+     // traiter le fichier image ici
+     console.log(event.target.files)
+   }
+   
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
@@ -38,16 +56,18 @@ const ProfilePage: React.FC = () => {
             <FontAwesomeIcon icon={faUser} /> Informations Personnelles
           </h2>
           <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
+             <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
             <img
               src="../assets/et.jpeg"
               alt="Profil"
-              className="w-20 h-20 rounded-full object-cover border"
+               onClick={FileClick}
+              className="w-24 h-24 rounded-full object-cover border cursor-pointer"
             />
             <div>
-              <p className="font-bold">Joe Dalton</p>
-              <p className="text-gray-600">joe.dalton@gmail.com</p>
-              <p className="text-gray-600">+237 654606328</p>
-              <p className="text-gray-600">CS13-DLW</p>
+              <p className="font-bold capitalize">{nom_complet}</p>
+              <p className="text-gray-600">{email_etudiant}</p>
+              <p className="text-gray-600">{telephone}</p>
+              <p className="text-gray-600">{classe}</p>
             </div>
           </div>
         </div>

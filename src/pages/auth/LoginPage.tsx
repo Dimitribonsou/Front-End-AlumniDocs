@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import constant from "../../data/constant";
-
+import constant from './../../data/constant'
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,18 +62,17 @@ useEffect(()=>{
       if (data.message) {
         setError(data.message);
       } 
-       navigate("/home");
-      if(data.islogin) {
+      if(data.islogin)
+      {
         // console.log("Connexion réussie !");
         // sauvegarder les elements dans la une variable
         setLoginData(data);
         //sauvegarder ces infomations dans le local storage
         localStorage.setItem('loginData', JSON.stringify(data));
         //naviger vers la page d'acceuil
-        navigate("/home");
+        navigate("/otp");
       }
     } catch (error) {
-       navigate("/home");
       console.error('Erreur lors de l\'opération de récupération des données :', error);
       setError("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
     }
