@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  Colors,
 } from "chart.js";
 import constant from "../../data/constant";
 
@@ -101,6 +102,18 @@ const Dashboard = () => {
         },
       },
     };
+    const PieOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top" as const,
+        },
+        title: {
+          display: true,
+          text: "Nombre requête reçu par catégorie"
+        },
+      },
+    };
   
     // Données pour le graphique en secteurs
     const pieData = {
@@ -152,7 +165,7 @@ const Dashboard = () => {
 
           {/* Graphique en secteurs */}
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <Pie data={pieData} />
+            <Pie data={pieData} options={PieOptions} />
           </div>
         </div>
       </div>
