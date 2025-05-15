@@ -24,6 +24,7 @@ import Etudiants from "./pages/admni/Etudiant";
 import RequeteAdmin from "./pages/admni/Requete";
 import AdministrateurPage from "./pages/admni/Administrateur";
 import ValidationsPage from "./pages/admni/Validations";
+import VerifyCodePage from "./pages/auth/OTPage";
 
 
 const AppRoutes = () => {
@@ -36,6 +37,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/admin" element={<Dashboard />} />
+        <Route path="/otp" element={<VerifyCodePage/>} />
         <Route path="/admin/annonces" element={<Annonces />} />
         <Route path="/compte" element={<Compte />} />
         <Route path="/admin/promotions" element={<Promotions />} />
