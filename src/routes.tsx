@@ -24,6 +24,7 @@ import Etudiants from "./pages/admni/Etudiant";
 import RequeteAdmin from "./pages/admni/Requete";
 import AdministrateurPage from "./pages/admni/Administrateur";
 import ValidationsPage from "./pages/admni/Validations";
+import UpdloadDocumentComponent from "./Components/uploadDocument";
 
 
 const AppRoutes = () => {
@@ -33,6 +34,7 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/uploadTest" element={<UpdloadDocumentComponent />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
