@@ -2,30 +2,15 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
 
-// Toast centré au-dessus du formulaire
-const Toast = ({ message, type, onClose }: { message: string; type: "success" | "error"; onClose: () => void }) => (
-  <div
-    className={`absolute left-1/2 -translate-x-1/2 top-2 px-4 py-3 rounded shadow-lg text-white transition-all duration-300 z-50
-      ${type === "success" ? "bg-green-600" : "bg-gray-700"}
-    `}
-    style={{ minWidth: 220, maxWidth: 320 }}
-  >
-    <div className="flex items-center gap-2">
-      <span>{message}</span>
-      <button className="ml-2 text-lg" onClick={onClose}>&times;</button>
-    </div>
-  </div>
-);
-
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+  const [error, setError] = useState("");
 
   const handleSendResetLink = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
-    setToast(null);
+    setError("");
     try {
       const response = await fetch('/api/send-reset-link', {
         method: 'POST',
@@ -37,12 +22,12 @@ const ForgotPasswordPage = () => {
 
       const data = await response.json();
       if (data.success) {
-        setToast({ message: "Lien de réinitialisation envoyé !", type: "success" });
+        setError("Lien de réinitialisation envoyé !");
       } else {
-        setToast({ message: "Impossible d'envoyer le lien.", type: "error" });
+        setError("Impossible d'envoyer le lien.");
       }
     } catch (error) {
-      setToast({ message: "Erreur lors de l'envoi du lien.", type: "error" });
+      setError("Erreur lors de l'envoi du lien.");
     } finally {
       setIsSending(false);
     }
@@ -55,9 +40,9 @@ const ForgotPasswordPage = () => {
         <img
           src="/assets/iuc-bg.jpg"
           alt="background"
-          className="w-full h-full object-cover object-center blur-sm brightness-75"
+          className="w-full h-full object-cover object-center brightness-75"
         />
-        <div className="absolute inset-0 bg-black opacity-40"></div>
+        <div className="absolute inset-0 "></div>
       </div>
 
       {/* Forgot Password Card */}
@@ -65,7 +50,7 @@ const ForgotPasswordPage = () => {
         <img
           src="/assets/logo_1_alumnidocs.png"
           alt="Logo"
-          className="h-16 mb-6"
+          className="h-24 mb-6"
         />
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">
           Mot de passe oublié ?
@@ -73,13 +58,10 @@ const ForgotPasswordPage = () => {
         <p className="text-gray-500 mb-6 text-center">
           Veuillez saisir votre email pour réinitialiser votre mot de passe.
         </p>
-        {/* Toast centré au-dessus du formulaire */}
-        {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => setToast(null)}
-          />
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {error}
+          </div>
         )}
         <form className="w-full" onSubmit={handleSendResetLink}>
           <div className="mb-4">

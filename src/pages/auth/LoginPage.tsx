@@ -56,7 +56,7 @@ const LoginPage = () => {
         <img
           src="/assets/logo_1_alumnidocs.png"
           alt="Logo"
-          className="h-16 mb-6"
+          className="h-24 mb-6"
         />
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Connexion</h2>
         <p className="text-gray-500 mb-6 text-center">Connectez-vous à votre espace AlumniDocs</p>

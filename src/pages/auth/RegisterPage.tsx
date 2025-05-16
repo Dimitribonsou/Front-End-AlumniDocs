@@ -70,9 +70,9 @@ const RegisterPage = () => {
         <img
           src="/assets/iuc-bg.jpg"
           alt="background"
-          className="w-full h-full object-cover object-center blur-sm brightness-75"
+          className="w-full h-full object-cover object-center  brightness-75"
         />
-        <div className="absolute inset-0 bg-black opacity-40"></div>
+        <div className="absolute inset-0"></div>
       </div>
 
       {/* Centered register card */}
@@ -80,7 +80,7 @@ const RegisterPage = () => {
         <img
           src="/assets/logo_1_alumnidocs.png"
           alt="Logo"
-          className="h-16 mb-6"
+          className="h-24 mb-6"
         />
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Créer un compte</h2>
         <p className="text-gray-500 mb-6 text-center">Remplissez le formulaire pour rejoindre AlumniDocs</p>
