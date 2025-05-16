@@ -29,7 +29,7 @@ const Inscription: React.FC = () => {
       const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
       const idEtudiant=dataLogin.iduser;
   
-      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newIncription`, {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/newIncription`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
