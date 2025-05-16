@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faAt, faLock,faPhone,faUser,faVenusMars } from "@fortawesome/free-solid-svg-icons";
 import constant from "../../data/constant";
 
 const RegisterPage = () => {

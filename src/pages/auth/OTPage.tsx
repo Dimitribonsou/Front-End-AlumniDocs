@@ -20,6 +20,7 @@ const Toast = ({ message, type, onClose }: { message: string; type: "success" | 
 const VerifyCodePage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const navigate = useNavigate();

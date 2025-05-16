@@ -18,17 +18,7 @@ const Classes = () => {
   const [listClass, setClasseListe]=useState([]);
   const [listFiliere, setFiliereListe]=useState([]);
   const [errorMessage, setErrorMessage]=useState([]);
-  const handleAddClass = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newClassName && newClassNiveau) {
-      setClasses([
-        ...classes,
-        { id: classes.length + 1, name: newClassName, niveau: newClassNiveau },
-      ]);
-      setNewClassName("");
-      setNewClassNiveau("");
-    }
-  };
+
   // fonction pour afficher  enregistrer une nouvelle classe
 const handleSubmit = async()=>{
   try {

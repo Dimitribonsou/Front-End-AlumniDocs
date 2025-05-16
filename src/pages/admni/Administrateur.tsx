@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
+import constant from "../../data/constant";
 
 interface Administrateur {
   id: number;
@@ -24,7 +25,10 @@ const AdministrateurPage: React.FC = () => {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [adminList, setAdminListe] = useState([]);
+useEffect(()=>{
+  getAdmin();
+},[])
   const handleAddAdmin = () => {
     if (newAdmin.nom && newAdmin.email) {
       setAdministrateurs((prev) => [
@@ -41,7 +45,19 @@ const AdministrateurPage: React.FC = () => {
   const handleDeleteAdmin = (id: number) => {
     setAdministrateurs((prev) => prev.filter((admin) => admin.id !== id));
   };
-
+  // fonction pour  afficher la liste des classes
+  const getAdmin= async ()=>{
+    const response = await fetch(`${constant.host}/AlumniDocs-API/AdminList`);
+    if(response.ok)
+    {
+      //mettre a jour la liste des classe
+       setAdminListe(await response.json());
+    }
+    else
+    {
+       console.log("erreur lors de la recuperation de la classe");
+    }
+  }
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -64,19 +80,19 @@ const AdministrateurPage: React.FC = () => {
                 <tr className="bg-gray-200">
                   <th className="border border-gray-300 p-2 text-left">Nom</th>
                   <th className="border border-gray-300 p-2 text-left">Email</th>
-                  <th className="border border-gray-300 p-2 text-left">Rôle</th>
+                  <th className="border border-gray-300 p-2 text-left">Telephone</th>
                   <th className="border border-gray-300 p-2 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {administrateurs.map((admin) => (
-                  <tr key={admin.id} className="hover:bg-gray-100">
+                {adminList.map((admin:any) => (
+                  <tr key={admin.id_utilisateur} className="hover:bg-gray-100">
                     <td className="border border-gray-300 p-2">{admin.nom}</td>
                     <td className="border border-gray-300 p-2">{admin.email}</td>
-                    <td className="border border-gray-300 p-2">{admin.role}</td>
+                    <td className="border border-gray-300 p-2">{admin.telephone}</td>
                     <td className="border border-gray-300 p-2 text-center">
                       <button
-                        onClick={() => handleDeleteAdmin(admin.id)}
+                        onClick={() => handleDeleteAdmin(admin.id_utilisateur)}
                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                       >
                         Supprimer
@@ -84,7 +100,7 @@ const AdministrateurPage: React.FC = () => {
                     </td>
                   </tr>
                 ))}
-                {administrateurs.length === 0 && (
+                {adminList.length === 0 && (
                   <tr>
                     <td colSpan={4} className="text-center text-gray-500 p-3">
                       Aucun administrateur trouvé.
