@@ -35,7 +35,7 @@ const Navbar = () => {
     { name: "Document", icon: faFile, route: "/profile" },
     { name: "Requetes", icon: faEnvelope, route: "/requetes" },
     { name: "Annonces", icon: faBullhorn, route: "/annonce" },
-    { name: "Forum", icon: faComments, route: "/forum" },
+    // { name: "Forum", icon: faComments, route: "/forum" },
     { name: "Notification", icon: faBell, route: "/notifications" },
   ];
 
