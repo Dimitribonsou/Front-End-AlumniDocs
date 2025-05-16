@@ -212,7 +212,7 @@ const RegisterPage = () => {
                   <FontAwesomeIcon icon={faPhone} />
                 </span>
                 <input
-                  type="text"
+                  type="tel"
                   placeholder="Votre téléphone"
                   className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={phone}

@@ -26,25 +26,82 @@ const AdministrateurPage: React.FC = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [adminList, setAdminListe] = useState([]);
+  const [email, setEmail] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [codeaccess, setCodeAccess] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [serverMessage, setServerMessage] = useState("");
+    //renitialiser le contenu du formulaire
+    const resetFormData= ()=>{
+      setEmail("");
+      setNom("");
+      setPrenom("");
+      setPhone("");
+      setPassword("");
+      setConfirmPassword("");
+      setGender("");
+      }
 useEffect(()=>{
   getAdmin();
 },[])
-  const handleAddAdmin = () => {
-    if (newAdmin.nom && newAdmin.email) {
-      setAdministrateurs((prev) => [
-        ...prev,
-        { ...newAdmin, id: prev.length + 1 },
-      ]);
-      setNewAdmin({ id: 0, nom: "", email: "", role: "Admin" });
-      setIsModalOpen(false);
-    } else {
-      alert("Veuillez remplir tous les champs.");
-    }
-  };
 
-  const handleDeleteAdmin = (id: number) => {
-    setAdministrateurs((prev) => prev.filter((admin) => admin.id !== id));
-  };
+
+const handleSubmit = async () => {
+  // if (!isFormValid) return;
+    // recuperer les donnees saisi dans le formulaire
+    const data = {
+      nom: nom,
+      prenom: prenom,
+      email: email,
+      telephone: phone,
+      password: password,
+      genre: gender,
+      code_access:codeaccess,
+    };
+    try {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/NewAdmin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('la reponse du serveur est pas correct.');
+      }
+      const result = await response.text();
+      console.log(result);
+      // mettre a jour le message retourner par le serveur
+      setServerMessage(result);
+      // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
+      resetFormData();
+      // Handle success as needed
+    } catch (error) {
+      console.log('There was a problem with the fetch operation:', error);
+      // Handle error as needed
+    }
+};
+ const handleDeleteAdmin= async(id_user:any)=>{
+  try {
+    const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${id_user}`, {
+      method: 'DELETE',
+    });
+    if(!response.ok)
+    {
+       console.log("erreur lors de la suppression de L'admin")
+    }
+    console.log(await response.text())
+    getAdmin();
+   
+  } catch (error) {
+    console.log("Une erreur est survenue : "+error)
+  }
+ }
   // fonction pour  afficher la liste des classes
   const getAdmin= async ()=>{
     const response = await fetch(`${constant.host}/AlumniDocs-API/AdminList`);
@@ -123,39 +180,92 @@ useEffect(()=>{
 
       {/* Modal pour ajouter un administrateur */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <div className="fixed inset-0 bg-black bg-opacity-50 w-screen flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-1/2">
             <h2 className="text-xl font-bold mb-4">Ajouter un Administrateur</h2>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nom</label>
-              <input
-                type="text"
-                className="w-full border border-gray-300 p-2 rounded"
-                value={newAdmin.nom}
-                onChange={(e) => setNewAdmin({ ...newAdmin, nom: e.target.value })}
-                placeholder="Entrez le nom"
-              />
+            {serverMessage && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {serverMessage}
+          </div>
+        )}
+            <div className="flex flex-col md:flex-row gap-2 justy-center items-center w-full  px-2">
+              <div className="mb-4 w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 p-2 rounded"
+                  value={nom}
+                  onChange={(e) => setNom(e.target.value)}
+                  placeholder="Entrez le nom"
+                />
+              </div>
+              <div className="mb-4 w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Prenom</label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 p-2 rounded"
+                  value={prenom}
+                  onChange={(e) => setPrenom(e.target.value)}
+                  placeholder="Entrez le Prenom"
+                />
+              </div>
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                className="w-full border border-gray-300 p-2 rounded"
-                value={newAdmin.email}
-                onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-                placeholder="Entrez l'email"
-              />
+            <div className="flex  flex-col md:flex-row gap-2 justy-center items-center w-full ">
+              <div className="mb-4 w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input
+                  type="email"
+                  className="w-full border border-gray-300 p-2 rounded"
+                  value={email}
+                  onChange={(e) => setEmail( e.target.value )}
+                  placeholder="Entrez l'email"
+                />
+              </div>
+              <div className="mb-4 w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Telephone</label>
+                <input
+                  type="tel"
+                  className="w-full border border-gray-300 p-2 rounded"
+                  value={phone}
+                  onChange={(e) => setPhone( e.target.value )}
+                  placeholder="Entrez le numero de telephone"
+                />
+              </div>
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-              <select
-                className="w-full border border-gray-300 p-2 rounded"
-                value={newAdmin.role}
-                onChange={(e) => setNewAdmin({ ...newAdmin, role: e.target.value })}
-              >
-                <option value="Admin">Admin</option>
-                <option value="Super Admin">Super Admin</option>
-              </select>
+            <div className="flex  flex-col md:flex-row gap-2 justy-center items-center w-full ">
+                <div className="mb-4 w-full">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 p-2 rounded"
+                    value={password}
+                    onChange={(e) => setPassword( e.target.value )}
+                    placeholder="Entrez le code d'access"
+                  />
+                </div>
+                <div className="mb-4 w-full">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">genre</label>
+                  <select
+                    className="w-full border border-gray-300 p-2 rounded"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value )}
+                  >
+                    <option value="homme">Homme</option>
+                    <option value="femme">Femme</option>
+                  </select>
+                </div>
+            </div>
+            <div className="flex  flex-col md:flex-row gap-2 justy-center items-center w-full ">
+                <div className="mb-4 w-full">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Code d'access</label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 p-2 rounded"
+                    value={codeaccess}
+                    onChange={(e) => setCodeAccess( e.target.value )}
+                    placeholder="Entrez le code d'access"
+                  />
+                </div>
             </div>
             <div className="flex justify-end gap-2">
               <button
@@ -165,7 +275,8 @@ useEffect(()=>{
                 Annuler
               </button>
               <button
-                onClick={handleAddAdmin}
+              type="button"
+                onClick={handleSubmit}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Ajouter
