@@ -126,159 +126,178 @@ const RegisterPage = () => {
   );
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
-      {/* Partie gauche - fond rouge */}
-      <div className="w-full md:w-[40%] bg-[#CF3F3F] flex items-center justify-center relative">
-        <div className="absolute top-4 left-4 md:static md:pl-10">
-          <img
-            src="/assets/logo_1_alumnidocs.png"
-            alt="Logo"
-            className="h-16 md:h-72 object-contain"
-          />
-        </div>
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/assets/iuc-bg.jpg"
+          alt="background"
+          className="w-full h-full object-cover object-center  brightness-75"
+        />
+        <div className="absolute inset-0"></div>
       </div>
 
-      {/* Partie droite - fond blanc */}
-      <div className="w-full md:w-[60%] bg-white flex items-center justify-center">
-        <div className="w-full max-w-md p-10 bg-white shadow-lg rounded-lg">
-          <h2 className="text-2xl md:text-4xl font-semibold text-center">
-            BIENVENUE
-            <p className="italic text-sm text-thin">Créer votre compte</p>
-            <div className="line-with-dots"></div>
-          </h2>
-            <p className="  text-center ">Veuillez remplir tout les champs du formulaire</p>
-            <span className="mt-2 text-green-500 font-medium block text-center ">{serverMessage}</span>
-          <form className="mt-6 space-y-4">
-            {/* Nom */}
-            <div>
-              {renderLabel("Nom")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+      {/* Centered register card */}
+      <div className="relative z-10 flex flex-col items-center w-full max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-2xl">
+        <img
+          src="/assets/logo_1_alumnidocs.png"
+          alt="Logo"
+          className="h-24 mb-6"
+        />
+        <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Créer un compte</h2>
+        <p className="text-gray-500 mb-6 text-center">Remplissez le formulaire pour rejoindre AlumniDocs</p>
+        {serverMessage && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {serverMessage}
+          </div>
+        )}
+        <form className="w-full" onSubmit={handleSubmit}>
+          {/* Ligne 1 : Nom & Prénom */}
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Nom</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faUser} />
+                </span>
                 <input
                   type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre nom"
+                  placeholder="Votre nom"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={nom}
-                  onChange={(e)=>setNom(e.target.value)}
+                  onChange={(e) => setNom(e.target.value)}
+                  required
                 />
               </div>
             </div>
-            {/* Prénom */}
-            <div>
-              {renderLabel("Prénom")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Prénom</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faUser} />
+                </span>
                 <input
                   type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre prénom"
+                  placeholder="Votre prénom"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={prenom}
-                  onChange={(e)=>setPrenom(e.target.value)}
+                  onChange={(e) => setPrenom(e.target.value)}
+                  required
                 />
               </div>
             </div>
-
-            {/* Sexe */}
-            <div>
-              {renderLabel("Sexe")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <select
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  required
-                >
-                  <option value=""></option>
-                  <option value="homme">Homme</option>
-                  <option value="femme">Femme</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Téléphone */}
-            <div>
-              {renderLabel("Téléphone")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
-                <input
-                  type="text"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-                  required
-                  placeholder="Entrez votre téléphone"
-                  value={phone}
-                  onChange={(e)=>setPhone(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* Email */}
-            <div>
-              {renderLabel("Email")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+          </div>
+          {/* Ligne 2 : Email & Téléphone */}
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faAt} />
+                </span>
                 <input
                   type="email"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  placeholder="Votre email"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  placeholder="Entrez votre email"
                 />
-                <span className="p-3 text-gray-600">
-                  <FontAwesomeIcon icon={faAt} />
-                </span>
               </div>
             </div>
-            {/* Mot de passe */}
-            <div>
-              {renderLabel("Mot de passe")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Téléphone</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faPhone} />
+                </span>
+                <input
+                  type="text"
+                  placeholder="Votre téléphone"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          {/* Ligne 3 : Sexe */}
+          <div className="mb-4">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Sexe</label>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+              <span className="bg-gray-100 p-3 text-gray-600">
+                <FontAwesomeIcon icon={faVenusMars} />
+              </span>
+              <select
+                className="w-full py-2 px-3 text-base focus:outline-none bg-white"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                required
+              >
+                <option value="">Sélectionnez</option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+              </select>
+            </div>
+          </div>
+          {/* Ligne 4 : Mot de passe & Confirmation */}
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Mot de passe</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faLock} />
+                </span>
                 <input
                   type="password"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  placeholder="Mot de passe"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="Écrire votre mot de passe"
                 />
-                <span className="p-3 text-gray-600">
-                  <FontAwesomeIcon icon={faLock} />
-                </span>
               </div>
             </div>
-            {/* Confirmation mot de passe */}
-            <div>
-              {renderLabel("Confirmation mot de passe")}
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-9">
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium text-gray-700">Confirmation</label>
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+                <span className="bg-gray-100 p-3 text-gray-600">
+                  <FontAwesomeIcon icon={faLock} />
+                </span>
                 <input
                   type="password"
-                  className="w-full py-2 px-3 focus:outline-none focus:border-blue-500"
+                  placeholder="Confirmez le mot de passe"
+                  className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  placeholder="Réécrire votre mot de passe"
                 />
-                <span className="p-3 text-gray-600">
-                  <FontAwesomeIcon icon={faLock} />
-                </span>
               </div>
             </div>
-            {/* Boutons */}
-            <div className="flex flex-col md:flex-row justify-between mt-6">
-              <button
-                type="button"
-                className="bg-[#161B70] h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
-              >
-                <a href="/">Connexion</a>
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid}
-                className={ !isFormValid ? "bg-gray-500 h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2" : "bg-[#161B70] h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"}
-              >
-                Envoyer
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          {/* Boutons */}
+          <div className="flex flex-col md:flex-row justify-between mt-6 gap-2">
+            <button
+              type="button"
+              className="bg-[#161B70] h-11 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2"
+              onClick={() => window.location.href = "/"}
+            >
+              Connexion
+            </button>
+            <button
+              type="submit"
+              disabled={!isFormValid}
+              className={
+                !isFormValid
+                  ? "bg-gray-500 h-11 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2"
+                  : "bg-[#161B70] h-11 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2"
+              }
+            >
+              Créer le compte
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

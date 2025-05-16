@@ -6,56 +6,25 @@ import constant from './../../data/constant'
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // sauvegarder tout les donnees envoyee par le serveurs dans une variables
-  const [logindata, setLoginData]=useState({});
-  // definir le hook pour la validation du formulaire
+  const [logindata, setLoginData] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Connexion réussie !");
-    navigate("/home");
-  };
-  const [error, setError] = useState("");
-// utiliser le hooks usereffect pour effectuer des changements sur la valeur des champs du formulaire
-useEffect(()=>{
-  const isvalid=valideForm();
-  // mettre a jour la variable de validation du formulaire
-  setIsFormValid(isvalid);
-})
-  // definir la fonction permettant de valider le formualaire
-  const valideForm=()=>
-  {
-    let isValid=true;
-      //  verifier si l'identifiant a ete definis
-           if(email.trim() ==='')
-           {
-              isValid=false;
-              console.log("email est obligatoire");
-           }
-           // verifier si le mot de passe a ete definis
-           if(password.trim() ==="")
-           {
-              isValid=false;
-              console.log("le mot de passe est obligatoire");
-           }
-      
-          return isValid;
-  }
-  const handleSubmit = async () => {
+  useEffect(() => {
+    setIsFormValid(email.trim() !== "" && password.trim() !== "");
+  }, [email, password]);
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     try {
       const response = await fetch(`${constant.host}/AlumniDocs-API/Loginjwt`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error('Réponse du réseau non valide');
-      }
+      if (!response.ok) throw new Error("Réponse du réseau non valide");
 
       const data = await response.json();
       console.log(data);
@@ -73,95 +42,94 @@ useEffect(()=>{
         navigate("/otp");
       }
     } catch (error) {
-      console.error('Erreur lors de l\'opération de récupération des données :', error);
       setError("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#CF3F3F] px-4">
-      {/* Logo */}
-      <div className="absolute top-4 left-4 md:inset-0 md:flex md:items-center md:justify-start md:pl-10">
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/assets/iuc-bg.jpg"
+          alt="background"
+          className="w-full h-full object-cover object-center  brightness-75"
+        />
+        <div className="absolute inset-0 "></div>
+      </div>
+
+      {/* Centered login card */}
+      <div className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow-2xl">
         <img
           src="/assets/logo_1_alumnidocs.png"
           alt="Logo"
-          className="h-16 md:h-72 object-contain"
+          className="h-24 mb-6"
         />
-      </div>
-
-      {/* Login Card */}
-      <div className="relative md:absolute md:top-1/2 md:left-[70%] bg-white transform md:-translate-x-1/2 md:-translate-y-1/2 shadow-lg rounded-lg p-6 md:p-10 w-full max-w-sm md:max-w-md">
-        <h2 className="text-2xl md:text-4xl font-semibold text-center">
-          BIENVENUE
-          <span className="ml-2 text-yellow-500 text-xl md:text-3xl">😊</span>
-          <div className="line-with-dots"></div>
-        </h2>
-         <p className="text-center text-red-500 my-2">{error}</p>
-        <form className="mt-6" onSubmit={handleLogin}>
-          <div>
-            <label className="block mb-2 text-left text-sm md:text-base font-medium">
-              Identifiant
-            </label>
-            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-10">
-              <span className="bg-gray-200 p-3 text-gray-600">
+        <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Connexion</h2>
+        <p className="text-gray-500 mb-6 text-center">Connectez-vous à votre espace AlumniDocs</p>
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {error}
+          </div>
+        )}
+        <form className="w-full" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+              <span className="bg-gray-100 p-3 text-gray-600">
                 <FontAwesomeIcon icon={faUser} />
               </span>
               <input
                 type="text"
                 id="username"
                 name="username"
-                placeholder="Entrez votre matricule ou email"
-                className="w-full py-2 px-3 text-sm md:text-base focus:outline-none focus:border-blue-500"
+                placeholder="Email ou matricule"
+                className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                 autoComplete="off"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
-          <div className="mt-4">
-            <label className="block mb-2 text-left text-sm md:text-base font-medium">
-              Mot de passe
-            </label>
-            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-10">
-              <span className="bg-gray-200 p-3 text-gray-600">
+          <div className="mb-2">
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+              <span className="bg-gray-100 p-3 text-gray-600">
                 <FontAwesomeIcon icon={faLock} />
               </span>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Entrez votre mot de passe"
-                className="w-full py-2 px-3 text-sm md:text-base focus:outline-none focus:border-blue-500"
+                placeholder="Votre mot de passe"
+                className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                 autoComplete="off"
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
-          <br />
-
-          <div className="mb-4 text-right text-xs md:text-sm">
-            Mot de passe oublié ?{" "}
-            <a href="/forgot-password" className="text-[#9B1E1E]">
-              Cliquez ici
+          <div className="mb-4 text-right text-xs">
+            <a href="/forgot-password" className="text-[#161B70] hover:underline">
+              Mot de passe oublié ?
             </a>
           </div>
-          <div className="flex flex-col md:flex-row justify-between">
-            <button
-              type="button"
-              className="bg-[#161B70] h-9 hover:bg-red-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
-            >
-              <a href="/register">Créer un compte</a>
-            </button>
-            <button
-              type="button"onClick={handleSubmit}
-              disabled={!isFormValid}
-              className={ !isFormValid ? "bg-gray-500 h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2" : "bg-[#161B70] hover:bg-red-500  h-9 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"}
-            >
-              Connexion
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={!isFormValid}
+            className={`w-full h-11 rounded-md font-semibold text-white transition ${
+              isFormValid
+                ? "bg-[#161B70] hover:bg-[#0e1350]"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Connexion
+          </button>
         </form>
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Pas encore de compte ?{" "}
+          <a href="/register" className="text-[#161B70] font-semibold hover:underline">
+            Créer un compte
+          </a>
+        </div>
       </div>
     </div>
   );

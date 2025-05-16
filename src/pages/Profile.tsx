@@ -123,7 +123,7 @@ const ProfilePage: React.FC = () => {
             </div>
         
             {/* Boutons */}
-            <div className="flex flex-col md:flex-row justify-between mt-6">
+            {/* <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
                 type="button"
                 className="bg-gray-600 h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
@@ -136,7 +136,7 @@ const ProfilePage: React.FC = () => {
               >
                 <FontAwesomeIcon icon={faPlus} /> Soumettre
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

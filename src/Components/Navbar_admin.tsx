@@ -7,10 +7,18 @@ const Navbar_admin = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
+    // ...existing code...
     <nav className="bg-white px-6 py-4 flex justify-between items-center shadow-md">
-      {/* Titre ou Logo */}
-      <div className="text-xl font-bold text-[#161B70]">AlumniDocs - Admin</div>
-
+      {/* Logo + Titre */}
+      <div className="flex items-center gap-3">
+        <img
+          src="/assets/3IAC.png"
+          alt=""
+          className="h-8 w-8 object-contain"
+        />
+        <span className="text-xl font-bold text-[#161B70]">AlumniDocs - Admin</span>
+      </div>
+      {/* ...reste du code... */}
       {/* Bouton pour le menu mobile */}
       <button
         className="md:hidden text-gray-700 text-2xl"
