@@ -19,7 +19,7 @@ const ProfilePage: React.FC = () => {
  const email_etudiant=dataLogin.email;
  const telephone=dataLogin.telephone;
  // recuperer la classe de l'etudiant
- const classe=classeInfo[0].libelle_classe || "CSI3-DLW";
+ const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
   const handleFileChange = (name: string, file: File | null) => {
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
   };
