@@ -8,13 +8,35 @@ interface Requete {
   type: string;
   date: string;
   statut: "En attente" | "Traitée";
+  pieceJointeUrl?: string; // Ajout du champ pièce jointe
 }
 
 const RequeteAdmin: React.FC = () => {
   const [requetes, setRequetes] = useState<Requete[]>([
-    { id: 1, etudiant: "Jean-Pierre Ngono", type: "Revendication de note", date: "2023-04-01", statut: "En attente" },
-    { id: 2, etudiant: "Marie Mballa", type: "Absence justifiée", date: "2023-04-02", statut: "Traitée" },
-    { id: 3, etudiant: "Pauline Ewane", type: "Demande de document", date: "2023-04-03", statut: "En attente" },
+    {
+      id: 1,
+      etudiant: "Jean-Pierre Ngono",
+      type: "Revendication de note",
+      date: "2023-04-01",
+      statut: "En attente",
+      pieceJointeUrl: "/uploads/pj1.pdf",
+    },
+    {
+      id: 2,
+      etudiant: "Marie Mballa",
+      type: "Absence justifiée",
+      date: "2023-04-02",
+      statut: "Traitée",
+      pieceJointeUrl: "/uploads/pj2.pdf",
+    },
+    {
+      id: 3,
+      etudiant: "Pauline Ewane",
+      type: "Demande de document",
+      date: "2023-04-03",
+      statut: "En attente",
+      pieceJointeUrl: "/uploads/pj3.pdf",
+    },
   ]);
 
   const handleMarkAsProcessed = (id: number) => {
@@ -50,6 +72,7 @@ const RequeteAdmin: React.FC = () => {
                   <th className="border border-gray-300 p-2 text-left">Date</th>
                   <th className="border border-gray-300 p-2 text-left">Statut</th>
                   <th className="border border-gray-300 p-2 text-center">Actions</th>
+                  <th className="border border-gray-300 p-2 text-center">Détails</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,11 +98,25 @@ const RequeteAdmin: React.FC = () => {
                         </button>
                       )}
                     </td>
+                    <td className="border border-gray-300 p-2 text-center">
+                      {requete.pieceJointeUrl ? (
+                        <a
+                          href={requete.pieceJointeUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#161B70] underline hover:text-blue-700"
+                        >
+                          Détails
+                        </a>
+                      ) : (
+                        <span className="text-gray-400">Aucune pièce</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
                 {requetes.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="text-center text-gray-500 p-3">
+                    <td colSpan={6} className="text-center text-gray-500 p-3">
                       Aucune requête trouvée.
                     </td>
                   </tr>
