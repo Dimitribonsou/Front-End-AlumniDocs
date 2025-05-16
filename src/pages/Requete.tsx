@@ -21,7 +21,7 @@ const RequetePage: React.FC = () => {
     formData.append('piece_jointe', fichier);
     formData.append('id_etudiant', idEtudiant);
     try {
-      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newRequest`, {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/newRequest`, {
         method: 'POST',
         body: formData
       });
