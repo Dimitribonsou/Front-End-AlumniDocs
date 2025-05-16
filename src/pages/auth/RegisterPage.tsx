@@ -92,9 +92,9 @@ const RegisterPage = () => {
     }
 
     // Validation for phone
-    const phoneRegex = /^\+?([0-9]{1,3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    if (!phoneRegex.test(phone)) {
-      console.log("format de numero de telphone incorrect");
+    // const phoneRegex = /^([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (phone.trim() === "") {
+      console.log("le numero  de telphone est obligatoire");
       isValid = false;
     }
 
