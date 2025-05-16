@@ -25,9 +25,9 @@ const Sidebar = () => {
     { name: "Accueil", path: "/admin", icon: faHome },
     { name: "Annonces", path: "/admin/annonces", icon: faBullhorn },
     { name: "Étudiants", path: "/admin/etudiant", icon: faUserGraduate },
-    { name: "Validations", path: "/admin/validations", icon: faCheckCircle },
+    // { name: "Validations", path: "/admin/validations", icon: faCheckCircle },
     { name: "Requêtes", path: "/admin/requetes", icon: faEnvelope },
-    { name: "Forums", path: "/admin/forums", icon: faComments },
+    // { name: "Forums", path: "/admin/forums", icon: faComments },
     { name: "Administrateurs", path: "/admin/admins", icon: faUserShield },
   ];
 
