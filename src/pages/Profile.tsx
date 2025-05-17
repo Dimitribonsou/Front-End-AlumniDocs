@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
           <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
              <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
             <img
-              src="../assets/et.jpeg"
+              src="../assets/profil.png"
               alt="Profil"
                onClick={FileClick}
               className="w-24 h-24 rounded-full object-cover border cursor-pointer"
