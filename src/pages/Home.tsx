@@ -11,7 +11,7 @@ import constant from "../data/constant";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [InfoRate,setInfoRate]=useState<number>(20)
   const navigate = useNavigate();
 const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
 console.log(data.nom);
@@ -34,6 +34,22 @@ const getStudentClassInfo= async ()=>{
     console.log(data)
     // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
     localStorage.setItem("classInfo",JSON.stringify(data));
+  }
+  else
+  {
+     console.log("erreur lors de la recuperation de la classe");
+  }
+}
+//focntion permettant davoir le niveau de progression dans la soummission des documents
+const getStudentRate= async ()=>{
+  const idEtudiant=data.iduser;
+  const response = await fetch(`${constant.host}/AlumniDocs-API/profile-completion/${idEtudiant}`);
+  if(response.ok)
+  {
+    const res=await response.json()
+    console.log(data)
+    // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
+    setInfoRate(res.data.completionRate);
   }
   else
   {

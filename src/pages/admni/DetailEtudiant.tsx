@@ -44,6 +44,10 @@ export default function DetailEtudiant() {
   const { id } = useParams<{ id: string }>();
   const [infos, setInfos] = useState<InfosEtudiant | null>(null);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   useEffect(() => {
     // Remplace ceci par un appel API réel
     async function fetchEtudiant() {
@@ -106,17 +110,25 @@ export default function DetailEtudiant() {
       <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
         <Navbar_admin />
         <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
-          <h2 className="text-2xl font-bold mb-6 text-center">Détails de l'étudiant <strong className="capitalize text-[#161B70]">{infos.nom} {infos.prenom}</strong> </h2>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-center">Fiche infos de l'étudiant <strong className="font-bold text-red-600">{infos.nom} {infos.prenom}</strong> </h2>
+            <button
+              onClick={handlePrint}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 print:hidden"
+            >
+              Imprimer
+            </button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Infos personnelles */}
             <div>
-              <h3 className="font-semibold mb-2 text-[#161B70]">Informations personnelles</h3>
+              <h3 className="font-semibold mb-2 text-red-600 text-xl">Informations personnelles</h3>
               {renderLabel("Civilité")}
               <div>{infos.civilite}</div>
               {renderLabel("Nom")}
               <div>{infos.nom}</div>
-              {renderLabel("Nom marital")}
-              <div>{infos.nomMarital}</div>
+              {/* {renderLabel("Nom marital")}
+              <div>{infos.nomMarital}</div> */}
               {renderLabel("Prénom")}
               <div>{infos.prenom}</div>
               {renderLabel("Email")}
@@ -138,7 +150,7 @@ export default function DetailEtudiant() {
             </div>
             {/* Infos académiques */}
             <div>
-              <h3 className="font-semibold mb-2 text-[#161B70]">Informations académiques</h3>
+              <h3 className="font-semibold mb-2 text-red-600 text-xl">Informations académiques</h3>
               {renderLabel("Année académique")}
               <div>{infos.anneeAcademique}</div>
               {renderLabel("Matricule")}
@@ -156,7 +168,7 @@ export default function DetailEtudiant() {
             </div>
             {/* Infos parents */}
             <div className="md:col-span-2 mt-6">
-              <h3 className="font-semibold mb-2 text-[#161B70]">Informations des parents</h3>
+              <h3 className="font-semibold mb-2 text-red-600 text-xl">Informations des parents</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   {renderLabel("Nom du père ou tuteur")}
@@ -184,6 +196,30 @@ export default function DetailEtudiant() {
         </div>
         <Footer />
       </div>
+
+      {/* Styles pour l'impression */}
+      <style>
+        {`
+          @media print {
+            .print\\:hidden {
+              display: none !important;
+            }
+            body * {
+              visibility: hidden;
+            }
+            .w-full.max-w-4xl.mx-auto.p-6.mt-4.bg-white.shadow-md.rounded-xl,
+            .w-full.max-w-4xl.mx-auto.p-6.mt-4.bg-white.shadow-md.rounded-xl * {
+              visibility: visible;
+            }
+            .w-full.max-w-4xl.mx-auto.p-6.mt-4.bg-white.shadow-md.rounded-xl {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 }

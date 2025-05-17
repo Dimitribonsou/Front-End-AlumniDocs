@@ -159,7 +159,7 @@ const getClassEtudiant= async ()=>{
           {/* Actions globales */}
           {filterClasse && (
             <>
-              <div className="flex justify-end gap-4 mb-6">
+              {/* <div className="flex justify-end gap-4 mb-6">
                 <button
                   onClick={handleExportPDF}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -177,8 +177,8 @@ const getClassEtudiant= async ()=>{
                   className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                 >
                   Télécharger Documents.zip
-                </button> */}
-              </div>
+                </button> 
+              </div> */}
 
               {/* Liste des étudiants */}
               <div className="bg-white p-6 rounded-lg shadow-md">
@@ -205,12 +205,12 @@ const getClassEtudiant= async ()=>{
                         <td className="border border-gray-300 p-2">{student.email}</td>
                         <td className="border border-gray-300 p-2">{student.genre}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                          <button
+                          {/* <button
                             onClick={() => handleViewDocuments(student)}
                             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             Voir Documents
-                          </button>
+                          </button> */}
                           <a
                           href={`/admin/detail-etudiant/${student.id_etudiant}`}
                            className="ml-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 inline-block"
