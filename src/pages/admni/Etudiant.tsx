@@ -78,7 +78,7 @@ const Etudiants: React.FC = () => {
           <div className="bg-white p-4 rounded-lg shadow-md mb-6">
             <h2 className="text-lg font-semibold mb-4">Filtres</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Promotion</label>
                 <select
                   className="w-full border border-gray-300 p-2 rounded"
@@ -89,7 +89,7 @@ const Etudiants: React.FC = () => {
                   <option value="2023-2024">2023-2024</option>
                   <option value="2022-2023">2022-2023</option>
                 </select>
-              </div>
+              </div> */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Classe</label>
                 <select
@@ -169,6 +169,13 @@ const Etudiants: React.FC = () => {
                           >
                             Voir Documents
                           </button>
+                          <a
+                          href={`/admin/detail-etudiant/${student.id}`}
+                           className="ml-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 inline-block"
+                          style={{ textDecoration: "none" }}
+                          >
+                           Détails
+                          </a>
                         </td>
                       </tr>
                     ))}

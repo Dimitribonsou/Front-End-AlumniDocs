@@ -24,6 +24,8 @@ import RequeteAdmin from "./pages/admni/Requete";
 import AdministrateurPage from "./pages/admni/Administrateur";
 import ValidationsPage from "./pages/admni/Validations";
 import VerifyCodePage from "./pages/auth/OTPage";
+import DetailEtudiant from "./pages/admni/DetailEtudiant"; // Ensure this is a valid React component
+
 import UpdloadDocumentComponent from "./Components/uploadDocument";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import AdminRoute from "./Components/AdminRoute";
@@ -41,6 +43,42 @@ const AppRoutes = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
         <Route path="/otp" element={<VerifyCodePage/>} />
+        <Route path="/admin/annonces" element={<Annonces />} />
+        <Route path="/compte" element={<Compte />} />
+        <Route path="/admin/promotions" element={<Promotions />} />
+        <Route path="/admin/filieres" element={<Filieres />} />
+        <Route path="/admin/detail-etudiant" element={<DetailEtudiant />} />
+        <Route path="/admin/classes" element={<Classes />} />
+        <Route path="/admin/forums" element={<Forums />} />
+        <Route path="/admin/etudiant" element={<Etudiants />} />
+        <Route path="/admin/requetes" element={<RequeteAdmin />} />
+        <Route path="/admin/admins" element={<AdministrateurPage />} />
+        <Route path="/admin/validations" element={<ValidationsPage />} />
+            
+        {/* // faire le test sur la variable islogin */}
+        {data.islogin ? (
+          <>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/Annonce" element={<Annonce />} />
+            <Route path="/requetes" element={<RequetePage />} />
+            <Route path="/forum" element={<ForumPage />} />
+            <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
+            <Route path="/notifications" element={<Notif />} />
+            <Route path="/inscription" element={<Inscription />} />
+          </>
+          // rediriger vers le formulaire de connexion
+        ) : (
+          <>
+            <Route path="/home" element={<Navigate replace to="/home" />} />
+            <Route path="/profile" element={<Navigate replace to="/" />} />
+            <Route path="/Annonce" element={<Navigate replace to="/" />} />
+            <Route path="/requetes" element={<Navigate replace to="/" />} />
+            <Route path="/forum" element={<Navigate replace to="/" />} />
+            <Route path="/annonce/:id" element={<Navigate replace to="/" />} />
+            <Route path="/notifications" element={<Navigate replace to="/" />} />
+          </>
+        )}
         <Route path="/admin/annonces" element={<AdminRoute><Annonces /></AdminRoute>} />
         <Route path="/compte" element={<ProtectedRoute allowedRoles={['etudiant']}><Compte /></ProtectedRoute>} />
         <Route path="/admin/promotions" element={<AdminRoute><Promotions /></AdminRoute>} />
