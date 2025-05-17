@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Ilogin from '../types/Ilogin';
+import constant from '../data/constant';
 
 type FileInputProps = {
   label: string;
@@ -11,6 +13,7 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
   const [fileName, setFileName] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [successMsg, setSuccessMsg] = useState<string>("");
+  const [serverMessage, setServerMessage] = useState('');
   const [isTooBig, setIsTooBig] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +21,8 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
     setFileName(file ? file.name : '');
     setSelectedFile(file);
     onChange(file);
-
+    // recuperer le fichier selectionner
+    // setFichier(file)
     if (file && file.size > 1024 * 1024) {
       setSuccessMsg("Fichier est supérieur à 1 Mo !");
       setIsTooBig(true);
@@ -28,9 +32,38 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
+
     if (selectedFile && !isTooBig) {
-      alert(`Fichier "${selectedFile.name}" envoyé !`);
+
+     
+      const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+      const idEtudiant=dataLogin.iduser;
+      const nom=dataLogin.nom;
+      const classe="CSI3-DLW"
+      const formData = new FormData();
+      formData.append('libelle', label);
+      formData.append('document', selectedFile);
+      formData.append('nom', nom);
+      formData.append('classe', classe);
+      formData.append('id_etudiant', idEtudiant);
+      try {
+        const response = await fetch(`${constant.host}/AlumniDocs-API/upload-file`, {
+          method: 'POST',
+          body: formData
+        });
+        console.log(formData);
+        if (!response.ok) {
+          alert("fichier non envoye !")
+          throw new Error('La réponse du serveur n\'est pas valide.');
+        }
+        alert(`Fichier "${selectedFile.name}" envoyé !`);
+        const result = await response.text();
+        setServerMessage(result);
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi de la requête :', error);
+        setServerMessage('Une erreur est survenue lors de l\'envoi de votre requête.');
+      }
     }
   };
 
