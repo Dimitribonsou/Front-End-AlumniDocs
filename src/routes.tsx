@@ -54,31 +54,6 @@ const AppRoutes = () => {
         <Route path="/admin/requetes" element={<RequeteAdmin />} />
         <Route path="/admin/admins" element={<AdministrateurPage />} />
         <Route path="/admin/validations" element={<ValidationsPage />} />
-            
-        {/* // faire le test sur la variable islogin */}
-        {data.islogin ? (
-          <>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/Annonce" element={<Annonce />} />
-            <Route path="/requetes" element={<RequetePage />} />
-            <Route path="/forum" element={<ForumPage />} />
-            <Route path="/annonce/:id" element={<AnnonceDetailsPage />} />
-            <Route path="/notifications" element={<Notif />} />
-            <Route path="/inscription" element={<Inscription />} />
-          </>
-          // rediriger vers le formulaire de connexion
-        ) : (
-          <>
-            <Route path="/home" element={<Navigate replace to="/home" />} />
-            <Route path="/profile" element={<Navigate replace to="/" />} />
-            <Route path="/Annonce" element={<Navigate replace to="/" />} />
-            <Route path="/requetes" element={<Navigate replace to="/" />} />
-            <Route path="/forum" element={<Navigate replace to="/" />} />
-            <Route path="/annonce/:id" element={<Navigate replace to="/" />} />
-            <Route path="/notifications" element={<Navigate replace to="/" />} />
-          </>
-        )}
         <Route path="/admin/annonces" element={<AdminRoute><Annonces /></AdminRoute>} />
         <Route path="/compte" element={<ProtectedRoute allowedRoles={['etudiant']}><Compte /></ProtectedRoute>} />
         <Route path="/admin/promotions" element={<AdminRoute><Promotions /></AdminRoute>} />
