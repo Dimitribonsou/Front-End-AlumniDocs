@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
+import constant from "../../data/constant";
+import { StudentType } from "../../types/StudentType";
 
 // Définition des types pour les étudiants et les documents
 interface Student {
@@ -16,22 +18,58 @@ interface Student {
 }
 
 const Etudiants: React.FC = () => {
-  const [students, setStudents] = useState<Student[]>([
-    { id: 1, matricule: "ETU001", nom: "Ngono", prenom: "Jean-Pierre", tel: "655123456", email: "jean.ngono@gmail.com", promotion: "2023-2024", classe: "CSI3 DLW", documents: ["doc1.pdf", "doc2.pdf"] },
-    { id: 2, matricule: "ETU002", nom: "Mballa", prenom: "Marie", tel: "654987321", email: "marie.mballa@gmail.com", promotion: "2023-2024", classe: "CSI3 DLW", documents: ["doc3.pdf"] },
-    { id: 3, matricule: "ETU003", nom: "Ewane", prenom: "Pauline", tel: "653456789", email: "pauline.ewane@gmail.com", promotion: "2022-2023", classe: "3IL2", documents: ["doc4.pdf", "doc5.pdf"] },
-  ]);
+  const [students, setStudents] = useState<Student[]>([]);
+  useEffect(() => {
+    fetch('your_endpoint_here')
+      .then(response => response.json())
+      .then(data => setStudents(data));
+  }, []);
 
-  const [filterPromotion, setFilterPromotion] = useState<string>("");
-  const [filterClasse, setFilterClasse] = useState<string>("");
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-
-  const filteredStudents = students.filter(
+  const [filterClasse, setFilterClasse] = useState<number>();
+  const [selectedStudent, setSelectedStudent] = useState<StudentType | null>(null);
+  // liste des classes existante 
+  const [listClass, setClasseListe]=useState([]);
+  const [listEtudiant, setListEtudiant]=useState<StudentType[]>([]);
+  
+  useEffect(()=>{
+    getClasse();
+    getClassEtudiant();
+  },[]);
+  useEffect(()=>{
+    getClassEtudiant();
+  },[filterClasse]);
+  const filteredStudents = listEtudiant.filter(
     (student) =>
-      (filterPromotion === "" || student.promotion === filterPromotion) &&
-      (filterClasse === "" || student.classe === filterClasse)
+      !filterClasse || student.id_classe === filterClasse
   );
-
+const getClasse= async ()=>{
+  const response =   await fetch(`${constant.host}/AlumniDocs-API/ClassList`);                                                                                                                                
+  if(response.ok)
+  {
+    //mettre a jour la liste des classe
+     setClasseListe(await response.json());
+  }
+  else
+  {
+     console.log("erreur lors de la recuperation de la classe");
+  }
+}
+const getClassEtudiant= async ()=>{
+  const response = await fetch(`${constant.host}/AlumniDocs-API/studenClass`);
+  if(response.ok)
+  {
+    const data=await response.json();
+    //mettre a jour la liste des classe
+    setListEtudiant(data);
+    console.log(data);
+    
+  }
+  else
+  {
+    alert("Error !")
+     console.log("erreur lors de la recuperation de la liste des etudiant");
+  }
+}
   const handleExportPDF = () => {
     alert("Exportation de la liste des étudiants au format PDF...");
     // Implémentez ici la logique pour générer un fichier PDF
@@ -42,12 +80,14 @@ const Etudiants: React.FC = () => {
     // Implémentez ici la logique pour générer un fichier CSV
   };
 
+
+
   const handleDownloadZip = () => {
     alert("Téléchargement des documents de tous les étudiants en tant que dossier ZIP...");
     // Implémentez ici la logique pour générer un fichier ZIP
   };
 
-  const handleViewDocuments = (student: Student) => {
+  const handleViewDocuments = (student: StudentType) => {
     setSelectedStudent(student);
   };
 
@@ -95,15 +135,17 @@ const Etudiants: React.FC = () => {
                 <select
                   className="w-full border border-gray-300 p-2 rounded"
                   value={filterClasse}
-                  onChange={(e) => setFilterClasse(e.target.value)}
+                  onChange={(e) => setFilterClasse(Number(e.target.value))}
                 >
                   <option value="">Aucune</option>
-                  <option value="CSI3 DLW">CSI3 DLW</option>
-                  <option value="3IL2">3IL2</option>
+                    {/* afficher la liste des classes  */}
+                    {listClass.map((classe:any) => (
+                              <option key={classe.id_classe} value={classe.id_classe}>{classe.libelle}</option>
+                        ))}
                 </select>
               </div>
             </div>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <a
                 href="#"
                 onClick={handleViewEffectifs}
@@ -111,11 +153,11 @@ const Etudiants: React.FC = () => {
               >
                 Voir les effectifs par genre
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Actions globales */}
-          {filterClasse !== "" && (
+          {filterClasse && (
             <>
               <div className="flex justify-end gap-4 mb-6">
                 <button
@@ -130,12 +172,12 @@ const Etudiants: React.FC = () => {
                 >
                   Exporter CSV
                 </button>
-                <button
+                {/* <button
                   onClick={handleDownloadZip}
                   className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                 >
                   Télécharger Documents.zip
-                </button>
+                </button> */}
               </div>
 
               {/* Liste des étudiants */}
@@ -149,19 +191,19 @@ const Etudiants: React.FC = () => {
                       <th className="border border-gray-300 p-2 text-left">Prénom</th>
                       <th className="border border-gray-300 p-2 text-left">Téléphone</th>
                       <th className="border border-gray-300 p-2 text-left">Email</th>
-                      <th className="border border-gray-300 p-2 text-left">Promotion</th>
+                      <th className="border border-gray-300 p-2 text-left">Genre</th>
                       <th className="border border-gray-300 p-2 text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredStudents.map((student) => (
-                      <tr key={student.id} className="hover:bg-gray-100">
+                      <tr key={student.id_etudiant} className="hover:bg-gray-100">
                         <td className="border border-gray-300 p-2">{student.matricule}</td>
                         <td className="border border-gray-300 p-2">{student.nom}</td>
                         <td className="border border-gray-300 p-2">{student.prenom}</td>
-                        <td className="border border-gray-300 p-2">{student.tel}</td>
+                        <td className="border border-gray-300 p-2">{student.telephone}</td>
                         <td className="border border-gray-300 p-2">{student.email}</td>
-                        <td className="border border-gray-300 p-2">{student.promotion}</td>
+                        <td className="border border-gray-300 p-2">{student.genre}</td>
                         <td className="border border-gray-300 p-2 text-center">
                           <button
                             onClick={() => handleViewDocuments(student)}
@@ -170,7 +212,7 @@ const Etudiants: React.FC = () => {
                             Voir Documents
                           </button>
                           <a
-                          href={`/admin/detail-etudiant/${student.id}`}
+                          href={`/admin/detail-etudiant/${student.id_etudiant}`}
                            className="ml-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 inline-block"
                           style={{ textDecoration: "none" }}
                           >

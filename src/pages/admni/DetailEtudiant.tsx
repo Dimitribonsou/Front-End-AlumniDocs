@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
 import Footer from "../../Components/footer";
+import constant from "../../data/constant";
 
 // Type pour les infos étudiant
 type InfosEtudiant = {
@@ -46,40 +47,40 @@ export default function DetailEtudiant() {
   useEffect(() => {
     // Remplace ceci par un appel API réel
     async function fetchEtudiant() {
-      // const res = await fetch(`/api/etudiants/${id}`);
-      // const data = await res.json();
-      // setInfos(data);
-
+      const res=await fetch(`${constant.host}/AlumniDocs-API/studentDetail/${id}`);
+      const Info:any = await res.json();
+      setInfos(Info.data);
+      console.log(infos)
       // MOCK :
-      setInfos({
-        civilite: "Mr",
-        nom: "Doe",
-        nomMarital: "",
-        prenom: "John",
-        email: "john.doe@email.com",
-        telephone: "699999999",
-        nationalite: "Camerounaise",
-        dateNaissance: "2000-01-01",
-        regionNaissance: "Centre",
-        lieuNaissance: "Yaoundé",
-        departementNaissance: "Mfoundi",
-        quartier: "Bastos",
-        anneeAcademique: "2024-2025",
-        matricule: "123456",
-        classe: "CSI3 DLW",
-        bac: "Scientifique",
-        anneeObtentionBac: "2018",
-        diplomeEntree: "Bac C",
-        anneeObtentionDiplome: "2018",
-        nomPere: "Paul Doe",
-        telPere: "677000000",
-        emailPere: "paul.doe@email.com",
-        professionPere: "Ingénieur",
-        nomMere: "Marie Doe",
-        telMere: "699000000",
-        emailMere: "marie.doe@email.com",
-        professionMere: "Comptable",
-      });
+      // setInfos({
+      //   civilite: "Mr",
+      //   nom: "Doe",
+      //   nomMarital: "",
+      //   prenom: "John",
+      //   email: "john.doe@email.com",
+      //   telephone: "699999999",
+      //   nationalite: "Camerounaise",
+      //   dateNaissance: "2000-01-01",
+      //   regionNaissance: "Centre",
+      //   lieuNaissance: "Yaoundé",
+      //   departementNaissance: "Mfoundi",
+      //   quartier: "Bastos",
+      //   anneeAcademique: "2024-2025",
+      //   matricule: "123456",
+      //   classe: "CSI3 DLW",
+      //   bac: "Scientifique",
+      //   anneeObtentionBac: "2018",
+      //   diplomeEntree: "Bac C",
+      //   anneeObtentionDiplome: "2018",
+      //   nomPere: "Paul Doe",
+      //   telPere: "677000000",
+      //   emailPere: "paul.doe@email.com",
+      //   professionPere: "Ingénieur",
+      //   nomMere: "Marie Doe",
+      //   telMere: "699000000",
+      //   emailMere: "marie.doe@email.com",
+      //   professionMere: "Comptable",
+      // });
     }
     fetchEtudiant();
   }, [id]);
@@ -105,7 +106,7 @@ export default function DetailEtudiant() {
       <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
         <Navbar_admin />
         <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
-          <h2 className="text-2xl font-bold mb-6 text-center">Détails de l'étudiant</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Détails de l'étudiant <strong className="capitalize text-[#161B70]">{infos.nom} {infos.prenom}</strong> </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Infos personnelles */}
             <div>
