@@ -37,7 +37,7 @@ const Navbar = () => {
  const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home", hiden: false },
-    { name: "Inscription", icon: faPencil, route: "/inscription", hiden: false },
+    { name: "Inscription", icon: faPencil, route: "/inscription", hiden: classeInfo.length || classeInfo[0].libelle_classe ? true : false },
     { 
       name: "Document", 
       icon: faFile, 
@@ -45,7 +45,7 @@ const Navbar = () => {
       hiden: !classeInfo.length || !classeInfo[0].libelle_classe ? true : false // Si la classe n'est pas définie ou si le tableau est vide, l'onglet sera grisé
     },
     { name: "Requetes", icon: faEnvelope, route: "/requetes", hiden: false },
-    { name: "Annonces", icon: faBullhorn, route: "/annonce", hiden: false },
+    { name: "Annonces", icon: faBullhorn, route: "/annonce",  hiden: !classeInfo.length || !classeInfo[0].libelle_classe ? true : false },
     // { name: "Forum", icon: faComments, route: "/forum" },
     { name: "Notification", icon: faBell, route: "/notifications", hiden: false },
   ];
