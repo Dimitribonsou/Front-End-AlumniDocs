@@ -8,5 +8,6 @@ export default interface Ilogin{
     prenom?: string,
     telephone?: string,
     email?: string,
+    classe?: string,
     message: string
   }

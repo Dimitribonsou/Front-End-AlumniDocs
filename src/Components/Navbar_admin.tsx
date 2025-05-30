@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faUser, faSignOutAlt, faCog, faBars } from "@fortawesome/free-solid-svg-icons";
+import Ilogin from "../types/Ilogin";
 
 const Navbar_admin = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const data = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
 
   return (
     // ...existing code...
@@ -42,14 +44,17 @@ const Navbar_admin = () => {
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
           >
             <FontAwesomeIcon icon={faUser} className="w-6 h-6 text-gray-700" />
-            <span className="text-gray-700 text-sm font-medium">Admin</span>
+            <div className="flex flex-col gap-0">
+               <span className="text-gray-700 text-sm font-bold capitalize">{data.nom}</span>
+               <span className="text-gray-700 text-sm font-normal capitalize">{data.role}</span>
+            </div>
           </button>
 
           {/* Menu déroulant */}
           {isUserMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 text-gray-800">
-              <p className="px-4 py-2 text-sm font-medium">Admin</p>
-              <p className="px-4 py-2 text-xs text-gray-500 border-b">admin@alumnidocs.com</p>
+              <p className="px-4 py-2 text-sm font-medium capitalize">{data.nom}</p>
+              <p className="px-4 py-2 text-xs text-gray-500 border-b">{data.email}</p>
               <a
                 href="/settings"
                 className="px-4 py-2 hover:bg-gray-100 flex items-center gap-2"

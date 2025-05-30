@@ -11,7 +11,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
   const loginData = JSON.parse(localStorage.getItem('loginData') || '{}') as Ilogin;
 
   // Vérifier si l'utilisateur est connecté et est un administrateur
-  if (!loginData || loginData.role !== 'admin') {
+  if (!loginData || loginData.role !== 'admin' && loginData.role !== 'super-admin') {
     // Rediriger vers la page de connexion si l'utilisateur n'est pas un admin
     return <Navigate to="/login" replace />;
   }

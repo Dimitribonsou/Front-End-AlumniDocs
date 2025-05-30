@@ -16,13 +16,14 @@ import {
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 import Ilogin from "../types/Ilogin";
+import IclassInfo from "../types/IclasseInfo";
 
 // Fonction permettant à un utilisateur de se déconnecter
 const logOut = () => {
   // Supprimer la variable loginData du localStorage
   localStorage.removeItem("loginData");
   // Rediriger vers la page de connexion
-  window.location.href = "/";
+  window.location.href = "/login";
 };
 
 const Navbar = () => {
@@ -33,14 +34,20 @@ const Navbar = () => {
  const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
  const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
  const email_etudiant=dataLogin.email;
+ const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
   const navItems = [
-    { name: "Accueil", icon: faHome, route: "/home" },
-    { name: "Inscription", icon: faPencil, route: "/inscription" },
-    { name: "Document", icon: faFile, route: "/profile" },
-    { name: "Requetes", icon: faEnvelope, route: "/requetes" },
-    { name: "Annonces", icon: faBullhorn, route: "/annonce" },
+    { name: "Accueil", icon: faHome, route: "/home", hiden: false },
+    { name: "Inscription", icon: faPencil, route: "/inscription", hiden: false },
+    { 
+      name: "Document", 
+      icon: faFile, 
+      route: "/profile", 
+      hiden: !classeInfo.length || !classeInfo[0].libelle_classe ? true : false // Si la classe n'est pas définie ou si le tableau est vide, l'onglet sera grisé
+    },
+    { name: "Requetes", icon: faEnvelope, route: "/requetes", hiden: false },
+    { name: "Annonces", icon: faBullhorn, route: "/annonce", hiden: false },
     // { name: "Forum", icon: faComments, route: "/forum" },
-    { name: "Notification", icon: faBell, route: "/notifications" },
+    { name: "Notification", icon: faBell, route: "/notifications", hiden: false },
   ];
 
   return (
@@ -58,6 +65,7 @@ const Navbar = () => {
         {/* Menu pour les grands écrans */}
         <ul className="hidden md:flex space-x-6 text-white font-medium">
           {navItems.map((item) => (
+            
             <li key={item.name}>
               <a
                 href={item.route}
@@ -65,7 +73,8 @@ const Navbar = () => {
                   location.pathname === item.route
                     ? "bg-blue-800 text-yellow-300 shadow-md"
                     : "hover:bg-blue-700"
-                }`}
+                } ${item.hiden ? "opacity-50 cursor-not-allowed pointer-events-none" : ""}`}
+                onClick={(e) => item.hiden && e.preventDefault()}
               >
                 <FontAwesomeIcon icon={item.icon} />
                 <span>{item.name}</span>
@@ -79,6 +88,7 @@ const Navbar = () => {
           <button
             className="md:hidden text-white text-2xl"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            
           >
             <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} />
           </button>
@@ -101,7 +111,8 @@ const Navbar = () => {
                     location.pathname === item.route
                       ? "bg-blue-800 text-yellow-300 shadow-md"
                       : "hover:bg-blue-700"
-                  }`}
+                  } ${item.hiden ? "opacity-50 cursor-not-allowed pointer-events-none" : ""}`}
+                  onClick={(e) => item.hiden && e.preventDefault()}
                 >
                   <FontAwesomeIcon icon={item.icon} />
                   <span>{item.name}</span>

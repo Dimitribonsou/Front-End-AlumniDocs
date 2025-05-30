@@ -43,7 +43,6 @@ const renderLabel = (text: string) => (
 export default function DetailEtudiant() {
   const { id } = useParams<{ id: string }>();
   const [infos, setInfos] = useState<InfosEtudiant | null>(null);
-
   const handlePrint = () => {
     window.print();
   };
@@ -54,7 +53,7 @@ export default function DetailEtudiant() {
       const res=await fetch(`${constant.host}/AlumniDocs-API/studentDetail/${id}`);
       const Info:any = await res.json();
       setInfos(Info.data);
-      console.log(infos)
+    
       // MOCK :
       // setInfos({
       //   civilite: "Mr",
@@ -111,7 +110,7 @@ export default function DetailEtudiant() {
         <Navbar_admin />
         <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-center">Fiche infos de l'étudiant <strong className="font-bold text-red-600">{infos.nom} {infos.prenom}</strong> </h2>
+            <h2 className="text-2xl font-bold text-center">Fiche infos de l'étudiant <strong className="font-bold text-blue-600">{infos.nom} {infos.prenom}</strong> </h2>
             <button
               onClick={handlePrint}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 print:hidden"
@@ -138,7 +137,7 @@ export default function DetailEtudiant() {
               {renderLabel("Nationalité")}
               <div>{infos.nationalite}</div>
               {renderLabel("Date de naissance")}
-              <div>{infos.dateNaissance}</div>
+              <div>{new Date(infos.dateNaissance).toISOString().split("T")[0]}</div>
               {renderLabel("Région de naissance")}
               <div>{infos.regionNaissance}</div>
               {renderLabel("Lieu de naissance")}
