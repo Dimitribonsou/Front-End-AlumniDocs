@@ -116,7 +116,7 @@ const handleSubmit = async () => {
     }
   }
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       {/* Sidebar */}
       <Sidebar />
 
