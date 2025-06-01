@@ -4,12 +4,21 @@ import Footer from "../Components/footer";
 
 export default function Compte() {
   const [step, setStep] = useState(1);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     civilité: "",
     nom: "",
+    nomMarital: "",
     prenom: "",
     email: "",
     telephone: "",
+    nationalite: "",
+    dateNaissance: "",
+    regionNaissance: "",
+    lieuNaissance: "",
+    departementNaissance: "",
+    quartier: "",
+    photo: "",
     anneeAcademique: "",
     matricule: "",
     classe: "",
@@ -27,25 +36,39 @@ export default function Compte() {
     professionMere: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
-  const totalSteps = 2; // Nombre total d'étapes
-  const progressPercentage = (step / totalSteps) * 100; // Calcul de la progression
+  const totalSteps = 2;
+  const progressPercentage = (step / totalSteps) * 100;
 
   const renderLabel = (text: string) => (
     <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
   );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Exemple de validation
+    setError("Exemple de notification ou d'erreur");
+    // Ajoute ici ta logique de soumission réelle
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
       <Navbar />
       <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Profile Étudiant</h2>
+
+        {/* Notification */}
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300 font-semibold ">
+            {error}
+          </div>
+        )}
 
         {/* Barre de progression */}
         <div className="relative w-full h-2 bg-gray-200 rounded-full mb-6">
@@ -55,7 +78,7 @@ export default function Compte() {
           ></div>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Étape 1 : Informations personnelles */}
           {step === 1 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,12 +112,11 @@ export default function Compte() {
                 {renderLabel("Nom Marital")}
                 <input
                   type="text"
-                  name="nom"
+                  name="nomMarital"
                   placeholder="Entrer le nom marital"
-                  value={formData.nom}
+                  value={formData.nomMarital}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -137,84 +159,74 @@ export default function Compte() {
                 {renderLabel("Nationalité")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="nationalite"
                   placeholder="Entrer la nationalité"
-                  value={formData.telephone}
+                  value={formData.nationalite}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Date de naissance")}
                 <input
                   type="date"
-                  name="telephone"
-                  placeholder="Entrer la date de naissance"
-                  value={formData.telephone}
+                  name="dateNaissance"
+                  value={formData.dateNaissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Région de naissance")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="regionNaissance"
                   placeholder="Entrer la région de naissance"
-                  value={formData.telephone}
+                  value={formData.regionNaissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Lieu de naissance")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="lieuNaissance"
                   placeholder="Entrer le lieu de naissance"
-                  value={formData.telephone}
+                  value={formData.lieuNaissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Département de naissance")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="departementNaissance"
                   placeholder="Entrer le département de naissance"
-                  value={formData.telephone}
+                  value={formData.departementNaissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Quartier")}
                 <input
                   type="text"
-                  name="telephone"
+                  name="quartier"
                   placeholder="Entrer le quartier"
-                  value={formData.telephone}
+                  value={formData.quartier}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
                 {renderLabel("Photo")}
                 <input
                   type="file"
-                  name="telephone"
-                  placeholder="Télécharger une photo"
-                  value={formData.telephone}
-                  onChange={handleChange}
+                  name="photo"
                   className="w-full border p-2 rounded"
-                  required
+                  // Pour gérer l'upload, il faut une logique spécifique
                 />
               </div>
             </div>
@@ -232,11 +244,10 @@ export default function Compte() {
                   value={formData.nomPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Téléphone")}
+                {renderLabel("Téléphone du père ou tuteur")}
                 <input
                   type="tel"
                   name="telPere"
@@ -244,11 +255,10 @@ export default function Compte() {
                   value={formData.telPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Email")}
+                {renderLabel("Email du père ou tuteur")}
                 <input
                   type="email"
                   name="emailPere"
@@ -256,11 +266,10 @@ export default function Compte() {
                   value={formData.emailPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Profession")}
+                {renderLabel("Profession du père ou tuteur")}
                 <input
                   type="text"
                   name="professionPere"
@@ -268,7 +277,6 @@ export default function Compte() {
                   value={formData.professionPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -280,11 +288,10 @@ export default function Compte() {
                   value={formData.nomMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Téléphone")}
+                {renderLabel("Téléphone de la mère ou tutrice")}
                 <input
                   type="tel"
                   name="telMere"
@@ -292,11 +299,10 @@ export default function Compte() {
                   value={formData.telMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Email")}
+                {renderLabel("Email de la mère ou tutrice")}
                 <input
                   type="email"
                   name="emailMere"
@@ -304,11 +310,10 @@ export default function Compte() {
                   value={formData.emailMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
-                {renderLabel("Profession")}
+                {renderLabel("Profession de la mère ou tutrice")}
                 <input
                   type="text"
                   name="professionMere"
@@ -316,7 +321,6 @@ export default function Compte() {
                   value={formData.professionMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
             </div>

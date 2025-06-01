@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 
 const RequetePage: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Exemple de validation
+    setError("Exemple de notification ou d'erreur");
+    // Ajoute ici ta logique de soumission réelle
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
-      <div className="flex flex-col md:flex-row max-w-5xl w-full bg-white shadow-lg mt-10 p-6 rounded-lg mx-auto">
+      <div className="flex flex-col md:flex-row max-w-5xl w-full bg-white  mt-10 p-6 rounded-lg mx-auto">
         {/* Image Section */}
         <img
           src="/assets/rq.jpeg"
@@ -21,7 +30,14 @@ const RequetePage: React.FC = () => {
             Envoyer votre requete
           </p>
 
-          <form className="mt-4 space-y-4">
+          {/* Notification */}
+          {error && (
+            <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300 font-semibold shadow-sm">
+              {error}
+            </div>
+          )}
+
+          <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
             {/* Libelle Input */}
             <div>
               <label className="block text-gray-700">Objet</label>
@@ -59,7 +75,6 @@ const RequetePage: React.FC = () => {
                 name="file"
                 className="mt-1 block text-sm w-full  text-gray-700  border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
               />
-              
             </div>
 
             {/* Submit Button */}

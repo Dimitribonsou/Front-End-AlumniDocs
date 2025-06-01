@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 
 const Inscription: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
+
   const renderLabel = (text: string) => (
     <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
   );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Exemple de validation
+    setError("Exemple de notification ou d'erreur");
+    // Ici, ajoute ta logique de soumission réelle
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
       <div className="flex flex-col max-w-3xl w-full bg-white shadow-lg mt-10 p-6 rounded-lg mx-auto">
+        
         {/* Form Section */}
         <div className="w-full p-6">
           <h2 className="text-2xl font-bold text-center">INSCRIPTION</h2>
-
-          {/* Conteneur sans défilement */}
+          {/* Notification */}
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300 font-semibold ">
+            {error}
+          </div>
+        )}
           <div className="mt-6">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Infos académiques */}
               <div className="space-y-4">
                 <hr />
@@ -122,7 +136,6 @@ const Inscription: React.FC = () => {
                   </div>
                 </div>
               </div>
-
               {/* Submit Button */}
               <div className="max-w-sm mx-auto">
                 <button
@@ -136,7 +149,6 @@ const Inscription: React.FC = () => {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

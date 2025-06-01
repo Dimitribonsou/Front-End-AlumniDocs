@@ -26,6 +26,7 @@ import AdministrateurPage from "./pages/admni/Administrateur";
 import ValidationsPage from "./pages/admni/Validations";
 import VerifyCodePage from "./pages/auth/OTPage";
 import DetailEtudiant from "./pages/admni/DetailEtudiant"; // Ensure this is a valid React component
+import DiscussionPage from "./pages/Discussion";
 
 
 const AppRoutes = () => {
@@ -41,6 +42,7 @@ const AppRoutes = () => {
         <Route path="/otp" element={<VerifyCodePage/>} />
         <Route path="/admin/annonces" element={<Annonces />} />
         <Route path="/compte" element={<Compte />} />
+        <Route path="/discussion" element={<DiscussionPage />} />
         <Route path="/admin/promotions" element={<Promotions />} />
         <Route path="/admin/filieres" element={<Filieres />} />
         <Route path="/admin/detail-etudiant" element={<DetailEtudiant />} />
