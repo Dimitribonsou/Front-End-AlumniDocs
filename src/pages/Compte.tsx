@@ -40,7 +40,7 @@ export default function Compte() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://${constant.host}/AlumniDocs-API/newProfil`, {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/newProfil`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

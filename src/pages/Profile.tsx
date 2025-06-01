@@ -19,7 +19,7 @@ const ProfilePage: React.FC = () => {
  const email_etudiant=dataLogin.email;
  const telephone=dataLogin.telephone;
  // recuperer la classe de l'etudiant
- const classe=classeInfo[0].libelle_classe || "CSI3-DLW";
+ const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
   const handleFileChange = (name: string, file: File | null) => {
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
   };
@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
           <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
              <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
             <img
-              src="../assets/et.jpeg"
+              src="../assets/profil.png"
               alt="Profil"
                onClick={FileClick}
               className="w-24 h-24 rounded-full object-cover border cursor-pointer"
@@ -123,7 +123,7 @@ const ProfilePage: React.FC = () => {
             </div>
         
             {/* Boutons */}
-            <div className="flex flex-col md:flex-row justify-between mt-6">
+            {/* <div className="flex flex-col md:flex-row justify-between mt-6">
               <button
                 type="button"
                 className="bg-gray-600 h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
@@ -136,7 +136,7 @@ const ProfilePage: React.FC = () => {
               >
                 <FontAwesomeIcon icon={faPlus} /> Soumettre
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

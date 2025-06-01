@@ -5,73 +5,69 @@ import { faAt } from "@fortawesome/free-solid-svg-icons";
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [sendSuccess, setSendSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSendResetLink = async () => {
+  const handleSendResetLink = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSending(true);
+    setError("");
     try {
       const response = await fetch('/api/send-reset-link', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send reset link');
-      }
+      if (!response.ok) throw new Error('Échec de l\'envoi du lien');
 
       const data = await response.json();
       if (data.success) {
-        setSendSuccess(true);
+        setError("Lien de réinitialisation envoyé !");
       } else {
-        console.error('Failed to send reset link');
+        setError("Impossible d'envoyer le lien.");
       }
     } catch (error) {
-      console.error('Error sending reset link:', error);
+      setError("Erreur lors de l'envoi du lien.");
     } finally {
       setIsSending(false);
     }
   };
 
-  const handleResetPassword = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Email envoyé à :", email);
-    alert("Un e-mail de réinitialisation a été envoyé.");
-  };
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#CF3F3F] px-4">
-      {/* Logo */}
-      <div className="absolute top-4 left-4 md:inset-0 md:flex md:items-center md:justify-start md:pl-10">
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
         <img
-          src="/assets/logo_1_alumnidocs.png"
-          alt="Logo"
-          className="h-16 md:h-72 object-contain"
+          src="/assets/iuc-bg.jpg"
+          alt="background"
+          className="w-full h-full object-cover object-center brightness-75"
         />
+        <div className="absolute inset-0 "></div>
       </div>
 
       {/* Forgot Password Card */}
-      <div className="relative md:absolute md:top-1/2 md:left-[70%] bg-white transform md:-translate-x-1/2 md:-translate-y-1/2 shadow-lg rounded-lg p-6 md:p-10 w-full max-w-sm md:max-w-md">
-        <h2 className="text-2xl md:text-4xl font-semibold text-center">
-          Mot de passe oublié?
-          <div className="line-with-dots"></div>
+      <div className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow-2xl">
+        <img
+          src="/assets/logo_1_alumnidocs.png"
+          alt="Logo"
+          className="h-24 mb-6"
+        />
+        <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">
+          Mot de passe oublié ?
         </h2>
-        <br />
-        <div>
-          <p className="text-sm md:text-base text-center italic">
-            Veuillez saisir votre email pour réinitialiser <br />
-            votre mot de passe.
-          </p>
-        </div>
-        <form className="mt-6" onSubmit={handleResetPassword}>
-          <div>
-            <label className="block mb-2 text-sm md:text-base font-medium">
-              Email
-            </label>
-            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-10">
-              <span className="bg-gray-200 p-3 text-gray-600">
+        <p className="text-gray-500 mb-6 text-center">
+          Veuillez saisir votre email pour réinitialiser votre mot de passe.
+        </p>
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {error}
+          </div>
+        )}
+        <form className="w-full" onSubmit={handleSendResetLink}>
+          <div className="mb-4">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
+              <span className="bg-gray-100 p-3 text-gray-600">
                 <FontAwesomeIcon icon={faAt} />
               </span>
               <input
@@ -79,24 +75,30 @@ const ForgotPasswordPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Entrez votre email"
-                className="w-full py-2 px-3 text-sm md:text-base focus:outline-none focus:border-blue-500"
+                className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                 autoComplete="off"
+                required
               />
             </div>
           </div>
-          <br />
-          <div className="flex flex-col md:flex-row justify-between">
+          <div className="flex flex-col md:flex-row justify-between gap-2 mt-4">
             <button
               type="button"
-              className="bg-[#161B70] h-9 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:mr-2 mb-2 md:mb-0"
+              className="bg-[#161B70] h-11 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2"
+              onClick={() => (window.location.href = "/")}
             >
-              <a href="/">Connexion</a>
+              Connexion
             </button>
             <button
               type="submit"
-              className="bg-[#161B70] h-9 hover:bg-blue-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2 md:ml-2"
+              disabled={isSending}
+              className={`h-11 font-semibold rounded-md py-2 text-sm w-full md:w-1/2 text-white ${
+                isSending
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#161B70] hover:bg-blue-600"
+              }`}
             >
-              Envoyer
+              {isSending ? "Envoi..." : "Envoyer"}
             </button>
           </div>
         </form>

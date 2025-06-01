@@ -19,12 +19,12 @@ const Toast = ({ message, type, onClose }: { message: string; type: "success" | 
 
 const VerifyCodePage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [error, setError] = useState("");
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const navigate = useNavigate();
 
-  // Gère la saisie et le focus automatique
   const handleChange = (value: string, idx: number) => {
     if (!/^\d?$/.test(value)) return;
     const newCode = [...code];
@@ -46,11 +46,11 @@ const VerifyCodePage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (code.some((c) => c === "")) {
-      setToast({ message: "Veuillez entrer le code complet.", type: "error" });
+      setError("Veuillez entrer le code complet.");
       return;
     }
     setIsSubmitting(true);
-    setToast(null);
+    setError("");
     try {
       const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
       const id_user=dataLogin.iduser;
@@ -76,45 +76,47 @@ const VerifyCodePage = () => {
         console.log("etudiant")
         setTimeout(() => navigate("/home"), 1200);
       } else {
-        setToast({ message: data.message || "Code incorrect.", type: "error" });
+        setError(data.message || "Code incorrect.");
       }
     } catch {
-      setToast({ message: "Erreur lors de la vérification.", type: "error" });
+      setError("Erreur lors de la vérification.");
     }
     setIsSubmitting(false);
   };
 
   const handleResend = () => {
-    setToast({ message: "Code de vérification renvoyé !", type: "success" });
+    setError("Code de vérification renvoyé !");
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#CF3F3F] px-4">
-      {/* Toast */}
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/assets/iuc-bg.jpg"
+          alt="background"
+          className="w-full h-full object-cover object-center brightness-75"
         />
-      )}
-      {/* Logo */}
-      <div className="absolute top-4 left-4 md:inset-0 md:flex md:items-center md:justify-start md:pl-10">
+        <div className="absolute inset-0 "></div>
+      </div>
+
+      {/* Centered card */}
+      <div className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow-2xl">
         <img
           src="/assets/logo_1_alumnidocs.png"
           alt="Logo"
-          className="h-16 md:h-72 object-contain"
+          className="h-24 mb-6"
         />
-      </div>
-      {/* Card */}
-      <div className="relative md:absolute md:top-1/2 md:left-[70%] bg-white transform md:-translate-x-1/2 md:-translate-y-1/2 shadow-lg rounded-lg p-6 md:p-10 w-full max-w-sm md:max-w-md">
-        <h2 className="text-2xl md:text-4xl font-semibold text-center mb-2">
-          Vérification du code
-        </h2>
-        <p className="text-center text-gray-600 mb-4">
+        <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Vérification du code</h2>
+        <p className="text-gray-500 mb-6 text-center">
           Entrez le code à 6 chiffres envoyé à votre adresse email.
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className="flex flex-col items-center w-full mt-4">
           <div className="flex justify-center gap-2 mb-4">
             {code.map((digit, idx) => (
               <input
