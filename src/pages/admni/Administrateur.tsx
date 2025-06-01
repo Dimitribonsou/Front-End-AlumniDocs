@@ -35,6 +35,8 @@ const AdministrateurPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
   const [serverMessage, setServerMessage] = useState("");
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [adminToDelete, setAdminToDelete] = useState<number | null>(null);
     //renitialiser le contenu du formulaire
     const resetFormData= ()=>{
       setEmail("");
@@ -86,9 +88,9 @@ const handleSubmit = async () => {
       // Handle error as needed
     }
 };
- const handleDeleteAdmin= async(id_user:any)=>{
+ const handleDeleteAdmin= async()=>{
   try {
-    const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${id_user}`, {
+    const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${adminToDelete}`, {
       method: 'DELETE',
     });
     if(!response.ok)
@@ -96,12 +98,21 @@ const handleSubmit = async () => {
        console.log("erreur lors de la suppression de L'admin")
     }
     console.log(await response.text())
+    setShowConfirmDialog(false);
     getAdmin();
    
   } catch (error) {
     console.log("Une erreur est survenue : "+error)
   }
  }
+ const handleDeleteClick = (id_admin: number) => {
+  setAdminToDelete(id_admin);
+  setShowConfirmDialog(true);
+};
+const handleCancelDelete = () => {
+  setShowConfirmDialog(false);
+  setAdminToDelete(null);
+};
   // fonction pour  afficher la liste des classes
   const getAdmin= async ()=>{
     const response = await fetch(`${constant.host}/AlumniDocs-API/AdminList`);
@@ -149,7 +160,7 @@ const handleSubmit = async () => {
                     <td className="border border-gray-300 p-2">{admin.telephone}</td>
                     <td className="border border-gray-300 p-2 text-center">
                       <button
-                        onClick={() => handleDeleteAdmin(admin.id_utilisateur)}
+                        onClick={() => handleDeleteClick(admin.id_utilisateur)}
                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                       >
                         Supprimer
@@ -280,6 +291,29 @@ const handleSubmit = async () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+            {/* Boîte de dialogue de confirmation */}
+            {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+            <h3 className="text-lg font-semibold mb-4">Confirmation de suppression</h3>
+            <p className="mb-6">Voulez-vous vraiment supprimer cette annonce ?</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={handleCancelDelete}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={handleDeleteAdmin}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Supprimer
               </button>
             </div>
           </div>
