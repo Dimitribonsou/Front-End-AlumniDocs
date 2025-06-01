@@ -47,7 +47,12 @@ export default function Compte() {
   const progressPercentage = (step / totalSteps) * 100;
 
   const renderLabel = (text: string) => (
-    <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
+    <label className="block mb-2 text-sm font-medium text-gray-700">
+      {text}
+      {text !== "Nom Marital" && text !== "Département de naissance" && (
+        <span className="text-red-600 ml-1">*</span>
+      )}
+    </label>
   );
 
   const handleSubmit = (e: React.FormEvent) => {

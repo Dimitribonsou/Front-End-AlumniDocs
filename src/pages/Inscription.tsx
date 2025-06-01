@@ -5,8 +5,12 @@ import Footer from '../Components/footer';
 const Inscription: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
+  // Ajout de l'étoile rouge sur chaque label
   const renderLabel = (text: string) => (
-    <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
+    <label className="block mb-2 text-sm font-medium text-gray-700">
+      {text}
+      <span className="text-red-600 ml-1">*</span>
+    </label>
   );
 
   const handleSubmit = (e: React.FormEvent) => {
