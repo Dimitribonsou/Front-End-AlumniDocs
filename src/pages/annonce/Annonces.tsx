@@ -79,7 +79,9 @@ const Annonce = () => {
           </div>
         </div>
       </div>
-      <Footer />
+        <div className="mt-auto w-full">
+          <Footer />
+        </div>
     </div>
   );
 };
