@@ -3,6 +3,7 @@ import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
 import constant from "../../data/constant";
 import { FiliereType } from "../../types/FiliereType";
+import { exit } from "process";
 
 const Filieres = () => {
   // const filieres = [
@@ -19,6 +20,11 @@ const Filieres = () => {
   //fonction pour enregistrer une filiere
    const handleSubmit= async ()=>{
          try {
+            if(libelle=='')
+            {
+              setErrorMessage("Entrer le nom de la filiere !");
+              return;
+            }
           const data={
              libelle:libelle
           }
@@ -35,6 +41,7 @@ const Filieres = () => {
                     const message:any= await response.text();
                     console.log(message)
                     setErrorMessage(message);
+                    getFiliere();
                  }
                  console.log("Erreur lors de l'enregistrement de la filiere")
          } catch (error) {

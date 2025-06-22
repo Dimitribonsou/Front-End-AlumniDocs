@@ -1,48 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
+import constant from "../../data/constant";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Requete {
   id: number;
+  id_etudiant: number;
   etudiant: string;
   type: string;
-  date: string;
-  statut: "En attente" | "Traitée";
-  pieceJointeUrl?: string; // Ajout du champ pièce jointe
+  objet: string;
+  date_envoi: string;
+  statut: "En attente" | "Traitée" | "Rejeter";
+  piece_jointe?: string; // Ajout du champ pièce jointe
+  description?:string
 }
 
 const RequeteAdmin: React.FC = () => {
-  const [requetes, setRequetes] = useState<Requete[]>([
+  const [requetes, setRequetes] = useState<Requete[]>([]);
+  useEffect(()=>{
+    getRequetes();
+  },[])
+  const getRequetes= async ()=>{
+    const response = await fetch(`${constant.host}/AlumniDocs-API/requestList`);
+    if(response.ok)
     {
-      id: 1,
-      etudiant: "Jean-Pierre Ngono",
-      type: "Revendication de note",
-      date: "2023-04-01",
-      statut: "En attente",
-      pieceJointeUrl: "/uploads/pj1.pdf",
-    },
+      const requestData:Requete[]=await response.json()
+      //mettre a jour la liste des annonces
+      setRequetes(requestData);
+      console.log(requestData)
+      console.table(requetes)
+    }
+    else
     {
-      id: 2,
-      etudiant: "Marie Mballa",
-      type: "Absence justifiée",
-      date: "2023-04-02",
-      statut: "Traitée",
-      pieceJointeUrl: "/uploads/pj2.pdf",
-    },
-    {
-      id: 3,
-      etudiant: "Pauline Ewane",
-      type: "Demande de document",
-      date: "2023-04-03",
-      statut: "En attente",
-      pieceJointeUrl: "/uploads/pj3.pdf",
-    },
-  ]);
+       console.log("erreur lors de la recuperation de la classe");
+    }
+  }
 
-  const handleMarkAsProcessed = (id: number) => {
+  const handleMarkAsProcessed = (id: number,id_etudiant:number) => {
     setRequetes((prevRequetes) =>
       prevRequetes.map((requete) =>
         requete.id === id ? { ...requete, statut: "Traitée" } : requete
+      )
+    );
+    
+  };
+  const handleMarkAsReset = (id: number,id_etudiant:number) => {
+    setRequetes((prevRequetes) =>
+      prevRequetes.map((requete) =>
+        requete.id === id ? { ...requete, statut: "Rejeter" } : requete
       )
     );
   };
@@ -69,6 +76,7 @@ const RequeteAdmin: React.FC = () => {
                 <tr className="bg-gray-200">
                   <th className="border border-gray-300 p-2 text-left">Étudiant</th>
                   <th className="border border-gray-300 p-2 text-left">Type</th>
+                  <th className="border border-gray-300 p-2 text-left">Objet</th>
                   <th className="border border-gray-300 p-2 text-left">Date</th>
                   <th className="border border-gray-300 p-2 text-left">Statut</th>
                   <th className="border border-gray-300 p-2 text-center">Actions</th>
@@ -78,9 +86,10 @@ const RequeteAdmin: React.FC = () => {
               <tbody>
                 {requetes.map((requete) => (
                   <tr key={requete.id} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 p-2">{requete.etudiant}</td>
+                    <td className="border border-gray-300 p-2 capitalize">{requete.etudiant}</td>
                     <td className="border border-gray-300 p-2">{requete.type}</td>
-                    <td className="border border-gray-300 p-2">{requete.date}</td>
+                    <td className="border border-gray-300 p-2">{requete.objet}</td>
+                    <td className="border border-gray-300 p-2">{new Date(requete.date_envoi).toISOString().split('T')[0]}</td>
                     <td
                       className={`border border-gray-300 p-2 ${
                         requete.statut === "Traitée" ? "text-green-600" : "text-red-600"
@@ -89,19 +98,30 @@ const RequeteAdmin: React.FC = () => {
                       {requete.statut}
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
-                      {requete.statut === "En attente" && (
-                        <button
-                          onClick={() => handleMarkAsProcessed(requete.id)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                        >
-                          Marquer comme traitée
-                        </button>
+                      {requete.statut === "En attente" || 1 && (
+                        <div className="flex gap-1">
+
+                          <button
+                            onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
+                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                          >
+                            <FontAwesomeIcon icon={faCheckCircle} />
+                            {/* Accepter */}
+                          </button>
+                          <button
+                            onClick={() => handleMarkAsReset(requete.id,requete.id_etudiant)}
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                          >
+                            <FontAwesomeIcon icon={faTimesCircle} />
+                            {/* Refuser */}
+                          </button>
+                        </div>
                       )}
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
-                      {requete.pieceJointeUrl ? (
+                      {requete.piece_jointe ? (
                         <a
-                          href={requete.pieceJointeUrl}
+                          href={constant.requete_file_path+"/"+requete.piece_jointe}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[#161B70] underline hover:text-blue-700"

@@ -50,6 +50,7 @@ const getAnnonces= async ()=>{
      console.log("erreur lors de la recuperation de la classe");
   }
 }
+// fonction pour publier une nouvelle annonce
   const handleSubmit = async (e: React.FormEvent) => {
     const dataLogin:any = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
     const idAdmin=dataLogin.iduser;
@@ -121,11 +122,22 @@ const handleCancelDelete = () => {
   setShowConfirmDialog(false);
   setAnnonceToDelete(null);
 };
-
+const handleStatus=async (id:number)=>{
+   try {
+    const response = await fetch(`${constant.host}/AlumniDocs-API/UpdateStatusAnnonce/${id}`, {
+      method: "PUT"
+    });
+    if(!response.ok)
+    {
+       console.log("Erreur lors de la mise a jour du status de l'annonce");
+    }
+   } catch ( error) {
+    console.error("Erreur lors de la mise a jour du status:", error);
+   }
+}
+// fonction pour publier une annonce
   const handlePublish = async (id: number) => {
     try {
-      console.log(id);
-      console.log(selectedFiliere)
       for (const id_classe of selectedFiliere) {
         let data={
           "id_classe":id_classe,
@@ -146,6 +158,8 @@ const handleCancelDelete = () => {
           const result = await response.text();
           setServerMessage(result);
           getAnnonces();
+          // mettre a jour le statut de l'annonce
+          handleStatus(id);
 
         } catch (error) {
           console.error('Erreur lors de l\'envoi de la requête pour la classe ' + id_classe + ' :', error);
@@ -196,7 +210,7 @@ const handleCancelDelete = () => {
                       <td className="p-3 capitalize font-medium">{annonce.nom_admin}</td>
                       {/* <td className="p-3">{annonce.classes ? annonce.classes.map((classe:string)=>classe).join(", ") : ''}</td> */}
                       <td className="p-3">{new Date(annonce.date_publication).toISOString().split("T")[0]}</td>
-                      <td className='p-3'> <span className={annonce.statut ? "bg-green-200 text-white   rounded-lg p-1 px-2" : "bg-yellow-200 text-white  rounded-lg p-1 px-2"  }>{annonce.statut ? 'publier' :'non publier'}</span></td>
+                      <td className='p-3'> <span className={annonce.statut ? "bg-green-300 text-white   rounded-lg p-1 px-2 text-base font-normal" : "bg-yellow-300 text-white  rounded-lg p-1 px-2 text-base font-normal"  }>{annonce.statut ? 'publier' :'non publier'}</span></td>
                       <td className="p-3 flex flex-col sm:flex-row gap-2">
                         <button
                           onClick={() => getPublication(annonce.id_annonce)}

@@ -3,6 +3,7 @@ import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 import constant from '../data/constant';
 import Ilogin from '../types/Ilogin';
+import NewNotification from '../data/function';
 
 const RequetePage: React.FC = () => {
   const [serverMessage, setServerMessage] = useState('');
@@ -32,6 +33,8 @@ const RequetePage: React.FC = () => {
 
       const result = await response.text();
       setServerMessage(result);
+      // envoie des notifications a l'etudiant conserner
+       NewNotification("Requete en attente","Votre requete est en cour de traitement",idEtudiant,"success");
     } catch (error) {
       console.error('Erreur lors de l\'envoi de la requête :', error);
       setServerMessage('Une erreur est survenue lors de l\'envoi de votre requête.');
