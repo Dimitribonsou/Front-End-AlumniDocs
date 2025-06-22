@@ -4,6 +4,7 @@ import Navbar_admin from "../../Components/Navbar_admin";
 import constant from "../../data/constant";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NewNotification from "../../data/function";
 
 interface Requete {
   id: number;
@@ -29,8 +30,6 @@ const RequeteAdmin: React.FC = () => {
       const requestData:Requete[]=await response.json()
       //mettre a jour la liste des annonces
       setRequetes(requestData);
-      console.log(requestData)
-      console.table(requetes)
     }
     else
     {
@@ -38,20 +37,56 @@ const RequeteAdmin: React.FC = () => {
     }
   }
 
-  const handleMarkAsProcessed = (id: number,id_etudiant:number) => {
-    setRequetes((prevRequetes) =>
-      prevRequetes.map((requete) =>
-        requete.id === id ? { ...requete, statut: "Traitée" } : requete
-      )
-    );
-    
+  const handleMarkAsProcessed = async (id: number,id_etudiant:number) => {
+    try {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/UpdateStatutRequest/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({statut:"Rejeter"})
+      });
+      if(!response.ok)
+      {
+         console.log("erreur lors de la Mise a jour du statut")
+      }
+      const result=await response.text();
+      console.log(result)
+      alert(result)
+      // actualiser la liste 
+      getRequetes();
+      // envoyer les notifications a l'etudiant conserner
+      NewNotification("Requete traitée","Votre requete a été traitée avec success.",id_etudiant,'success');
+     
+    } catch (error) {
+      console.log("Une erreur est survenue : "+error)
+    }  
   };
-  const handleMarkAsReset = (id: number,id_etudiant:number) => {
-    setRequetes((prevRequetes) =>
-      prevRequetes.map((requete) =>
-        requete.id === id ? { ...requete, statut: "Rejeter" } : requete
-      )
-    );
+  const handleMarkAsReset = async (id: number,id_etudiant:number) => {
+    try {
+      const response = await fetch(`${constant.host}/AlumniDocs-API/UpdateStatutRequest/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({statut:"Traitée"})
+      });
+      if(!response.ok)
+      {
+         console.log("erreur lors de la Mise a jour du statut")
+      }
+      const result=await response.text();
+      console.log(result)
+      alert(result)
+      //mettre a jour la liste
+      getRequetes();
+      // envoyer les notifications a l'etudiant
+      NewNotification("Requete rejetée","Votre requete a été rejetée .",id_etudiant,'danger');
+     
+    } catch (error) {
+      console.log("Une erreur est survenue : "+error)
+    }
+    
   };
 
   return (
@@ -98,7 +133,7 @@ const RequeteAdmin: React.FC = () => {
                       {requete.statut}
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
-                      {requete.statut === "En attente" || 1 && (
+                      {/* {requete.statut === "En attente" || 1 && ( */}
                         <div className="flex gap-1">
 
                           <button
@@ -116,7 +151,7 @@ const RequeteAdmin: React.FC = () => {
                             {/* Refuser */}
                           </button>
                         </div>
-                      )}
+                      {/* )} */}
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
                       {requete.piece_jointe ? (
