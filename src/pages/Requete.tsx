@@ -40,10 +40,11 @@ const RequetePage: React.FC = () => {
       setServerMessage('Une erreur est survenue lors de l\'envoi de votre requête.');
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
-      <div className="flex flex-col md:flex-row max-w-5xl w-full bg-white shadow-lg mt-10 p-6 rounded-lg mx-auto">
+      <div className="flex flex-col md:flex-row max-w-5xl w-full bg-white  mt-10 p-6 rounded-lg mx-auto">
         {/* Image Section */}
         <img
           src="/assets/rq.jpeg"
@@ -57,7 +58,15 @@ const RequetePage: React.FC = () => {
           <p className="text-gray-500 text-center italic md:text-left">
             Envoyer votre requete
           </p>
-          <p className='font-medium text-center   mt-1 text-green-500 rounded-sm'>{serverMessage}</p>
+
+
+          {/* Notification */}
+          {serverMessage && (
+            <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300 font-semibold shadow-sm">
+              {serverMessage}
+            </div>
+          )}
+
           <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
             {/* Libelle Input */}
             <div>

@@ -48,6 +48,7 @@ const Navbar = () => {
     { name: "Annonces", icon: faBullhorn, route: "/annonce",  hiden: classeInfo.length>0 ? false : true },
     // { name: "Forum", icon: faComments, route: "/forum" },
     { name: "Notification", icon: faBell, route: "/notifications", hiden: false },
+
   ];
 
   return (

@@ -144,7 +144,9 @@ export default function Compte() {
                 <input
                   type="text"
                   name="nomMarital"
+                  name="nomMarital"
                   placeholder="Entrer le nom marital"
+                  value={formData.nomMarital}
                   value={formData.nomMarital}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -191,11 +193,12 @@ export default function Compte() {
                 <input
                   type="text"
                   name="nationalite"
+                  name="nationalite"
                   placeholder="Entrer la nationalité"
+                  value={formData.nationalite}
                   value={formData.nationalite}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -207,7 +210,6 @@ export default function Compte() {
                   value={formData.date_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -219,7 +221,6 @@ export default function Compte() {
                   value={formData.region_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -231,7 +232,6 @@ export default function Compte() {
                   value={formData.lieu_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -243,7 +243,6 @@ export default function Compte() {
                   value={formData.dep_naissance}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -251,11 +250,12 @@ export default function Compte() {
                 <input
                   type="text"
                   name="quartier"
+                  name="quartier"
                   placeholder="Entrer le quartier"
+                  value={formData.quartier}
                   value={formData.quartier}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -283,7 +283,6 @@ export default function Compte() {
                   value={formData.nomPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -295,7 +294,6 @@ export default function Compte() {
                   value={formData.telPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -318,7 +316,6 @@ export default function Compte() {
                   value={formData.professionPere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -330,7 +327,6 @@ export default function Compte() {
                   value={formData.nomMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -342,7 +338,6 @@ export default function Compte() {
                   value={formData.telMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
               <div>
@@ -366,7 +361,6 @@ export default function Compte() {
                   value={formData.professionMere}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
-                  required
                 />
               </div>
             </div>
