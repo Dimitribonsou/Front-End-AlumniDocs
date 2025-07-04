@@ -62,11 +62,13 @@ const Notif = () => {
         )}
           </div>
       </div>
-      </div>
-
-      <Footer />
-    </div>
-  );
-};
-
-export default Notif;
+            </div>
+            {/* Place le footer en bas de la page */}
+            <div className="mt-auto w-full">
+              <Footer />
+            </div>
+          </div>
+        );
+      };
+      
+      export default Notif;

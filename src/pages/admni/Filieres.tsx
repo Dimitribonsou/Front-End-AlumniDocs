@@ -3,6 +3,7 @@ import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
 import constant from "../../data/constant";
 import { FiliereType } from "../../types/FiliereType";
+import { exit } from "process";
 
 const Filieres = () => {
   // const filieres = [
@@ -19,6 +20,11 @@ const Filieres = () => {
   //fonction pour enregistrer une filiere
    const handleSubmit= async ()=>{
          try {
+            if(libelle=='')
+            {
+              setErrorMessage("Entrer le nom de la filiere !");
+              return;
+            }
           const data={
              libelle:libelle
           }
@@ -35,6 +41,7 @@ const Filieres = () => {
                     const message:any= await response.text();
                     console.log(message)
                     setErrorMessage(message);
+                    getFiliere();
                  }
                  console.log("Erreur lors de l'enregistrement de la filiere")
          } catch (error) {
@@ -76,7 +83,7 @@ const Filieres = () => {
                 <tr className="bg-gray-200">
                   <th className="border border-gray-300 p-2 text-left">#</th>
                   <th className="border border-gray-300 p-2 text-left">Nom</th>
-                  <th className="border border-gray-300 p-2 text-left">Actions</th>
+                  {/* <th className="border border-gray-300 p-2 text-left">Actions</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -84,14 +91,14 @@ const Filieres = () => {
                   <tr key={filiere.id_filiere} className="hover:bg-gray-100">
                     <td className="border border-gray-300 p-2">{filiere.id_filiere}</td>
                     <td className="border border-gray-300 p-2">{filiere.libelle}</td>
-                    <td className="border border-gray-300 p-2">
-                      <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
+                    {/* <td className="border border-gray-300 p-2"> */}
+                      {/* <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
                         Modifier
-                      </button>
-                      <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
+                      </button> */}
+                      {/* <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
                         Supprimer
-                      </button>
-                    </td>
+                      </button> */}
+                    {/* </td> */}
                   </tr>
                 ))}
               </tbody>

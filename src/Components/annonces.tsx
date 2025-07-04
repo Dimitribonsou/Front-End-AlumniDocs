@@ -1,4 +1,5 @@
 import React from "react";
+import constant from "../data/constant";
 
 interface AnnouncementProps {
   imageSrc: string;
@@ -6,23 +7,23 @@ interface AnnouncementProps {
   description: string;
   date: string;
   time: string;
+  id_annonce:number;
 }
 
-const AnnouncementCard: React.FC<AnnouncementProps> = ({ imageSrc, title, description, date, time }) => {
+const AnnouncementCard: React.FC<AnnouncementProps> = ({ imageSrc, title, description, date, time ,id_annonce }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full">
       {/* Image */}
-      <img src={imageSrc} alt={title} className="w-full h-32 object-cover" />
-
+      <img src={ `${constant.img_annonce_path}/${imageSrc}` } alt={title} className="w-full h-32 object-cover" />
       {/* Contenu */}
       <div className="p-4">
         <h3 className="text-lg text-red-700 font-bold">{title}</h3>
-        <p className="text-gray-600 mt-2 text-sm">{description}</p>
+        <p className="text-gray-600 mt-2 text-sm">{description}...</p>
         <div className="flex justify-between text-xs text-gray-500 mt-2">
           <span>{date}</span>
           <span>{time}</span>
         </div>
-        <a href="/annonce/:id" className="text-blue-600 text-sm text-right mt-2 block">Voir plus</a>
+        <a href={ `/annonce/${id_annonce}`} className="text-blue-600 text-sm text-right mt-2 block">Voir plus</a>
       </div>
     </div>
   );

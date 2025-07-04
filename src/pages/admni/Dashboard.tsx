@@ -15,6 +15,7 @@ import {
   Colors,
 } from "chart.js";
 import constant from "../../data/constant";
+import Ilogin from "../../types/Ilogin";
 
 // Enregistrer les composants nécessaires pour Chart.js
 ChartJS.register(

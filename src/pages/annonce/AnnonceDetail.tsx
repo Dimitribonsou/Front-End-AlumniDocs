@@ -1,9 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../Components/navbar';
 import Footer from '../../Components/footer';
 import AnnouncementCard from '../../Components/annonces';
+import { AnnonceType } from '../../types/annonceType';
+import constant from '../../data/constant';
+import IclassInfo from '../../types/IclasseInfo';
 
 const AnnonceDetailsPage: React.FC = () => {
+  const [annonces, setAnnonces] = useState<AnnonceType[]>([]);
+  const [detailAnnonces, setDetailAnnonces] = useState<AnnonceType | any>(null);
+
+  useEffect(() => {
+    getAnnonces();
+    getDetailAnnonce();
+  }, []);
+
+  const getAnnonces = async () => {
+    const classeInfo: IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '[]') as IclassInfo[];
+    const id_classe = classeInfo[0] ? classeInfo[0].id_classe : 1 ;
+    const response = await fetch(`${constant.host}/AlumniDocs-API/getAnnonceRecent/${id_classe}`);
+    if (!response.ok) {
+      console.log("erreur lors de la recuperation des notifications .");
+      return;
+    }
+    const annonceData = await response.json();
+    setAnnonces(annonceData);
+    console.log(annonceData)
+  };
+
+  const getDetailAnnonce = async () => {
+    const id_annonce = window.location.pathname.split('/').pop();
+    if (!id_annonce) return;
+
+    const response = await fetch(`${constant.host}/AlumniDocs-API/getAnnonceDetail/${id_annonce}`);
+    if (!response.ok) {
+      console.log("erreur lors de la recuperation des notifications .");
+      return;
+    }
+    const annonceData = await response.json();
+    setDetailAnnonces(annonceData);
+    console.log(annonceData)
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
@@ -14,45 +52,39 @@ const AnnonceDetailsPage: React.FC = () => {
           ANNONCES/DETAILS
         </h2>
 
-        <h3 className="text-2xl font-bold text-center my-4">Reunion mobiliter</h3>
-        <img
-          src="../../assets/rm.jpeg"
-          alt="Annonce"
-          className="w-full h-64 object-cover rounded-lg"
-        />
-        <p className="text-gray-600 mt-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quasi rem, similique natus eum
-          veritatis saepe iste omnis suscipit laborum distinctio accusantium unde non ullam eveniet eligendi
-          molestias perspiciatis enim tempora in magnam aut consequatur ratione.
-        </p>
-        <p className="text-gray-500 mt-2 text-right">12 Feb 2025 &nbsp; 12:30</p>
+        {detailAnnonces && (
+          <>
+            <h3 className="text-2xl font-bold text-center my-4">{detailAnnonces[0].libelle}</h3>
+            <img
+              src={`${constant.img_annonce_path}/${detailAnnonces[0].image}`}
+              alt="Annonce"
+              className="w-full h-64 object-cover rounded-lg"
+            />
+            <p className="text-gray-600 mt-4">
+              {detailAnnonces[0].description}
+            </p>
+            <p className="text-gray-500 mt-2 text-right">
+              {detailAnnonces[0].date_publication ? new Date(detailAnnonces[0].date_publication).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'} &nbsp; {detailAnnonces[0].heure_publication}
+            </p>
+          </>
+        )}
       </div>
 
       {/* Section Annonces Similaires */}
       <div className="max-w-4xl w-full mx-auto bg-white shadow-lg mt-6 p-6 rounded-lg">
         <h3 className="text-xl font-bold mb-4">Annonces similaires</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <AnnouncementCard
-            imageSrc="../../assets/rm.jpeg"
-            title="Réunion mobilité"
-            description="Il est porté à la connaissance..."
-            date="12 Feb 2025"
-            time="12:30"
-          />
-          <AnnouncementCard
-            imageSrc="../../assets/sn.jpeg"
-            title="Session normal 2"
-            description="Il est porté à la connaissance..."
-            date="07 Feb 2025"
-            time="14:30"
-          />
-          <AnnouncementCard
-            imageSrc="../../assets/pt.jpeg"
-            title="Projet tutoré"
-            description="Il est porté à la connaissance..."
-            date="05 Feb 2025"
-            time="08:30"
-          />
+          {annonces.map((annonce) => (
+            <AnnouncementCard
+              key={annonce.id_annonce}
+              imageSrc={annonce.image}
+              title={annonce.libelle}
+              description={annonce.description.substring(0, 80)}
+              date={new Date(annonce.date_publication).toISOString().split('T')[0]}
+              time={annonce.heure_publication}
+              id_annonce={annonce.id_annonce}
+            />
+          ))}
         </div>
       </div>
       <Footer />
