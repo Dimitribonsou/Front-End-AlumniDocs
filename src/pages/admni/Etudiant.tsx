@@ -18,7 +18,7 @@ interface Student {
 }
 
 const EXEMPLES_ETUDIANTS: Student[] = [
-  { id: 1, matricule: "ETU001", nom: "Ngono", prenom: "Jean-Pierre", tel: "655123456", email: "jean.ngono@gmail.com", promotion: "2023-2024", classe: "CSI3 DLW", documents: ["doc1.pdf", "doc2.pdf"] },
+  { id: 34, matricule: "ETU001", nom: "Ngono", prenom: "Jean-Pierre", tel: "655123456", email: "jean.ngono@gmail.com", promotion: "2023-2024", classe: "CSI3 DLW", documents: ["doc1.pdf", "doc2.pdf"] },
   { id: 2, matricule: "ETU002", nom: "Mballa", prenom: "Marie", tel: "654987321", email: "marie.mballa@gmail.com", promotion: "2023-2024", classe: "CSI3 DLW", documents: ["doc3.pdf"] },
   { id: 3, matricule: "ETU003", nom: "Ewane", prenom: "Pauline", tel: "653456789", email: "pauline.ewane@gmail.com", promotion: "2022-2023", classe: "3IL2", documents: ["doc4.pdf", "doc5.pdf"] },
   { id: 4, matricule: "ETU004", nom: "Mbarga", prenom: "Alain", tel: "652111222", email: "alain.mbarga@gmail.com", promotion: "2023-2024", classe: "3IL2", documents: ["doc6.pdf"] },
@@ -71,7 +71,7 @@ const Etudiants: React.FC = () => {
     alert("Téléchargement des documents de tous les étudiants en tant que dossier ZIP...");
   };
 
-  const handleViewDocuments = (student: StudentType) => {
+  const handleViewDocuments = (student: Student) => {
     setSelectedStudent(student);
   };
 

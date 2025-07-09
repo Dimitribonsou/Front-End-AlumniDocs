@@ -82,7 +82,7 @@ const Filieres = () => {
 
   // Filtrage
   const filteredFilieres = filieres.filter((filiere) =>
-    filiere.name.toLowerCase().includes(search.toLowerCase())
+    filiere.name.toLowerCase().includes(search.toLowerCase()) 
   );
 
   // Pagination

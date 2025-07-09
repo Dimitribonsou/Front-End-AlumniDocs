@@ -112,6 +112,7 @@ const handleSubmit = async () => {
     } catch (error) {
       console.log('There was a problem with the fetch operation:', error);
       // Handle error as needed
+    }
 }
 
 
@@ -143,21 +144,22 @@ const handleSubmit = async () => {
 
  const handleDeleteAdmin= async()=>{
   try {
-    const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${adminToDelete}`, {
-      method: 'DELETE',
-    });
-    if(!response.ok)
-    {
-       console.log("erreur lors de la suppression de L'admin")
+        const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${adminToDelete}`, {
+          method: 'DELETE',
+        });
+        if(!response.ok)
+        {
+          console.log("erreur lors de la suppression de L'admin")
+        }
+        console.log(await response.text())
+        setShowConfirmDialog(false);
+        getAdmin();
+    
+    } catch (error) {
+      console.log("Une erreur est survenue : "+error)
     }
-    console.log(await response.text())
-    setShowConfirmDialog(false);
-    getAdmin();
-   
-  } catch (error) {
-    console.log("Une erreur est survenue : "+error)
-  }
  }
+
  const handleDeleteClick = (id_admin: number) => {
   setAdminToDelete(id_admin);
   setShowConfirmDialog(true);
@@ -229,7 +231,7 @@ const handleCancelDelete = () => {
                       <td className="border border-gray-300 p-2 whitespace-nowrap">{admin.role}</td>
                       <td className="border border-gray-300 p-2 text-center whitespace-nowrap">
                         <button
-                          onClick={() => handleDeleteAdmin(admin.id)}
+                          onClick={() => handleDeleteClick(admin.id)}
                           className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                         >
                           Supprimer
@@ -411,6 +413,6 @@ const handleCancelDelete = () => {
       )}
     </div>
   );
-};}
+};
 
 export default AdministrateurPage;

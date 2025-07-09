@@ -144,9 +144,7 @@ export default function Compte() {
                 <input
                   type="text"
                   name="nomMarital"
-                  name="nomMarital"
                   placeholder="Entrer le nom marital"
-                  value={formData.nomMarital}
                   value={formData.nomMarital}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -193,9 +191,7 @@ export default function Compte() {
                 <input
                   type="text"
                   name="nationalite"
-                  name="nationalite"
                   placeholder="Entrer la nationalité"
-                  value={formData.nationalite}
                   value={formData.nationalite}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
@@ -250,9 +246,7 @@ export default function Compte() {
                 <input
                   type="text"
                   name="quartier"
-                  name="quartier"
                   placeholder="Entrer le quartier"
-                  value={formData.quartier}
                   value={formData.quartier}
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
