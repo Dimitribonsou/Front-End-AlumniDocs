@@ -1,5 +1,6 @@
 export interface StudentType
 {
+ 
   id_etudiant:number;
   nom?:string;
   prenom?:string;
@@ -8,6 +9,8 @@ export interface StudentType
   password?:string;
   matricule?:string;
   genre?:string;
-  documents: string[];
+  documents: string;
   id_classe?: number;
+  annee_scolaire?: string,
+  classe?: string,
 }
