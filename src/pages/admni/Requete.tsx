@@ -14,11 +14,11 @@ interface Requete {
   objet?: string;
   date_envoi: string;
   statut: "En attente" | "Traitée" | "Rejeter";
-  //.pieceJointeUrl?: string; // Ajout du champ pièce jointe
+  //.piece_jointe?: string; // Ajout du champ pièce jointe
   description?:string
   // date: string;
   // statut: "En attente" | "Traitée";
-  pieceJointeUrl?: string;
+  piece_jointe?: string;
 }
 
 const EXEMPLES_REQUETES: Requete[] = [
@@ -29,7 +29,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     type: "Revendication de note",
     date_envoi: "2023-04-01",
     statut: "En attente",
-    pieceJointeUrl: "/uploads/pj1.pdf",
+    piece_jointe: "/uploads/pj1.pdf",
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     type: "Absence justifiée",
     date_envoi: "2023-04-02",
     statut: "Traitée",
-    pieceJointeUrl: "/uploads/pj2.pdf",
+    piece_jointe: "/uploads/pj2.pdf",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     type: "Demande de document",
     date_envoi: "2023-04-03", 
     statut: "En attente",
-    pieceJointeUrl: "/uploads/pj3.pdf",
+    piece_jointe: "/uploads/pj3.pdf",
   },
   {
     id: 4,
@@ -56,7 +56,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     type: "Revendication de note",
     date_envoi: "2023-04-04",
     statut: "Traitée",
-    pieceJointeUrl: "/uploads/pj4.pdf",
+    piece_jointe: "/uploads/pj4.pdf",
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     type: "Absence justifiée",
     date_envoi: "2023-04-05", 
     statut: "En attente",
-    pieceJointeUrl: "/uploads/pj5.pdf",
+    piece_jointe: "/uploads/pj5.pdf",
   },
 ];
 
@@ -76,6 +76,11 @@ const RequeteAdmin: React.FC = () => {
   const [search, setSearch] = useState("");
   const [statutFilter, setStatutFilter] = useState<"" | "En attente" | "Traitée">("");
   const [page, setPage] = useState(1);
+  const [showConfirmDialog, setshowConfirmDialog] = useState(false);
+  const [currentRequest, setCurrentRequest] = useState(2);
+  const [currentStudent, setCurrentStudent] = useState(2);
+  const [currentStatut, setCurrentStatut] = useState(false);
+  const [description, setDescription] = useState("");
   useEffect(()=>{
     getRequetes();
   },[])
@@ -126,7 +131,14 @@ const RequeteAdmin: React.FC = () => {
       // actualiser la liste 
       getRequetes();
       // envoyer les notifications a l'etudiant conserner
-      NewNotification("Requete traitée","Votre requete a été traitée avec success.",id_etudiant,'success');
+      if(description.trim() === "")
+      {
+        NewNotification("Requete traitée","Votre requete a été traitée avec success.",id_etudiant,'success');
+      }
+      else
+      {
+        NewNotification("Requete traitée",description,id_etudiant,'success');
+      }
      
     } catch (error) {
       console.log("Une erreur est survenue : "+error)
@@ -151,14 +163,37 @@ const RequeteAdmin: React.FC = () => {
       //mettre a jour la liste
       getRequetes();
       // envoyer les notifications a l'etudiant
-      NewNotification("Requete rejetée","Votre requete a été rejetée .",id_etudiant,'danger');
+      if(description.trim() === "")
+      {
+        NewNotification("Requete rejetée","Votre requete a été rejetée .",id_etudiant,'danger');
+      }
+       else
+      {
+        NewNotification("Requete rejetée",description,id_etudiant,'danger');
+      }
      
     } catch (error) {
       console.log("Une erreur est survenue : "+error)
     }
     
   };
-
+ const showConfirmDialogHandler = (requeteId: number,studentId:number,statut:boolean) => {
+    setCurrentRequest(requeteId); 
+    setCurrentStudent(studentId); 
+    setCurrentStatut(statut); 
+    setshowConfirmDialog(true);
+  }
+  const handleSendResponse = () => {
+    setshowConfirmDialog(false);
+    if(currentStatut)
+    {
+      handleMarkAsProcessed(currentRequest,currentStudent);
+    }
+    else
+    {
+      handleMarkAsReset(currentRequest,currentStudent);
+    }
+  };
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -233,14 +268,16 @@ const RequeteAdmin: React.FC = () => {
                         <div className="flex gap-1">
 
                           <button
-                            onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
+                            // onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
+                             onClick={() => showConfirmDialogHandler(requete.id,requete.id_etudiant,true)}
                             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             <FontAwesomeIcon icon={faCheckCircle} />
                             {/* Accepter */}
                           </button>
                           <button
-                            onClick={() => handleMarkAsReset(requete.id,requete.id_etudiant)}
+                            // onClick={() => handleMarkAsReset(requete.id,requete.id_etudiant)}
+                             onClick={() => showConfirmDialogHandler(requete.id,requete.id_etudiant,false)}
                             className="bg-red-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             <FontAwesomeIcon icon={faTimesCircle} />
@@ -250,9 +287,9 @@ const RequeteAdmin: React.FC = () => {
                       {/* )} */}
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
-                      {requete.pieceJointeUrl ? (
+                      {requete.piece_jointe ? (
                         <a
-                          href={constant.requete_file_path+"/"+requete.pieceJointeUrl}
+                          href={constant.requete_file_path+"/"+requete.piece_jointe}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[#161B70] underline hover:text-blue-700"
@@ -299,8 +336,43 @@ const RequeteAdmin: React.FC = () => {
           </div>
         </div>
       </div>
+            {/* Boîte de dialogue de confirmation */}
+      {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+            <h3 className="text-lg font-semibold mb-4">Laisser une reponse à la requete</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                className="w-full border border-gray-300 p-2 rounded"
+                value={description}
+                onChange={(e) => setDescription( e.target.value)}
+                placeholder="Entrez un Justificatif"
+                rows={3}
+                maxLength={255}
+              ></textarea>
+            </div>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={()=>setshowConfirmDialog(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={handleSendResponse}
+                className="px-4 py-2 bg-blue-500 text-gray-800 rounded hover:bg-blue-600"
+              >
+                Envoyer
+              </button>
+              
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+  
 };
 
 export default RequeteAdmin;

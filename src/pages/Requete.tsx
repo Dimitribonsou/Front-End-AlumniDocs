@@ -91,6 +91,7 @@ const RequetePage: React.FC = () => {
                 <option value="">Categorie requete</option>
                 <option value="1">Note</option>
                 <option value="2">Absence</option>
+                <option value="3">Autre</option>
               </select>
             </div>
             {/* Pièce Jointe Input */}

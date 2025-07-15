@@ -310,21 +310,26 @@ useEffect(()=>{
       {/* Modal pour afficher les documents */}
       {selectedStudent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
             <h2 className="text-xl font-bold mb-4">Documents de {selectedStudent.nom} {selectedStudent.prenom}</h2>
             <ul className="mb-4">
-              {selectedStudent.documents.split(',').map((doc, index) => (
-                <li key={index} className="flex justify-between items-center mb-2">
-                  <span>{doc}</span>
-                  <a
-                    href={`#`} // Remplacez par le lien de téléchargement réel
-                    download={doc}
-                    className="text-blue-500 hover:underline"
-                  >
-                    Télécharger
-                  </a>
-                </li>
-              ))}
+              {selectedStudent.documents.trim() === "" ? (
+                <li className="text-gray-500">Documents non soumis</li>
+              ) : (
+                selectedStudent.documents.split(',').map((doc, index) => (
+                  <li key={index} className="flex justify-between items-center mb-2">
+                    <span>{doc.trim()}</span>
+                    <a
+                      href={`${constant.doc_path}/${doc.trim()}`}
+                      download={doc.trim()}
+                      className="text-blue-500 hover:underline"
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      Télécharger
+                    </a>
+                  </li>
+                ))
+              )}
             </ul>
             <div className="flex justify-end">
               <button
