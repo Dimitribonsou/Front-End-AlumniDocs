@@ -210,7 +210,17 @@ const handleStatus=async (id:number)=>{
                       <td className="p-3 capitalize font-medium">{annonce.nom_admin}</td>
                       {/* <td className="p-3">{annonce.classes ? annonce.classes.map((classe:string)=>classe).join(", ") : ''}</td> */}
                       <td className="p-3">{new Date(annonce.date_publication).toISOString().split("T")[0]}</td>
-                      <td className='p-3'> <span className={annonce.statut ? "bg-green-300 text-white   rounded-lg p-1 px-2 text-base font-normal" : "bg-yellow-300 text-white  rounded-lg p-1 px-2 text-base font-normal"  }>{annonce.statut ? 'publier' :'non publier'}</span></td>
+                      <td className="p-3">
+                        <span
+                          className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
+                            annonce.statut
+                              ? "bg-green-500 text-white"
+                              : "bg-yellow-400 text-gray-800"
+                          }`}
+                        >
+                          {annonce.statut ? "Publié" : "Non publié"}
+                        </span>
+                      </td>
                       <td className="p-3 flex flex-col sm:flex-row gap-2">
                         <button
                           onClick={() => getPublication(annonce.id_annonce)}

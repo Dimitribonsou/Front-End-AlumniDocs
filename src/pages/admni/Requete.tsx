@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Siderbar";
 import Navbar_admin from "../../Components/Navbar_admin";
 import constant from "../../data/constant";
-import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faTimesCircle,faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewNotification from "../../data/function";
 
 interface Requete {
-  id: number;
+  id_requete: number;
   id_etudiant: number;
   etudiant: string;
   type: string;
@@ -23,7 +23,7 @@ interface Requete {
 
 const EXEMPLES_REQUETES: Requete[] = [
   {
-    id: 1,
+    id_requete: 1,
     id_etudiant:34,
     etudiant: "Jean-Pierre Ngono",
     type: "Revendication de note",
@@ -32,7 +32,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     piece_jointe: "/uploads/pj1.pdf",
   },
   {
-    id: 2,
+    id_requete: 2,
     id_etudiant:34,
     etudiant: "Marie Mballa",
     type: "Absence justifiée",
@@ -41,7 +41,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     piece_jointe: "/uploads/pj2.pdf",
   },
   {
-    id: 3,
+    id_requete: 3,
     id_etudiant:34,
     etudiant: "Pauline Ewane",
     type: "Demande de document",
@@ -50,7 +50,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     piece_jointe: "/uploads/pj3.pdf",
   },
   {
-    id: 4,
+    id_requete: 4,
     id_etudiant:34,
     etudiant: "Alain Mbarga",
     type: "Revendication de note",
@@ -59,7 +59,7 @@ const EXEMPLES_REQUETES: Requete[] = [
     piece_jointe: "/uploads/pj4.pdf",
   },
   {
-    id: 5,
+    id_requete: 5,
     id_etudiant:34,
     etudiant: "Sophie Nkou",
     type: "Absence justifiée",
@@ -74,10 +74,10 @@ const PAGE_SIZE = 3;
 const RequeteAdmin: React.FC = () => {
   const [requetes, setRequetes] = useState<Requete[]>(EXEMPLES_REQUETES);
   const [search, setSearch] = useState("");
-  const [statutFilter, setStatutFilter] = useState<"" | "En attente" | "Traitée">("");
+  const [statutFilter, setStatutFilter] = useState<"" | "En attente" | "Rejeter" | "Traitée">("");
   const [page, setPage] = useState(1);
   const [showConfirmDialog, setshowConfirmDialog] = useState(false);
-  const [currentRequest, setCurrentRequest] = useState(2);
+  const [currentRequest, setCurrentRequest] = useState<number>(2);
   const [currentStudent, setCurrentStudent] = useState(2);
   const [currentStatut, setCurrentStatut] = useState(false);
   const [description, setDescription] = useState("");
@@ -119,7 +119,7 @@ const RequeteAdmin: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({statut:"Rejeter"})
+        body:JSON.stringify({statut:"Traitée"})
       });
       if(!response.ok)
       {
@@ -151,7 +151,7 @@ const RequeteAdmin: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({statut:"Traitée"})
+        body:JSON.stringify({statut:"Rejeter"})
       });
       if(!response.ok)
       {
@@ -178,6 +178,7 @@ const RequeteAdmin: React.FC = () => {
     
   };
  const showConfirmDialogHandler = (requeteId: number,studentId:number,statut:boolean) => {
+  console.log("RequestId : "+requeteId)
     setCurrentRequest(requeteId); 
     setCurrentStudent(studentId); 
     setCurrentStatut(statut); 
@@ -185,6 +186,7 @@ const RequeteAdmin: React.FC = () => {
   }
   const handleSendResponse = () => {
     setshowConfirmDialog(false);
+    console.log("id requete : "+currentRequest);
     if(currentStatut)
     {
       handleMarkAsProcessed(currentRequest,currentStudent);
@@ -231,6 +233,7 @@ const RequeteAdmin: React.FC = () => {
               <option value="">Tous les statuts</option>
               <option value="En attente">En attente</option>
               <option value="Traitée">Traitée</option>
+              <option value="Rejeter">Rejeter</option>
             </select>
           </div>
 
@@ -246,19 +249,23 @@ const RequeteAdmin: React.FC = () => {
                   <th className="border border-gray-300 p-2 text-left">Date</th>
                   <th className="border border-gray-300 p-2 text-left">Statut</th>
                   <th className="border border-gray-300 p-2 text-center">Actions</th>
-                  <th className="border border-gray-300 p-2 text-center">Détails</th>
+                  <th className="border border-gray-300 p-2 text-center">Justificatif</th>
                 </tr>
               </thead>
               <tbody>
                 {requetesToShow.map((requete) => (
-                  <tr key={requete.id} className="hover:bg-gray-100">
+                  <tr key={requete.id_requete} className="hover:bg-gray-100">
                     <td className="border border-gray-300 p-2 capitalize">{requete.etudiant}</td>
                     <td className="border border-gray-300 p-2">{requete.type}</td>
                     <td className="border border-gray-300 p-2">{requete.objet}</td>
                     <td className="border border-gray-300 p-2">{new Date(requete.date_envoi).toISOString().split('T')[0]}</td>
                     <td
                       className={`border border-gray-300 p-2 ${
-                        requete.statut === "Traitée" ? "text-green-600" : "text-red-600"
+                        requete.statut === "Traitée"
+                          ? "text-green-600 font-semibold"
+                          : requete.statut === "En attente"
+                          ? "text-yellow-600 font-semibold"
+                          : "text-red-600 font-semibold"
                       }`}
                     >
                       {requete.statut}
@@ -269,7 +276,7 @@ const RequeteAdmin: React.FC = () => {
 
                           <button
                             // onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
-                             onClick={() => showConfirmDialogHandler(requete.id,requete.id_etudiant,true)}
+                             onClick={() => showConfirmDialogHandler(requete.id_requete,requete.id_etudiant,true)}
                             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             <FontAwesomeIcon icon={faCheckCircle} />
@@ -277,7 +284,7 @@ const RequeteAdmin: React.FC = () => {
                           </button>
                           <button
                             // onClick={() => handleMarkAsReset(requete.id,requete.id_etudiant)}
-                             onClick={() => showConfirmDialogHandler(requete.id,requete.id_etudiant,false)}
+                             onClick={() => showConfirmDialogHandler(requete.id_requete,requete.id_etudiant,false)}
                             className="bg-red-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             <FontAwesomeIcon icon={faTimesCircle} />
@@ -289,12 +296,13 @@ const RequeteAdmin: React.FC = () => {
                     <td className="border border-gray-300 p-2 text-center">
                       {requete.piece_jointe ? (
                         <a
-                          href={constant.requete_file_path+"/"+requete.piece_jointe}
+                          href={constant.requete_file_path + "/" + requete.piece_jointe}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#161B70] underline hover:text-blue-700"
+                          className="inline-flex items-center gap-2 px-2 py-1 rounded bg-gray-100 hover:bg-blue-100 text-blue-700 font-medium transition-colors duration-150"
                         >
-                          Détails
+                          <span className="truncate max-w-[100px]">{requete.piece_jointe.split('/').pop()}</span>
+                          <FontAwesomeIcon icon={faArrowRight} className="text-blue-700" />
                         </a>
                       ) : (
                         <span className="text-gray-400">Aucune pièce</span>
