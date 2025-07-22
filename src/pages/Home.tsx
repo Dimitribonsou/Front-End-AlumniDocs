@@ -62,7 +62,7 @@ const getStudentRate= async ()=>{
 const [annonces,setAnnonces]=useState<AnnonceType[]>([]);
 const getAnnonces = async ()=>{
   const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
- const id_classe=classeInfo[0].id_classe || 1;
+ const id_classe=classeInfo.length > 0 ? classeInfo[0].id_classe : 1;
   const response = await fetch(`${constant.host}/AlumniDocs-API/getAnnonceRecent/${id_classe}`);
   if(!response.ok)
   {

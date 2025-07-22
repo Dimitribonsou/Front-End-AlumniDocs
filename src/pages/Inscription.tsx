@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
@@ -5,8 +6,12 @@ import constant from '../data/constant';
 import Ilogin from '../types/Ilogin';
 
 const Inscription: React.FC = () => {
+  // Ajout de l'étoile rouge sur chaque label
   const renderLabel = (text: string) => (
-    <label className="block mb-2 text-sm font-medium text-gray-700">{text}</label>
+    <label className="block mb-2 text-sm font-medium text-gray-700">
+      {text}
+      <span className="text-red-600 ml-1">*</span>
+    </label>
   );
   const [matricule, setMatricule] = React.useState('');
   const [idClasse, setIdClasse] = React.useState('');
@@ -79,15 +84,21 @@ const getClasse= async ()=>{
   }
 }
 
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col bg-watermark">
       <Navbar />
       <div className="flex flex-col max-w-3xl w-full bg-white shadow-lg mt-10 p-6 rounded-lg mx-auto">
+        
         {/* Form Section */}
         <div className="w-full p-6">
           <h2 className="text-2xl font-bold text-center">INSCRIPTION</h2>
-
-          {/* Conteneur sans défilement */}
+          {/* Notification */}
+        {error && (
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300 font-semibold ">
+            {error}
+          </div>
+        )}
           <div className="mt-6">
             <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Infos académiques */}
@@ -265,7 +276,6 @@ const getClasse= async ()=>{
                   </div>
                 </div>
               </div>
-
               {/* Submit Button */}
               <div className="max-w-sm mx-auto">
                 <button
@@ -279,7 +289,6 @@ const getClasse= async ()=>{
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

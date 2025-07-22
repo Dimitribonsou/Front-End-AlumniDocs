@@ -37,17 +37,18 @@ const Navbar = () => {
  const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
   const navItems = [
     { name: "Accueil", icon: faHome, route: "/home", hiden: false },
-    { name: "Inscription", icon: faPencil, route: "/inscription", hiden: classeInfo.length || classeInfo[0].libelle_classe ? true : false },
+    { name: "Inscription", icon: faPencil, route: "/inscription", hiden: classeInfo.length>0 ? true : false },
     { 
       name: "Document", 
       icon: faFile, 
       route: "/profile", 
-      hiden: !classeInfo.length || !classeInfo[0].libelle_classe ? true : false // Si la classe n'est pas définie ou si le tableau est vide, l'onglet sera grisé
+      hiden: classeInfo.length>0 ? false :true // Si la classe n'est pas définie ou si le tableau est vide, l'onglet sera grisé
     },
-    { name: "Requetes", icon: faEnvelope, route: "/requetes", hiden: false },
-    { name: "Annonces", icon: faBullhorn, route: "/annonce",  hiden: !classeInfo.length || !classeInfo[0].libelle_classe ? true : false },
+    { name: "Requetes", icon: faEnvelope, route: "/requetes", hiden: classeInfo.length>0 ? false : true },
+    { name: "Annonces", icon: faBullhorn, route: "/annonce",  hiden: classeInfo.length>0 ? false : true },
     // { name: "Forum", icon: faComments, route: "/forum" },
     { name: "Notification", icon: faBell, route: "/notifications", hiden: false },
+
   ];
 
   return (

@@ -10,20 +10,31 @@ interface Administrateur {
   role: string;
 }
 
-const AdministrateurPage: React.FC = () => {
-  const [administrateurs, setAdministrateurs] = useState<Administrateur[]>([
-    { id: 1, nom: "Jean-Pierre Ngono", email: "jean.ngono@admin.com", role: "Super Admin" },
-    { id: 2, nom: "Marie Mballa", email: "marie.mballa@admin.com", role: "Admin" },
-    { id: 3, nom: "Pauline Ewane", email: "pauline.ewane@admin.com", role: "Admin" },
-  ]);
+const EXEMPLES_ADMINS: Administrateur[] = [
+  { id: 1, nom: "Jean-Pierre Ngono", email: "jean.ngono@admin.com", role: "Super Admin" },
+  { id: 2, nom: "Marie Mballa", email: "marie.mballa@admin.com", role: "Admin" },
+  { id: 3, nom: "Pauline Ewane", email: "pauline.ewane@admin.com", role: "Admin" },
+  { id: 4, nom: "Alain Mbarga", email: "alain.mbarga@admin.com", role: "Admin" },
+  { id: 5, nom: "Sophie Nkou", email: "sophie.nkou@admin.com", role: "Super Admin" },
+  { id: 6, nom: "Lucien Tchoua", email: "lucien.tchoua@admin.com", role: "Admin" },
+  { id: 7, nom: "Brigitte Nomo", email: "brigitte.nomo@admin.com", role: "Admin" },
+  { id: 8, nom: "Fabrice Zambo", email: "fabrice.zambo@admin.com", role: "Admin" },
+  { id: 9, nom: "Claire Foko", email: "claire.foko@admin.com", role: "Admin" },
+  { id: 10, nom: "Serge Ebogo", email: "serge.ebogo@admin.com", role: "Admin" },
+  { id: 11, nom: "Nadine Mvondo", email: "nadine.mvondo@admin.com", role: "Super Admin" },
+  { id: 12, nom: "Hervé Ngassa", email: "herve.ngassa@admin.com", role: "Admin" },
+];
 
+const PAGE_SIZE = 5;
+
+const AdministrateurPage: React.FC = () => {
+  const [administrateurs, setAdministrateurs] = useState<Administrateur[]>(EXEMPLES_ADMINS);
   const [newAdmin, setNewAdmin] = useState<Administrateur>({
     id: 0,
     nom: "",
     email: "",
     role: "Admin",
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [adminList, setAdminListe] = useState([]);
   const [email, setEmail] = useState("");
@@ -35,6 +46,10 @@ const AdministrateurPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
   const [serverMessage, setServerMessage] = useState("");
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [adminToDelete, setAdminToDelete] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("Tous");
     //renitialiser le contenu du formulaire
     const resetFormData= ()=>{
       setEmail("");
@@ -45,6 +60,19 @@ const AdministrateurPage: React.FC = () => {
       setConfirmPassword("");
       setGender("");
       }
+        // fonction pour  afficher la liste des classes
+  const getAdmin= async ()=>{
+    const response = await fetch(`${constant.host}/AlumniDocs-API/AdminList`);
+    if(response.ok)
+    {
+      //mettre a jour la liste des classe
+       setAdminListe(await response.json());
+    }
+    else
+    {
+       console.log("erreur lors de la recuperation de la classe");
+    }
+  }
 useEffect(()=>{
   getAdmin();
 },[])
@@ -85,38 +113,65 @@ const handleSubmit = async () => {
       console.log('There was a problem with the fetch operation:', error);
       // Handle error as needed
     }
-};
- const handleDeleteAdmin= async(id_user:any)=>{
+}
+
+
+  // Filtrage et recherche
+  const filteredAdmins = administrateurs.filter((admin) => {
+    const matchSearch =
+      admin.nom.toLowerCase().includes(search.toLowerCase()) ||
+      admin.email.toLowerCase().includes(search.toLowerCase());
+    const matchRole = roleFilter === "Tous" || admin.role === roleFilter;
+    return matchSearch && matchRole;
+  });
+
+  // Pagination
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(filteredAdmins.length / PAGE_SIZE);
+  const adminsToShow = filteredAdmins.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  // const handleAddAdmin = () => {
+  //   if (newAdmin.nom && newAdmin.email) {
+  //     setAdministrateurs((prev) => [
+  //       ...prev,
+  //       { ...newAdmin, id: prev.length + 1 },
+  //     ]);
+  //     setNewAdmin({ id: 0, nom: "", email: "", role: "Admin" });
+  //     setIsModalOpen(false);
+  //   } else {
+  //     alert("Veuillez remplir tous les champs.");
+  //   }
+
+ const handleDeleteAdmin= async()=>{
   try {
-    const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${id_user}`, {
-      method: 'DELETE',
-    });
-    if(!response.ok)
-    {
-       console.log("erreur lors de la suppression de L'admin")
+        const response = await fetch(`${constant.host}/AlumniDocs-API/deleteAdmin/${adminToDelete}`, {
+          method: 'DELETE',
+        });
+        if(!response.ok)
+        {
+          console.log("erreur lors de la suppression de L'admin")
+        }
+        console.log(await response.text())
+        setShowConfirmDialog(false);
+        getAdmin();
+    
+    } catch (error) {
+      console.log("Une erreur est survenue : "+error)
     }
-    console.log(await response.text())
-    getAdmin();
-   
-  } catch (error) {
-    console.log("Une erreur est survenue : "+error)
-  }
  }
-  // fonction pour  afficher la liste des classes
-  const getAdmin= async ()=>{
-    const response = await fetch(`${constant.host}/AlumniDocs-API/AdminList`);
-    if(response.ok)
-    {
-      //mettre a jour la liste des classe
-       setAdminListe(await response.json());
-    }
-    else
-    {
-       console.log("erreur lors de la recuperation de la classe");
-    }
-  }
+
+ const handleDeleteClick = (id_admin: number) => {
+  setAdminToDelete(id_admin);
+  setShowConfirmDialog(true);
+};
+const handleCancelDelete = () => {
+  setShowConfirmDialog(false);
+  setAdminToDelete(null);
+};
+
   return (
-    <div className="flex">
+
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <Sidebar />
 
@@ -129,44 +184,92 @@ const handleSubmit = async () => {
         <div className="p-6">
           <h1 className="text-2xl font-bold text-[#161B70] mb-6">Gestion des Administrateurs</h1>
 
+          {/* Barre de recherche et filtres */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4 gap-2 mb-4">
+            <input
+              type="text"
+              placeholder="Rechercher par nom ou email..."
+              className="border border-gray-300 rounded px-3 py-2 w-full md:w-1/3"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+            <select
+              className="border border-gray-300 rounded px-3 py-2 w-full md:w-48"
+              value={roleFilter}
+              onChange={(e) => {
+                setRoleFilter(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="Tous">Tous les rôles</option>
+              <option value="Admin">Admin</option>
+              <option value="Super Admin">Super Admin</option>
+            </select>
+          </div>
+
           {/* Liste des administrateurs */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Liste des Administrateurs</h2>
-            <table className="w-full border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="border border-gray-300 p-2 text-left">Nom</th>
-                  <th className="border border-gray-300 p-2 text-left">Email</th>
-                  <th className="border border-gray-300 p-2 text-left">Telephone</th>
-                  <th className="border border-gray-300 p-2 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {adminList.map((admin:any) => (
-                  <tr key={admin.id_utilisateur} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 p-2">{admin.nom}</td>
-                    <td className="border border-gray-300 p-2">{admin.email}</td>
-                    <td className="border border-gray-300 p-2">{admin.telephone}</td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      <button
-                        onClick={() => handleDeleteAdmin(admin.id_utilisateur)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                      >
-                        Supprimer
-                      </button>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-200">
+                    <th className="border border-gray-300 p-2 text-left">Nom</th>
+                    <th className="border border-gray-300 p-2 text-left">Email</th>
+                    <th className="border border-gray-300 p-2 text-left">Rôle</th>
+                    <th className="border border-gray-300 p-2 text-center">Actions</th>
                   </tr>
-                ))}
-                {adminList.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="text-center text-gray-500 p-3">
-                      Aucun administrateur trouvé.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-            <div className="mt-4 flex justify-end">
+                </thead>
+                <tbody>
+                  {adminsToShow.map((admin) => (
+                    <tr key={admin.id} className="hover:bg-gray-100">
+                      <td className="border border-gray-300 p-2 whitespace-nowrap">{admin.nom}</td>
+                      <td className="border border-gray-300 p-2 whitespace-nowrap">{admin.email}</td>
+                      <td className="border border-gray-300 p-2 whitespace-nowrap">{admin.role}</td>
+                      <td className="border border-gray-300 p-2 text-center whitespace-nowrap">
+                        <button
+                          onClick={() => handleDeleteClick(admin.id)}
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        >
+                          Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {adminsToShow.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="text-center text-gray-500 p-3">
+                        Aucun administrateur trouvé.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            {/* Pagination */}
+            <div className="flex justify-between items-center mt-4">
+              <div>
+                Page {page} sur {totalPages}
+              </div>
+              <div className="space-x-2">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                >
+                  Précédent
+                </button>
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                >
+                  Suivant
+                </button>
+              </div>
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -280,6 +383,29 @@ const handleSubmit = async () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+            {/* Boîte de dialogue de confirmation */}
+            {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+            <h3 className="text-lg font-semibold mb-4">Confirmation de suppression</h3>
+            <p className="mb-6">Voulez-vous vraiment supprimer cette annonce ?</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={handleCancelDelete}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={handleDeleteAdmin}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Supprimer
               </button>
             </div>
           </div>

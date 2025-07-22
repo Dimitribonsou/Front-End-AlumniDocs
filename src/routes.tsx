@@ -24,6 +24,9 @@ import RequeteAdmin from "./pages/admni/Requete";
 import AdministrateurPage from "./pages/admni/Administrateur";
 import ValidationsPage from "./pages/admni/Validations";
 import VerifyCodePage from "./pages/auth/OTPage";
+// import DetailEtudiant from "./pages/admni/DetailEtudiant"; // Ensure this is a valid React component
+import DiscussionPage from "./pages/Discussion";
+
 import DetailEtudiant from "./pages/admni/DetailEtudiant";
 import UpdloadDocumentComponent from "./Components/uploadDocument";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -39,7 +42,18 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/otp" element={<VerifyCodePage/>} />
-        
+        <Route path="/admin/annonces" element={<Annonces />} />
+        <Route path="/compte" element={<Compte />} />
+        <Route path="/discussion" element={<DiscussionPage />} />
+        <Route path="/admin/promotions" element={<Promotions />} />
+        <Route path="/admin/filieres" element={<Filieres />} />
+        <Route path="/admin/detail-etudiant" element={<DetailEtudiant />} />
+        <Route path="/admin/classes" element={<Classes />} />
+        <Route path="/admin/forums" element={<Forums />} />
+        <Route path="/admin/etudiant" element={<Etudiants />} />
+        <Route path="/admin/requetes" element={<RequeteAdmin />} />
+        <Route path="/admin/admins" element={<AdministrateurPage />} />
+        <Route path="/admin/validations" element={<ValidationsPage />} />
         {/* Routes protégées pour les administrateurs */}
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
         <Route path="/admin/annonces" element={<AdminRoute><Annonces /></AdminRoute>} />

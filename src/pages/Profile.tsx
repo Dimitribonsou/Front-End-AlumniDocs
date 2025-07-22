@@ -3,7 +3,6 @@ import FileInput from "../Components/fileinput";
 import Navbar from "../Components/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlus,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/footer";
@@ -12,15 +11,59 @@ import IclassInfo from "../types/IclasseInfo";
 
 const ProfilePage: React.FC = () => {
   const [files, setFiles] = useState<{ [key: string]: File | null }>({});
-   //recuperer l'id de l'etudiant connecter 
- const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
- const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
- const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
- const email_etudiant=dataLogin.email;
- const telephone=dataLogin.telephone;
- // recuperer la classe de l'etudiant
- const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
-  const handleFileChange = (name: string, file: File | null) => {
+  const [fileErrors, setFileErrors] = useState<{ [key: string]: string }>({}); // Ajout pour les erreurs
+  const [validFormat, setValidFormat] = useState<boolean>(false); // definis le format du fichier comme valid ou nom
+
+  //recuperer l'id de l'etudiant connecter 
+  const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
+  const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
+  const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
+  const email_etudiant=dataLogin.email;
+  const telephone=dataLogin.telephone;
+  // recuperer la classe de l'etudiant
+  const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
+
+  // Fonction utilitaire pour nettoyer les strings (enlever espaces, accents, etc.)
+  const slugify = (str: string="") =>
+    (str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toUpperCase();
+
+  // Nouvelle fonction handleFileChange avec vérification du format
+  const handleFileChange = (name: string, file: File | null, type?: string) => {
+    if (file) {
+      // Format attendu : classe_nom_prenom_type.pdf
+      
+      const classeSlug = slugify(classe);
+      const nomSlug = slugify(dataLogin.nom);
+      const prenomSlug = slugify(dataLogin.prenom);
+      const typeSlug = type ? slugify(type) : slugify(name);
+
+      const expectedName = `${classeSlug}_${nomSlug}_${prenomSlug}_${typeSlug}.pdf`;
+      if (file.name.toUpperCase().trim() !== expectedName.trim().toUpperCase()) {
+        // Si le nom du fichier ne correspond pas au format attendu, marquer le format comme invalide
+        setValidFormat(false);
+        console.error(`Nom de fichier invalide pour ${name}: ${file.name}`);
+        console.error(`Format attendu : ${expectedName}`);
+        // Afficher un message d'erreur si le nom du fichier ne correspond pas au format
+        setFileErrors((prev) => ({
+          ...prev,
+          [name]: `Format attendu : ${expectedName}`,
+        }));
+        setFiles((prevFiles) => ({ ...prevFiles, [name]: null }));
+        return;
+      } else {
+        // marquer le format de fichier comme valide
+        setValidFormat(true);
+        // Si le format est correct, on peut vider l'erreur pour ce fichier 
+        setFileErrors((prev) => ({ ...prev, [name]: "" }));
+      }
+    } else {
+      setFileErrors((prev) => ({ ...prev, [name]: "" }));
+    }
     setFiles((prevFiles) => ({ ...prevFiles, [name]: file }));
   };
 
@@ -28,18 +71,19 @@ const ProfilePage: React.FC = () => {
     e.preventDefault();
     console.log("Fichiers soumis :", files);
   };
+
   // definir une reference pour l'input avec un type specifique
   const inputRef=useRef<HTMLInputElement>(null) ;
-   const FileClick=()=>{
-       // select the image on click
-       if(inputRef.current) {
-           inputRef.current.click();
-       }
-   }
-   const handleChange=(event: React.ChangeEvent<HTMLInputElement>)=>{
-     // traiter le fichier image ici
-     console.log(event.target.files)
-   }
+  const FileClick=()=>{
+    // select the image on click
+    if(inputRef.current) {
+      inputRef.current.click();
+    }
+  }
+  const handleChange=(event: React.ChangeEvent<HTMLInputElement>)=>{
+    // traiter le fichier image ici
+    console.log(event.target.files)
+  }
    
   return (
     <div className="min-h-screen flex flex-col bg-watermark">
@@ -56,11 +100,11 @@ const ProfilePage: React.FC = () => {
             <FontAwesomeIcon icon={faUser} /> Informations Personnelles
           </h2>
           <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
-             <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
+            <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
             <img
               src="../assets/profil.png"
               alt="Profil"
-               onClick={FileClick}
+              onClick={FileClick}
               className="w-24 h-24 rounded-full object-cover border cursor-pointer"
             />
             <div>
@@ -79,11 +123,11 @@ const ProfilePage: React.FC = () => {
               {/* Colonne de gauche */}
               <div className="space-y-4">
                 {[
-                  { label: "Acte de naissance", name: "birthCertificate", required: true },
-                  { label: "CNI", name: "cni", required: true },
-                  { label: "Passeport", name: "passeport", required: false },
-                  { label: "Relevé du niveau 3", name: "r3", required: false },
-                  { label: "Relevé du niveau 5", name: "r5", required: false },
+                  { label: "Acte de naissance",type:'ACTE', name: "birthCertificate", required: true },
+                  { label: "CNI", name: "cni",type:'CNI', required: true },
+                  { label: "Passeport",type:'PASSPORT', name: "passeport", required: false },
+                  { label: "Relevé du niveau 3",type:'R3', name: "r3", required: false },
+                  { label: "Relevé du niveau 5",type:'R5' ,name: "r5", required: false },
                 ].map((doc) => (
                   <div
                     key={doc.name}
@@ -92,9 +136,13 @@ const ProfilePage: React.FC = () => {
                     <FileInput
                       label={doc.label}
                       name={doc.name}
-                      onChange={(file) => handleFileChange(doc.name, file)}
+                      onChange={(file) => handleFileChange(doc.name, file, doc.type)}
                       required={doc.required}
+                      isvalidformat={validFormat}
                     />
+                    {fileErrors[doc.name] && (
+                      <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -102,10 +150,10 @@ const ProfilePage: React.FC = () => {
               {/* Colonne de droite */}
               <div className="space-y-4">
                 {[
-                  { label: "Baccalauréat (relévé ou diplôme)", name: "bacTranscript", required: true },
-                  { label: "Relevé du niveau 1", name: "r1", required: false },
-                  { label: "Relevé du niveau 2", name: "r2", required: false },
-                  { label: "Relevé du niveau 4", name: "r4", required: false },
+                  { label: "Baccalauréat (relévé ou diplôme)", name: "bacTranscript", type: "BAC", required: true },
+                  { label: "Relevé du niveau 1", name: "r1", type: "R1", required: false },
+                  { label: "Relevé du niveau 2", name: "r2", type: "R2", required: false },
+                  { label: "Relevé du niveau 4", name: "r4", type: "R4", required: false },
                 ].map((doc) => (
                   <div
                     key={doc.name}
@@ -114,9 +162,13 @@ const ProfilePage: React.FC = () => {
                     <FileInput
                       label={doc.label}
                       name={doc.name}
-                      onChange={(file) => handleFileChange(doc.name, file)}
+                      onChange={(file) => handleFileChange(doc.name, file, doc.type)}
                       required={doc.required}
+                      isvalidformat={validFormat}
                     />
+                    {fileErrors[doc.name] && (
+                      <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>
+                    )}
                   </div>
                 ))}
               </div>

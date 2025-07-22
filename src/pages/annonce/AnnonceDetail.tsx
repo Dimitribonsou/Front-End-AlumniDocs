@@ -8,7 +8,7 @@ import IclassInfo from '../../types/IclasseInfo';
 
 const AnnonceDetailsPage: React.FC = () => {
   const [annonces, setAnnonces] = useState<AnnonceType[]>([]);
-  const [detailAnnonces, setDetailAnnonces] = useState<AnnonceType | null>(null);
+  const [detailAnnonces, setDetailAnnonces] = useState<AnnonceType | any>(null);
 
   useEffect(() => {
     getAnnonces();
@@ -54,17 +54,17 @@ const AnnonceDetailsPage: React.FC = () => {
 
         {detailAnnonces && (
           <>
-            <h3 className="text-2xl font-bold text-center my-4">{detailAnnonces.libelle}</h3>
+            <h3 className="text-2xl font-bold text-center my-4">{detailAnnonces[0].libelle}</h3>
             <img
-              src={`${constant.img_annonce_path}/${detailAnnonces.image}`}
+              src={`${constant.img_annonce_path}/${detailAnnonces[0].image}`}
               alt="Annonce"
               className="w-full h-64 object-cover rounded-lg"
             />
             <p className="text-gray-600 mt-4">
-              {detailAnnonces.description}
+              {detailAnnonces[0].description}
             </p>
             <p className="text-gray-500 mt-2 text-right">
-              {detailAnnonces.date_publication ? new Date(detailAnnonces.date_publication).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'} &nbsp; {detailAnnonces.heure_publication}
+              {detailAnnonces[0].date_publication ? new Date(detailAnnonces[0].date_publication).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'} &nbsp; {detailAnnonces[0].heure_publication}
             </p>
           </>
         )}
