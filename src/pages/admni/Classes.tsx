@@ -159,7 +159,7 @@ const getFiliere= async ()=>{
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
-                  <tr className="bg-gray-200">
+                  <tr className="bg-[#161B70] text-white">
                     <th className="border border-gray-300 p-2 text-left">#</th>
                     <th className="border border-gray-300 p-2 text-left">Nom</th>
                     <th className="border border-gray-300 p-2 text-left">Niveau</th>
@@ -173,10 +173,10 @@ const getFiliere= async ()=>{
                       <td className="border border-gray-300 p-2">{classe.name}</td>
                       <td className="border border-gray-300 p-2">{classe.niveau}</td>
                       <td className="border border-gray-300 p-2">
-                        <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
+                        <button className="bg-[#161B70] text-white px-4 py-1 rounded hover:opacity-80 mr-2">
                           Modifier
                         </button>
-                        <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
+                        <button className="bg-red-600 text-white px-4 py-1 rounded hover:opacity-80">
                           Supprimer
                         </button>
                       </td>
@@ -283,7 +283,7 @@ const getFiliere= async ()=>{
               </div>
               <button
                 type="submit"
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Ajouter
               </button>

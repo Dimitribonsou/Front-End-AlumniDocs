@@ -232,7 +232,7 @@ const handleCancelDelete = () => {
                       <td className="border border-gray-300 p-2 text-center whitespace-nowrap">
                         <button
                           onClick={() => handleDeleteClick(admin.id)}
-                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-600"
                         >
                           Supprimer
                         </button>
@@ -272,9 +272,9 @@ const handleCancelDelete = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
               >
-                Ajouter un administrateur
+                Ajouter 
               </button>
             </div>
           </div>
@@ -373,14 +373,14 @@ const handleCancelDelete = () => {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Annuler
               </button>
               <button
               type="button"
                 onClick={handleSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Ajouter
               </button>
@@ -397,7 +397,7 @@ const handleCancelDelete = () => {
             <div className="flex justify-end space-x-4">
               <button
                 onClick={handleCancelDelete}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                className="px-4 py-2 bg-[#161B70] text-white rounded hover:bg-gray-300"
               >
                 Annuler
               </button>

@@ -32,7 +32,7 @@ const RegisterPage = () => {
   }, [nom, prenom, email, phone, password, confirmPassword, gender]);
 
   const handleSubmit = async () => {
-    // if (!isFormValid) return;
+    if (!isFormValid) return;
       // recuperer les donnees saisi dans le formulaire
       const data = {
         nom: nom,
@@ -63,7 +63,7 @@ const RegisterPage = () => {
         // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
         resetFormData();
         // Handle success as needed
-        alert('Votre compte a été créé avec succès!');
+        // alert('Votre compte a été créé avec succès!');
       } catch (error) {
         console.log('There was a problem with the fetch operation:', error);
         // Handle error as needed
@@ -147,11 +147,11 @@ const RegisterPage = () => {
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Créer un compte</h2>
         <p className="text-gray-500 mb-6 text-center">Remplissez le formulaire pour rejoindre AlumniDocs</p>
         {serverMessage && (
-          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded text-center border border-gray-300">
+          <div className="w-full mb-4 px-4 py-2 bg-gray-100 text-[#161B70] rounded text-center border border-gray-300">
             {serverMessage}
           </div>
         )}
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="w-full" >
           {/* Ligne 1 : Nom & Prénom */}
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
@@ -286,7 +286,8 @@ const RegisterPage = () => {
               Connexion
             </button>
             <button
-              type="submit"
+            type="button"
+            onClick={handleSubmit}
               disabled={!isFormValid}
               className={
                 !isFormValid

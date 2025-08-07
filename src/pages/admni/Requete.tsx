@@ -242,7 +242,7 @@ const RequeteAdmin: React.FC = () => {
             <h2 className="text-xl font-semibold mb-4">Liste des Requêtes</h2>
             <table className="w-full border-collapse border border-gray-300">
               <thead>
-                <tr className="bg-gray-200">
+                <tr className="bg-[#161B70] text-white">
                   <th className="border border-gray-300 p-2 text-left">Étudiant</th>
                   <th className="border border-gray-300 p-2 text-left">Type</th>
                   <th className="border border-gray-300 p-2 text-left">Objet</th>
@@ -277,7 +277,7 @@ const RequeteAdmin: React.FC = () => {
                           <button
                             // onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
                              onClick={() => showConfirmDialogHandler(requete.id_requete,requete.id_etudiant,true)}
-                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                            className="bg-[#161B70] text-white text-white px-3 py-1 rounded hover:bg-blue-600"
                           >
                             <FontAwesomeIcon icon={faCheckCircle} />
                             {/* Accepter */}

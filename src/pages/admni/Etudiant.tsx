@@ -210,19 +210,19 @@ useEffect(()=>{
             <div className="flex justify-end gap-4 mb-6">
               <button
                 onClick={handleExportPDF}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                className="bg-[#161B70]  text-white px-4 py-2 rounded "
               >
                 Exporter PDF
               </button>
               <button
                 onClick={handleExportCSV}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-red-600 text-white px-4 py-2 rounded "
               >
                 Exporter CSV
               </button>
               <button
                 onClick={handleDownloadZip}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-[#161B70]  text-white px-4 py-2 rounded "
               >
                 Télécharger Documents.zip
               </button>
@@ -235,7 +235,7 @@ useEffect(()=>{
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
-                  <tr className="bg-gray-200">
+                  <tr className="bg-[#161B70] text-white">
                     <th className="border border-gray-300 p-2 text-left">Matricule</th>
                     <th className="border border-gray-300 p-2 text-left">Nom</th>
                     <th className="border border-gray-300 p-2 text-left">Prénom</th>
@@ -257,13 +257,13 @@ useEffect(()=>{
                       <td className="border border-gray-300 p-2 text-center">
                         <button
                           onClick={() => handleViewDocuments(student)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                          className="bg-[#161B70] text-white-500 text-white px-3 py-1 rounded hover:opacity-80"
                         >
                           Voir Documents
                         </button>
                         <a
                           href={`/admin/detail-etudiant/${student.id_etudiant}`}
-                          className="ml-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 inline-block"
+                          className="ml-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 inline-block"
                           style={{ textDecoration: "none" }}
                         >
                           Détails
@@ -310,19 +310,19 @@ useEffect(()=>{
       {/* Modal pour afficher les documents */}
       {selectedStudent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
-            <h2 className="text-xl font-bold mb-4">Documents de {selectedStudent.nom} {selectedStudent.prenom}</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-[40%]">
+            <h2 className="text-xl font-bold mb-4">Documents de <strong className="capitalize text-red-600">{selectedStudent.nom} {selectedStudent.prenom}</strong></h2>
             <ul className="mb-4">
               {selectedStudent.documents.trim() === "" ? (
                 <li className="text-gray-500">Documents non soumis</li>
               ) : (
                 selectedStudent.documents.split(',').map((doc, index) => (
                   <li key={index} className="flex justify-between items-center mb-2">
-                    <span>{doc.trim()}</span>
+                    <span>{doc.trim().length>40 ? doc.trim().substring(0,35).concat(" ...") : doc.trim()} </span>
                     <a
                       href={`${constant.doc_path}/${doc.trim()}`}
                       download={doc.trim()}
-                      className="text-blue-500 hover:underline"
+                      className="text-[#161B70] hover:underline"
                       target="_blank" rel="noopener noreferrer"
                     >
                       Télécharger
@@ -334,7 +334,7 @@ useEffect(()=>{
             <div className="flex justify-end">
               <button
                 onClick={handleCloseModal}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Fermer
               </button>
