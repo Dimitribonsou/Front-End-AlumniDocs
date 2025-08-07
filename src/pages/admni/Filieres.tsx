@@ -125,7 +125,7 @@ const Filieres = () => {
                 <tr className="bg-[#161B70] text-white">
                   <th className="border border-gray-300 p-2 text-left">#</th>
                   <th className="border border-gray-300 p-2 text-left">Nom</th>
-                  {/* <th className="border border-gray-300 p-2 text-left">Actions</th> */}
+                  <th className="border border-gray-300 p-2 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -134,14 +134,14 @@ const Filieres = () => {
                   <tr key={filiere.id_filiere} className="hover:bg-gray-100">
                     <td className="border border-gray-300 p-2">{filiere.id_filiere}</td>
                     <td className="border border-gray-300 p-2">{filiere.libelle}</td>
-                    {/* <td className="border border-gray-300 p-2">
+                     <td className="border border-gray-300 p-2">
                       {/* <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
                         Modifier
                       </button>  */}
-                      {/* <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
+                       <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
                         Supprimer
                       </button> 
-                    </td> */}
+                    </td> 
                   </tr>
                 ))}
                 {filieresToShow.length === 0 && (
@@ -181,7 +181,7 @@ const Filieres = () => {
           <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ajouter une Nouvelle Filière</h2>
             <form >
-              <p className={errorMessage.length>0 ? "text-center  py-2 bg-green-400 text-white rounded-sm my-2" :""}>{errorMessage}</p>
+              <p className={errorMessage.length>0 ? "text-center  py-2 bg-[#161B70] text-white rounded-sm my-2" :""}>{errorMessage}</p>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nom de la Filière</label>
                 <input

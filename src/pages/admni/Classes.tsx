@@ -173,9 +173,9 @@ const getFiliere= async ()=>{
                       <td className="border border-gray-300 p-2">{classe.name}</td>
                       <td className="border border-gray-300 p-2">{classe.niveau}</td>
                       <td className="border border-gray-300 p-2">
-                        <button className="bg-[#161B70] text-white px-4 py-1 rounded hover:opacity-80 mr-2">
+                        {/* <button className="bg-[#161B70] text-white px-4 py-1 rounded hover:opacity-80 mr-2">
                           Modifier
-                        </button>
+                        </button> */}
                         <button className="bg-red-600 text-white px-4 py-1 rounded hover:opacity-80">
                           Supprimer
                         </button>
@@ -219,6 +219,7 @@ const getFiliere= async ()=>{
           {/* Ajouter une nouvelle classe */}
           <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ajouter une Nouvelle Classe</h2>
+            <p className={errorMessage.length>0 ? "text-center  py-2 bg-[#161B70] text-white rounded-sm my-2" :""}>{errorMessage}</p>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nom de la Classe</label>
@@ -228,6 +229,7 @@ const getFiliere= async ()=>{
                   placeholder="Entrez le nom de la classe"
                   value={newClassName}
                   onChange={(e) => setNewClassName(e.target.value)}
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -246,6 +248,7 @@ const getFiliere= async ()=>{
                   className="w-full border border-gray-300 p-2 rounded"
                   value={newClassFiliere}
                   onChange={(e) => setNewClassFiliere(e.target.value)}
+                  required
                 >
                   <option value="">Sélectionnez un filiere</option>
                   {listFiliere.map((filiere:any) => (
@@ -259,6 +262,7 @@ const getFiliere= async ()=>{
                   className="w-full border border-gray-300 p-2 rounded"
                   value={newClassNiveau}
                   onChange={(e) => setNewClassNiveau(e.target.value)}
+                  required
                 >
                   <option value="" >Selectionnez un niveau</option>
                   <option value="1" selected={true}>1</option>
@@ -274,6 +278,7 @@ const getFiliere= async ()=>{
                   className="w-full border border-gray-300 p-2 rounded"
                   value={newClassSup}
                   onChange={(e) => setNewClassSup(e.target.value)}
+                  required
                 >
                   <option value="">Sélectionnez un classe</option>
                   {listClass.map((classe:any) => (

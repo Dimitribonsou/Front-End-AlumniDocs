@@ -224,7 +224,7 @@ useEffect(()=>{
                 onClick={handleDownloadZip}
                 className="bg-[#161B70]  text-white px-4 py-2 rounded "
               >
-                Télécharger Documents.zip
+                 Documents.zip
               </button>
             </div>
           )}
@@ -259,7 +259,7 @@ useEffect(()=>{
                           onClick={() => handleViewDocuments(student)}
                           className="bg-[#161B70] text-white-500 text-white px-3 py-1 rounded hover:opacity-80"
                         >
-                          Voir Documents
+                          Docs
                         </button>
                         <a
                           href={`/admin/detail-etudiant/${student.id_etudiant}`}

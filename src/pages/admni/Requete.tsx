@@ -277,7 +277,7 @@ const RequeteAdmin: React.FC = () => {
                           <button
                             // onClick={() => handleMarkAsProcessed(requete.id,requete.id_etudiant)}
                              onClick={() => showConfirmDialogHandler(requete.id_requete,requete.id_etudiant,true)}
-                            className="bg-[#161B70] text-white text-white px-3 py-1 rounded hover:bg-blue-600"
+                            className="bg-[#161B70]  text-white px-3 py-1 rounded hover:opacity-80"
                           >
                             <FontAwesomeIcon icon={faCheckCircle} />
                             {/* Accepter */}
@@ -285,7 +285,7 @@ const RequeteAdmin: React.FC = () => {
                           <button
                             // onClick={() => handleMarkAsReset(requete.id,requete.id_etudiant)}
                              onClick={() => showConfirmDialogHandler(requete.id_requete,requete.id_etudiant,false)}
-                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:opacity-80"
                           >
                             <FontAwesomeIcon icon={faTimesCircle} />
                             {/* Refuser */}
@@ -302,7 +302,7 @@ const RequeteAdmin: React.FC = () => {
                           className="inline-flex items-center gap-2 px-2 py-1 rounded bg-gray-100 hover:bg-blue-100 text-blue-700 font-medium transition-colors duration-150"
                         >
                           <span className="truncate max-w-[100px]">{requete.piece_jointe.split('/').pop()}</span>
-                          <FontAwesomeIcon icon={faArrowRight} className="text-blue-700" />
+                          <FontAwesomeIcon icon={faArrowRight} className="text-[#161B70]" />
                         </a>
                       ) : (
                         <span className="text-gray-400">Aucune pièce</span>
@@ -363,13 +363,13 @@ const RequeteAdmin: React.FC = () => {
             <div className="flex justify-end space-x-4">
               <button
                 onClick={()=>setshowConfirmDialog(false)}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:opacity-80"
               >
                 Annuler
               </button>
               <button
                 onClick={handleSendResponse}
-                className="px-4 py-2 bg-blue-500 text-gray-800 rounded hover:bg-blue-600"
+                className="px-4 py-2 bg-[#161B70] text-white rounded hover:opacity-80"
               >
                 Envoyer
               </button>

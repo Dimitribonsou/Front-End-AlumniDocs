@@ -41,8 +41,11 @@ const getAnnonces= async ()=>{
   const response = await fetch(`${constant.host}/AlumniDocs-API/annonceList`);
   if(response.ok)
   {
+    const result=await response.json();
     //mettre a jour la liste des annonces
-    setListeAnnonce(await response.json());
+    setListeAnnonce(result);
+    console.log(listAnnonce)
+    console.log( result)
     console.table(listAnnonce)
   }
   else
@@ -209,7 +212,7 @@ const handleStatus=async (id:number)=>{
                       <td className="p-3">{annonce.libelle}</td>
                       <td className="p-3 capitalize font-medium">{annonce.nom_admin}</td>
                       {/* <td className="p-3">{annonce.classes ? annonce.classes.map((classe:string)=>classe).join(", ") : ''}</td> */}
-                      <td className="p-3">{new Date(annonce.date_publication).toISOString().split("T")[0]}</td>
+                      <td className="p-3">{annonce.date_publication}</td>
                       <td className="p-3">
                         <span
                           className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
