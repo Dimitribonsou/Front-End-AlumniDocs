@@ -109,11 +109,11 @@ export default function DetailEtudiant() {
       <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
         <Navbar_admin />
         <div className="w-full max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-xl">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-center">Fiche infos de l'étudiant <strong className="font-bold text-blue-600">{infos.nom} {infos.prenom}</strong> </h2>
+          <div className="flex justify-between flex-wrap items-center gap-2 mb-6">
+            <h2 className="text-2xl font-bold text-center">Fiche infos de l'étudiant <strong className="font-bold text-[#161B70] capitalize">{infos.nom} {infos.prenom}</strong> </h2>
             <button
               onClick={handlePrint}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 print:hidden"
+              className="bg-[#161B70]  text-white px-4 py-2 rounded hover:opacity-80 print:hidden"
             >
               Imprimer
             </button>

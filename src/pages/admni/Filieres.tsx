@@ -7,11 +7,11 @@ import { FiliereType } from "../../types/FiliereType";
 import { exit } from "process";
 
 const EXEMPLES_FILIERES = [
-  { id: 1, name: "CSI" },
-  { id: 2, name: "Génie Logiciel" },
-  { id: 3, name: "Prepar 3IL" },
-  { id: 4, name: "Réseaux et Télécoms" },
-  { id: 5, name: "Data Science" },
+  { id_filiere: 1, libelle: "CSI" },
+  { id_filiere: 2, libelle: "Génie Logiciel" },
+  { id_filiere: 3, libelle: "Prepar 3IL" },
+  { id_filiere: 4, libelle: "Réseaux et Télécoms" },
+  { id_filiere: 5, libelle: "Data Science" },
 ];
 
 const PAGE_SIZE = 3;
@@ -19,13 +19,13 @@ const PAGE_SIZE = 3;
 const Filieres = () => {
 
   // const filieres = [
-  //   { id: 1, name: "CSI" },
-  //   { id: 2, name: "Génie Logiciel"},
-  //   { id: 3, name: "Prepar 3IL" },
+  //   { id: 1, libelle: "CSI" },
+  //   { id: 2, libelle: "Génie Logiciel"},
+  //   { id: 3, libelle: "Prepar 3IL" },
   // ];
   const  [libelle,setLibelle]=useState('');
   const  [errorMessage,setErrorMessage]=useState('');
-  const [filieres, setFilieres] = useState(EXEMPLES_FILIERES);
+  const [filieres, setFilieres] = useState<FiliereType[]>(EXEMPLES_FILIERES);
   const [search, setSearch] = useState("");
   const [newFiliere, setNewFiliere] = useState("");
   const [page, setPage] = useState(1);
@@ -81,9 +81,9 @@ const Filieres = () => {
  
 
   // Filtrage
-  const filteredFilieres = filieres.filter((filiere) =>
-    filiere.name.toLowerCase().includes(search.toLowerCase()) 
-  );
+  const filteredFilieres = filieres.length>0 ?  filieres.filter((filiere) =>
+    filiere.libelle.toLowerCase().includes(search.toLowerCase()) 
+  ) : [];
 
   // Pagination
   const totalPages = Math.ceil(filteredFilieres.length / PAGE_SIZE);
@@ -122,26 +122,26 @@ const Filieres = () => {
             <h2 className="text-xl font-semibold mb-4">Liste des Filières</h2>
             <table className="w-full border-collapse border border-gray-300">
               <thead>
-                <tr className="bg-gray-200">
+                <tr className="bg-[#161B70] text-white">
                   <th className="border border-gray-300 p-2 text-left">#</th>
                   <th className="border border-gray-300 p-2 text-left">Nom</th>
-                  {/* <th className="border border-gray-300 p-2 text-left">Actions</th> */}
+                  <th className="border border-gray-300 p-2 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
 
                 {filieresToShow.map((filiere) => (
-                  <tr key={filiere.id} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 p-2">{filiere.id}</td>
-                    <td className="border border-gray-300 p-2">{filiere.name}</td>
-                    <td className="border border-gray-300 p-2">
-                      <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
+                  <tr key={filiere.id_filiere} className="hover:bg-gray-100">
+                    <td className="border border-gray-300 p-2">{filiere.id_filiere}</td>
+                    <td className="border border-gray-300 p-2">{filiere.libelle}</td>
+                     <td className="border border-gray-300 p-2">
+                      {/* <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">
                         Modifier
-                      </button> 
-                      {/* <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
+                      </button>  */}
+                       <button className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
                         Supprimer
-                      </button> */}
-                    </td>
+                      </button> 
+                    </td> 
                   </tr>
                 ))}
                 {filieresToShow.length === 0 && (
@@ -181,7 +181,7 @@ const Filieres = () => {
           <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ajouter une Nouvelle Filière</h2>
             <form >
-              <p className={errorMessage.length>0 ? "text-center  py-2 bg-green-400 text-white rounded-sm my-2" :""}>{errorMessage}</p>
+              <p className={errorMessage.length>0 ? "text-center  py-2 bg-[#161B70] text-white rounded-sm my-2" :""}>{errorMessage}</p>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nom de la Filière</label>
                 <input
@@ -195,7 +195,7 @@ const Filieres = () => {
               </div>
               <button
                 type="button"
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
                 onClick={handleSubmit}
               >
                 Ajouter

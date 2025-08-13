@@ -58,7 +58,7 @@ const Notif = () => {
           ))
           
         ) : (
-          <p className="text-center font-medium text-blue-800 w-full my-2 text-2xl">Aucune notification disponible pour l'instant.</p>
+          <p className="text-center font-medium text-blue-800 w-full my-2 text-xl">Aucune notification disponible pour l'instant.</p>
         )}
           </div>
       </div>

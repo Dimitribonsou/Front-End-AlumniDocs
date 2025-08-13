@@ -41,8 +41,11 @@ const getAnnonces= async ()=>{
   const response = await fetch(`${constant.host}/AlumniDocs-API/annonceList`);
   if(response.ok)
   {
+    const result=await response.json();
     //mettre a jour la liste des annonces
-    setListeAnnonce(await response.json());
+    setListeAnnonce(result);
+    console.log(listAnnonce)
+    console.log( result)
     console.table(listAnnonce)
   }
   else
@@ -194,7 +197,7 @@ const handleStatus=async (id:number)=>{
             <div className="overflow-x-auto">
               <table className="min-w-full table-auto">
                 <thead>
-                  <tr className="bg-gray-100 text-left">
+                  <tr className="bg-[#161B70] text-white text-left">
                     <th className="p-3">Libellé</th>
                     <th className="p-3">Auteur</th>
                     {/* <th className="p-3">Classes</th> */}
@@ -209,13 +212,13 @@ const handleStatus=async (id:number)=>{
                       <td className="p-3">{annonce.libelle}</td>
                       <td className="p-3 capitalize font-medium">{annonce.nom_admin}</td>
                       {/* <td className="p-3">{annonce.classes ? annonce.classes.map((classe:string)=>classe).join(", ") : ''}</td> */}
-                      <td className="p-3">{new Date(annonce.date_publication).toISOString().split("T")[0]}</td>
+                      <td className="p-3">{annonce.date_publication}</td>
                       <td className="p-3">
                         <span
                           className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
                             annonce.statut
-                              ? "bg-green-500 text-white"
-                              : "bg-yellow-400 text-gray-800"
+                              ? "bg-[#161B70]  text-white"
+                              : "bg-red-500 text-white"
                           }`}
                         >
                           {annonce.statut ? "Publié" : "Non publié"}
@@ -224,11 +227,11 @@ const handleStatus=async (id:number)=>{
                       <td className="p-3 flex flex-col sm:flex-row gap-2">
                         <button
                           onClick={() => getPublication(annonce.id_annonce)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm"
+                          className="bg-[#161B70]  text-white px-3 py-1 rounded text-sm hover:opacity-80"
                         >
                           Publier
                         </button>
-                        <button onClick={() => handleDeleteClick(annonce.id_annonce)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+                        <button onClick={() => handleDeleteClick(annonce.id_annonce)} className="bg-red-600 text-white px-3 py-1 rounded  text-sm hover:opacity-80">
                           Supprimer
                         </button>
                       </td>
@@ -240,7 +243,7 @@ const handleStatus=async (id:number)=>{
             <div className="mt-6 flex justify-center md:justify-end">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+                className="bg-[#161B70]  text-white py-2 px-4 rounded hover:opacity-80"
               >
                 Ajouter une annonce
               </button>
@@ -286,13 +289,13 @@ const handleStatus=async (id:number)=>{
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Annuler
               </button>
               <button
                 onClick={handleSubmit}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Ajouter
               </button>
@@ -323,13 +326,13 @@ const handleStatus=async (id:number)=>{
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsPublishModalOpen(false)}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Annuler
               </button>
               <button
                 onClick={() => handlePublish(idPublication)} // Remplacez "1" par l'ID de l'annonce sélectionnée
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-[#161B70] text-white px-4 py-2 rounded hover:opacity-80"
               >
                 Publier
               </button>
@@ -347,13 +350,13 @@ const handleStatus=async (id:number)=>{
             <div className="flex justify-end space-x-4">
               <button
                 onClick={handleCancelDelete}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                className="px-4 py-2 bg-[#161B70] text-white rounded hover:opacity-80"
               >
                 Annuler
               </button>
               <button
                 onClick={handleConfirmDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:opacity-80"
               >
                 Supprimer
               </button>

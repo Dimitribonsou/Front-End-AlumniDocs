@@ -36,7 +36,8 @@ const Annonce = () => {
         {/* Section Annonces */}
         <div className="w-full max-w-4xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-            {annonces.map((annonce)=>(
+            { annonces && annonces.length >0 ? (
+             annonces.map((annonce)=>(
                 <AnnouncementCard
                    imageSrc={annonce.image}
                    title={annonce.libelle}
@@ -45,64 +46,12 @@ const Annonce = () => {
                    time={annonce.heure_publication}
                    id_annonce={annonce.id_annonce}
                  />
-            ))}
+            ))) :
+            (
+               <p className="text-center font-medium text-blue-800 w-full my-2 text-xl">Aucune Annonce disponible pour l'instant.</p> 
+            )}
         
-            {/* <AnnouncementCard
-              imageSrc="../assets/sn.jpeg"
-              title="Session normal 2"
-              description="Il est porté à la connaissance..."
-              date="07 Feb 2025"
-              time="14:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/pt.jpeg"
-              title="Projet tutoré"
-              description="Il est porté à la connaissance..."
-              date="05 Feb 2025"
-              time="08:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/rm.jpeg"
-              title="Réunion mobilité"
-              description="Il est porté à la connaissance..."
-              date="12 Feb 2025"
-              time="12:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/sn.jpeg"
-              title="Session normal 2"
-              description="Il est porté à la connaissance..."
-              date="07 Feb 2025"
-              time="14:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/pt.jpeg"
-              title="Projet tutoré"
-              description="Il est porté à la connaissance..."
-              date="05 Feb 2025"
-              time="08:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/rm.jpeg"
-              title="Réunion mobilité"
-              description="Il est porté à la connaissance..."
-              date="12 Feb 2025"
-              time="12:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/sn.jpeg"
-              title="Session normal 2"
-              description="Il est porté à la connaissance..."
-              date="07 Feb 2025"
-              time="14:30"
-            />
-            <AnnouncementCard
-              imageSrc="../assets/pt.jpeg"
-              title="Projet tutoré"
-              description="Il est porté à la connaissance..."
-              date="05 Feb 2025"
-              time="08:30"
-            /> */}
+          
           </div>
         </div>
       </div>

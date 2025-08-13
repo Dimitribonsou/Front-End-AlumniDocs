@@ -29,7 +29,7 @@ const Sidebar = () => {
     { name: "Requêtes", path: "/admin/requetes", icon: faEnvelope },
     // { name: "Forums", path: "", icon: faComments },
     { name: "Administrateurs", path: "/admin/admins", icon: faUserShield },
-    { name: "Promotions", path: "/admin/promotions", icon: faGraduationCap },
+    // { name: "Promotions", path: "/admin/promotions", icon: faGraduationCap },
     { name: "Classes", path: "/admin/classes", icon: faChalkboardTeacher },
     { name: "Filières", path: "/admin/filieres", icon: faBuilding },
   ];

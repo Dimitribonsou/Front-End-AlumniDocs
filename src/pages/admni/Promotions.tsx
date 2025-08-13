@@ -76,7 +76,7 @@ const Promotions = () => {
             <h2 className="text-xl font-semibold mb-4">Liste des Étudiants</h2>
             <table className="w-full border-collapse border border-gray-300">
               <thead>
-                <tr className="bg-gray-200">
+                <tr className="bg-[#161B70] text-white">
                   <th className="border border-gray-300 p-2 text-left">#</th>
                   <th className="border border-gray-300 p-2 text-left">Nom</th>
                   <th className="border border-gray-300 p-2 text-left">Promotion</th>
