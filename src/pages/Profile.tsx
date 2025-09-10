@@ -20,6 +20,7 @@ const ProfilePage: React.FC = () => {
   const nom_complet=dataLogin.nom+' '+dataLogin.prenom;
   const email_etudiant=dataLogin.email;
   const telephone=dataLogin.telephone;
+  const id_classe=classeInfo[0] ? classeInfo[0].id_classe : null;
   // recuperer la classe de l'etudiant
   const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
 

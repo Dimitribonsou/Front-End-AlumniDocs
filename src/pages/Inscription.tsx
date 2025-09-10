@@ -104,7 +104,7 @@ const getClasse= async ()=>{
               {/* Infos académiques */}
               <div className="space-y-4">
                 <hr />
-                <span className='text-center text-green-500 my-2 block text-base font-medium'>{error}</span>
+                {/* <span className='text-center text-green-500 my-2 block text-base font-medium'>{error}</span> */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* <div>
                     {renderLabel("Année académique")}
