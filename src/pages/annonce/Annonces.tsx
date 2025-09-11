@@ -39,7 +39,7 @@ const Annonce = () => {
             { annonces && annonces.length >0 ? (
              annonces.map((annonce)=>(
                 <AnnouncementCard
-                   imageSrc={annonce.image}
+                   imageSrc={annonce.lien_fichier || ""}
                    title={annonce.libelle}
                    description={annonce.description.substring(0,30)}
                    date={new Date(annonce.date_publication).toISOString().split('T')[0]}

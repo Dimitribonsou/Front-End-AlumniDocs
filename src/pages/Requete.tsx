@@ -16,10 +16,11 @@ const RequetePage: React.FC = () => {
     const idEtudiant=dataLogin.iduser;
     e.preventDefault();
     const formData = new FormData();
-    formData.append('objet', objet);
+    formData.append('objet', objet); 
     formData.append('description', description);
     formData.append('id_categorie', categorie);
     formData.append('piece_jointe', fichier);
+    formData.append('request_type', "Requete");
     formData.append('id_etudiant', idEtudiant);
     try {
       const response = await fetch(`${constant.host}/AlumniDocs-API/newRequest`, {

@@ -51,11 +51,13 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
       const nom=dataLogin.nom;
        // recuperer la classe de l'etudiant
       const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
+  const id_classe=classeInfo[0] ? classeInfo[0].id_classe : null;
       const formData = new FormData();
       formData.append('libelle', label);
       formData.append('document', selectedFile);
       formData.append('nom', nom);
       formData.append('classe', classe);
+      formData.append('classe_id', id_classe ? id_classe.toString() : '');
       formData.append('id_etudiant', idEtudiant);
       try {
         const response = await fetch(`${constant.host}/AlumniDocs-API/upload-file`, {
