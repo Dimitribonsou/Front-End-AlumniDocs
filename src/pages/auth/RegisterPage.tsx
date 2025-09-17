@@ -29,9 +29,9 @@ const RegisterPage = () => {
   useEffect(() => {
     const isValid = validateForm();
     setIsFormValid(isValid);
-  }, [nom, prenom, email, phone, password, confirmPassword, gender]);
+  }, [password,confirmPassword]);
 
-  const handleSubmit = async () => {
+  const handlesupmit = async () => {
     if (!isFormValid) return;
       // recuperer les donnees saisi dans le formulaire
       const data = {
@@ -53,6 +53,7 @@ const RegisterPage = () => {
         });
   
         if (!response.ok) {
+          setServerMessage("Une erreur est survenue réessayer plus tard .");
           throw new Error('la reponse du serveur est pas correct.');
         }
   
@@ -62,9 +63,11 @@ const RegisterPage = () => {
         setServerMessage(result);
         // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
         resetFormData();
+        window.location.href = "/login";
         // Handle success as needed
         // alert('Votre compte a été créé avec succès!');
       } catch (error) {
+        setServerMessage("Une erreur est survenue réessayer plus tard .");
         console.log('There was a problem with the fetch operation:', error);
         // Handle error as needed
       }
@@ -74,44 +77,51 @@ const RegisterPage = () => {
 
     // Validation for nom
     if (nom.trim() === "") {
-      console.log("le nom est obligatoire");
+      setServerMessage("le nom est obligatoire");
+      // console.log("le nom est obligatoire");
       isValid = false;
     }
 
     // Validation for prenom
     if (prenom.trim() === "") {
-      console.log("le prenom est obligatoire");
+      setServerMessage("le prenom est obligatoire");
+      // console.log("le prenom est obligatoire");
       isValid = false;
     }
 
     // Validation for email
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailRegex.test(email)) {
-      console.log("format email invalide");
+      setServerMessage("format email invalide");
+      // console.log("format email invalide");
       isValid = false;
     }
 
     // Validation for phone
     // const phoneRegex = /^([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     if (phone.trim() === "") {
-      console.log("le numero  de telphone est obligatoire");
+      setServerMessage("le numero  de telphone est obligatoire");
+      // console.log("le numero  de telphone est obligatoire");
       isValid = false;
     }
 
     // Validation for password
     if (password.trim() === "") {
-      console.log("mot de passe  est obligatoire.");
+      setServerMessage("mot de passe  est obligatoire.");
+      // console.log("mot de passe  est obligatoire.");
       isValid = false;
     }
 
     // Validation for confirmPassword
     if (confirmPassword.trim() !== password) {
-      console.log("les mots de passe ne correspondent pas .");
+      setServerMessage("les mots de passe ne correspondent pas .");
+      // console.log("les mots de passe ne correspondent pas .");
       isValid = false;
     }
 
     // Validation for gender
     if (gender.trim() === "") {
+      setServerMessage("le Genre est obligatoire");
       console.log("le Genre est obligatoire");
       isValid = false;
     }
@@ -155,7 +165,7 @@ const RegisterPage = () => {
           {/* Ligne 1 : Nom & Prénom */}
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Nom</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Nom <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faUser} />
@@ -171,7 +181,7 @@ const RegisterPage = () => {
               </div>
             </div>
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Prénom</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Prénom <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faUser} />
@@ -190,7 +200,7 @@ const RegisterPage = () => {
           {/* Ligne 2 : Email & Téléphone */}
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Email <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faAt} />
@@ -206,7 +216,7 @@ const RegisterPage = () => {
               </div>
             </div>
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Téléphone</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Téléphone <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faPhone} />
@@ -224,7 +234,7 @@ const RegisterPage = () => {
           </div>
           {/* Ligne 3 : Sexe */}
           <div className="mb-4">
-            <label className="block mb-1 text-sm font-medium text-gray-700">Sexe</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Sexe <sup className="text-red-500">*</sup></label>
             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
               <span className="bg-gray-100 p-3 text-gray-600">
                 <FontAwesomeIcon icon={faVenusMars} />
@@ -244,7 +254,7 @@ const RegisterPage = () => {
           {/* Ligne 4 : Mot de passe & Confirmation */}
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Mot de passe</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Mot de passe <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faLock} />
@@ -260,7 +270,7 @@ const RegisterPage = () => {
               </div>
             </div>
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Confirmation</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Confirmation <sup className="text-red-500">*</sup></label>
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden h-11 bg-white">
                 <span className="bg-gray-100 p-3 text-gray-600">
                   <FontAwesomeIcon icon={faLock} />
@@ -287,7 +297,7 @@ const RegisterPage = () => {
             </button>
             <button
             type="button"
-            onClick={handleSubmit}
+            onClick={handlesupmit}
               disabled={!isFormValid}
               className={
                 !isFormValid
