@@ -82,7 +82,7 @@ const LoginPage = () => {
                 type="text"
                 id="username"
                 name="username"
-                placeholder="Email ou matricule"
+                placeholder="Entrer votre email "
                 className="w-full py-2 px-3 text-base focus:outline-none bg-white"
                 autoComplete="off"
                 value={email}
@@ -107,15 +107,15 @@ const LoginPage = () => {
               />
             </div>
           </div>
-          <div className="mb-4 text-right text-xs">
+          {/* <div className="mb-4 text-right text-xs">
             <a href="/forgot-password" className="text-[#161B70] hover:underline">
               Mot de passe oublié ?
             </a>
-          </div>
+          </div> */}
           <button
             type="submit"
             disabled={!isFormValid}
-            className={`w-full h-11 rounded-md font-semibold text-white transition ${
+            className={`w-full h-11 rounded-md font-semibold text-white transition mt-3 ${
               isFormValid
                 ? "bg-[#161B70] hover:bg-[#0e1350]"
                 : "bg-gray-400 cursor-not-allowed"

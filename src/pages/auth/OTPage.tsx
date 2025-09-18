@@ -85,6 +85,7 @@ const VerifyCodePage = () => {
   };
 
   const handleResend = () => {
+    navigate('/login');
     setError("Code de vérification renvoyé !");
   };
 
@@ -148,7 +149,7 @@ const VerifyCodePage = () => {
             className="text-[#9B1E1E] underline"
             onClick={handleResend}
           >
-            Renvoyer
+            réessayer
           </button>
         </div>
       </div>

@@ -14,9 +14,9 @@ const AnnouncementCard: React.FC<AnnouncementProps> = ({ imageSrc, title, descri
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full">
       {/* Image */}
-      <img src={ `${constant.img_annonce_path}&id=1n4QPkQ1kzwA5o4AKr9XsrXjozpeAR1w4` } alt={title} className="w-full h-32 object-cover" />
+      {/* <img src={ `${constant.img_annonce_path}&id=1n4QPkQ1kzwA5o4AKr9XsrXjozpeAR1w4` } alt={title} className="w-full h-32 object-cover" /> */}
       {/* <img src={imageSrc} alt={title} className="w-full h-32 object-cover" /> */}
-      {/* <img src="https://drive.google.com/file/d/19mfXOQdbDhoqECqzXMaQKth3kxPdY7GL/view?usp=sharing" alt={title} className="w-full h-32 object-cover" /> */}
+      <img src="https://drive.google.com/uc?id=1IbagsMtwKPYmlP89QdFE614EOB4tVX29" alt={title} className="w-full h-32 object-cover" />
       {/* Contenu */}
       <div className="p-4">
         <h3 className="text-lg text-red-700 font-bold">{title}</h3>
