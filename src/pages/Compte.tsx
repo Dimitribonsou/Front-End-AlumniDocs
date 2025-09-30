@@ -252,7 +252,7 @@ export default function Compte() {
                   className="w-full border p-2 rounded"
                 />
               </div>
-              <div>
+              {/* <div>
                 {renderLabel("Photo")}
                 <input
                   type="file"
@@ -262,7 +262,7 @@ export default function Compte() {
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                 />
-              </div>
+              </div> */}
             </div>
           )}
           {/* Étape 2 : Infos parent */}

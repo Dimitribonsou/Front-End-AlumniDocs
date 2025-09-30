@@ -58,7 +58,7 @@ const Inscription: React.FC = () => {
 
       const message = await response.text();
       // vider les information de l'utilisateur connecter
-      localStorage.setItem('loginData', '{}');
+      localStorage.removeItem('loginData');
       //rediriger l'utilisateur vers la page de connexion
       window.location.href = '/login';
       console.log(message);

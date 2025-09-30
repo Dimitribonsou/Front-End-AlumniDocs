@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Ilogin from '../types/Ilogin';
 import constant from '../data/constant';
 import IclassInfo from '../types/IclasseInfo';
@@ -9,9 +9,11 @@ type FileInputProps = {
   onChange: (file: File | null) => void;
   required?: boolean;
   isvalidformat: boolean;
+  disabled?:boolean;
+  type:string;
 };
 
-const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required = false ,isvalidformat}) => {
+const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required = false ,isvalidformat,disabled=true,type}) => {
   const [fileName, setFileName] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [successMsg, setSuccessMsg] = useState<string>("");
@@ -30,7 +32,6 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
       onChange(null); // Réinitialise le fichier côté parent
       return;
     }
-
     onChange(file);
 
     if (file && file.size > 1024 * 512) { // 512 Ko
@@ -41,7 +42,10 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
       setIsTooBig(false);
     }
   };
-
+useEffect(() => {
+  if(disabled===true)
+    setSuccessMsg("Document déja envoyé ! " );
+  }, [disabled]);
   const handleSend = async () => {
 
     if (selectedFile && !isTooBig) {
@@ -56,6 +60,7 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
       formData.append('libelle', label);
       formData.append('document', selectedFile);
       formData.append('nom', nom);
+      formData.append('type', type);
       formData.append('classe', classe);
       formData.append('classe_id', id_classe ? id_classe.toString() : '');
       formData.append('id_etudiant', idEtudiant);
@@ -91,8 +96,11 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
         type="file"
         id={name}
         name={name}
-        className="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg"
+        className={`"mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base md:text-lg" ${disabled ? "d-none" : ""}`}
         onChange={handleFileChange}
+        accept=".pdf"
+        required={required}
+        disabled={disabled}
       />
       <button
         type="button"
@@ -101,14 +109,14 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
           isTooBig || !selectedFile || isvalidformat=== false
             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
             : "bg-[#161B70] text-white hover:bg-blue-700"
-        }`}
+        } ${disabled ? "d-none" : ""}`}
         // masquer le bouton de soumission du fichier si le fichier est trop volumineux , si aucun fichier n'est selctionner ou si le format exiger n'est pas respecter
         disabled={isTooBig || !selectedFile || isvalidformat === false}
       >
         Envoyer
       </button>
       {successMsg && (
-        <div className="mt-2 px-2 py-2 bg-red-500 text-medium text-white rounded text-xs text-center border border-red-700">
+        <div className={disabled ? "mt-2 px-2 py-2 bg-green-500 text-medium text-white rounded text-xs text-center border border-gray-700" : "mt-2 px-2 py-2 bg-red-500 text-medium text-white rounded text-xs text-center border border-red-700"}>
           {successMsg}
         </div>
       )}

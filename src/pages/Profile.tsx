@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import FileInput from "../Components/fileinput";
 import Navbar from "../Components/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,12 +8,16 @@ import {
 import Footer from "../Components/footer";
 import Ilogin from "../types/Ilogin";
 import IclassInfo from "../types/IclasseInfo";
+import constant from "../data/constant";
+import IDocType from "../types/DocType";
+
 
 const ProfilePage: React.FC = () => {
   const [files, setFiles] = useState<{ [key: string]: File | null }>({});
   const [fileErrors, setFileErrors] = useState<{ [key: string]: string }>({}); // Ajout pour les erreurs
   const [validFormat, setValidFormat] = useState<boolean>(false); // definis le format du fichier comme valid ou nom
-
+//state pour stocker les types de documents disponibles
+  const [availableDocTypes, setAvailableDocTypes] = useState<string[]>([]);
   //recuperer l'id de l'etudiant connecter 
   const dataLogin:Ilogin = JSON.parse(localStorage.getItem("loginData") || '{}') as Ilogin;
   const classeInfo:IclassInfo[] = JSON.parse(localStorage.getItem("classInfo") || '{}') as IclassInfo[];
@@ -24,6 +28,31 @@ const ProfilePage: React.FC = () => {
   // recuperer la classe de l'etudiant
   const classe= classeInfo[0] ? classeInfo[0].libelle_classe : "";
 
+  useEffect(() => {
+    getAvaibleDocType();
+    console.table(availableDocTypes)
+  }, []);
+// fonction pour recuperer les types de documents deja envoyer par l'etudiant
+  const getAvaibleDocType= async ()=>{
+    const response =await fetch(`${constant.host}/AlumniDocs-API/doc-type-infos/${dataLogin.iduser}`);
+    if (!response.ok)
+    {
+      throw new Error('Erreur lors de la récupération des types de documents');
+    }
+      const data:IDocType[]= await response.json();
+      console.log(data)
+      const stringValue:string = data[0].Type_doc || "";
+      // convertir la string en tableau en seperant par des virgules
+      const array = stringValue.trim().split(",");
+      // nettoyer les strings (enlever espaces, accents, etc.)
+    const cleanedArray = array.map((s) => s.trim().replace(/\s+/g, ""));
+    // mettre a jour le state
+     setAvailableDocTypes(cleanedArray);
+      // // convertir la string en tableau en seperant par des virgules
+      // setAvailableDocTypes(stringValue.trim().split(','));
+      
+      
+  }
   // Fonction utilitaire pour nettoyer les strings (enlever espaces, accents, etc.)
   const slugify = (str: string="") =>
     (str || "")
@@ -92,7 +121,7 @@ const ProfilePage: React.FC = () => {
       <div className="max-w-4xl mx-auto p-6 mt-4 bg-white shadow-md rounded-lg">
         <p className="text-lg italic text-red-600 text-center">
           Complétez votre profil est une phase primordiale en tant qu'utilisateur de AlumniDocs.
-          Rassurez-vous de soumettre tous les documents requis.
+          Rassurez-vous de soumettre tous les documents requis en respectant le format attendu.
         </p>
 
         {/* Informations Personnelles */}
@@ -101,7 +130,7 @@ const ProfilePage: React.FC = () => {
             <FontAwesomeIcon icon={faUser} /> Informations Personnelles
           </h2>
           <div className="mt-3 mx-auto flex flex-col items-center gap-4 text-center">
-            <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  />
+            {/* <input ref={inputRef} onChange={handleChange} type="file" id="file" className="w-40 h-20 bg-blue-500 hidden"  placeholder="Entrer votre photo"  /> */}
             <img
               src="../assets/profil.png"
               alt="Profil"
@@ -140,6 +169,8 @@ const ProfilePage: React.FC = () => {
                       onChange={(file) => handleFileChange(doc.name, file, doc.type)}
                       required={doc.required}
                       isvalidformat={validFormat}
+                      disabled={availableDocTypes.includes(doc.type) ? true : false}
+                      type={doc.type}
                     />
                     {fileErrors[doc.name] && (
                       <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>
@@ -166,6 +197,8 @@ const ProfilePage: React.FC = () => {
                       onChange={(file) => handleFileChange(doc.name, file, doc.type)}
                       required={doc.required}
                       isvalidformat={validFormat}
+                      disabled={availableDocTypes.includes(doc.type) ? true : false}
+                      type={doc.type}
                     />
                     {fileErrors[doc.name] && (
                       <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>

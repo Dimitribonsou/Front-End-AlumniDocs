@@ -34,7 +34,7 @@ const getStudentClassInfo= async ()=>{
   if(response.ok)
   {
     const data=await response.json()
-    console.log(data)
+    // console.log(data)
     // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
     localStorage.setItem("classInfo",JSON.stringify(data));
   }
@@ -50,7 +50,7 @@ const getStudentRate= async ()=>{
   if(response.ok)
   {
     const res=await response.json()
-    console.log(data)
+    // console.log(data)
     // sauvegarder les informations sur la classe de l'etudiant dans le localstorage
     setInfoRate(res.data.completionRate);
   }
