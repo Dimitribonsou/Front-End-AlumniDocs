@@ -59,8 +59,8 @@ const developers = [
         name: "Jamila Beulguibe (JamiDev)",
         role: "Développeuse Front-End",
         image: profil_jamila,
-        linkedin: "https://linkedin.com",
-        github: "https://github.com",
+        linkedin: "https://www.linkedin.com/in/jamila-beulguibe-248672272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+        github: "https://github.com/bjaminous",
         portfolio: "https://portfolio.com"
     }
 ];
