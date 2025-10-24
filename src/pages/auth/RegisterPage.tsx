@@ -139,6 +139,7 @@ const RegisterPage = () => {
     <div className="relative min-h-screen flex items-center justify-center">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
+        
         <img
           src="/assets/iuc-bg.jpg"
           alt="background"
@@ -149,11 +150,13 @@ const RegisterPage = () => {
 
       {/* Centered register card */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-2xl">
-        <img
-          src="/assets/logo_1_alumnidocs.png"
-          alt="Logo"
-          className="h-24 mb-6"
-        />
+        <a href="/">
+          <img
+            src="/assets/logo_1_alumnidocs.png"
+            alt="Logo"
+            className="h-24 mb-6"
+          />
+        </a>
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Créer un compte</h2>
         <p className="text-gray-500 mb-6 text-center">Remplissez le formulaire pour rejoindre AlumniDocs</p>
         {serverMessage && (
@@ -291,7 +294,7 @@ const RegisterPage = () => {
             <button
               type="button"
               className="bg-[#161B70] h-11 hover:bg-gray-600 text-white font-semibold rounded-md py-2 text-sm w-full md:w-1/2"
-              onClick={() => window.location.href = "/"}
+              onClick={() => window.location.href = "/login"}
             >
               Connexion
             </button>

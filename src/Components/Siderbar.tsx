@@ -57,7 +57,7 @@ const Sidebar = () => {
             <img
               src="/assets/logo_1_alumnidocs.png"
               alt=""
-              className="h-16 w-16 object-contain"
+              className="h-16 w-16 object-contain bg-white rounded-full"
             />
             <h2 className="text-xl font-bold">Admin Panel</h2>
           </div>

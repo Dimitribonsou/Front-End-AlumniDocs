@@ -41,9 +41,9 @@ const Notif = () => {
       <div className="container mx-auto flex flex-col items-center  space-y-6 px-4">
         {/* Section Notifs */}
         <div className="max-w-4xl w-full mx-auto bg-white shadow-lg mt-6 p-6 rounded-lg">
-        <h2 className="text-xl font-bold text-center bg-red-800 text-white py-2 rounded">
+        {/* <h2 className="text-xl font-medium text-center bg-red-800 text-white py-2 rounded">
           ACCUEIL/NOTIFICATIONS
-        </h2>
+        </h2> */}
           <div className={  notifications && notifications.length > 0  ?    "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4" : "grid grid-cols-1"  }> 
             {notifications && notifications.length > 0 ? (
           notifications.map((notification: Inotif) => (

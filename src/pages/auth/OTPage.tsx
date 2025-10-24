@@ -93,11 +93,13 @@ const VerifyCodePage = () => {
     <div className="relative min-h-screen flex items-center justify-center">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/assets/iuc-bg.jpg"
-          alt="background"
-          className="w-full h-full object-cover object-center brightness-75"
-        />
+        <a href="/">
+          <img
+            src="/assets/iuc-bg.jpg"
+            alt="background"
+            className="w-full h-full object-cover object-center brightness-75"
+          />
+        </a>
         <div className="absolute inset-0 "></div>
       </div>
 

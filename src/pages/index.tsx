@@ -124,7 +124,7 @@ const developers = [
             Bienvenue sur AlumniDocs
           </h1>
           <p className="text-xl sm:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Simplifiez la gestion documentaire des étudiants de 3IAC à l'IUC
+            Simplifiez la collecte des informations des étudiants   c'est notre mission
           </p>
           <p className="text-2xl sm:text-3xl font-semibold text-white mb-12 italic">
             "Votre parcours étudiant, simplifié en un clic"
@@ -151,8 +151,8 @@ const developers = [
             <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto text-justify">
               AlumniDocs est une solution innovante développée pour faciliter la collecte et la gestion 
-              des informations des étudiants de 3IAC à l'Institut Universitaire de la Côte (IUC). 
-              Notre plateforme modernise les processus administratifs et améliore la communication 
+              des informations des étudiants . 
+              cette plateforme modernise les processus administratifs et améliore la communication 
               entre l'administration et les étudiants.
             </p>
           </div>
@@ -196,7 +196,7 @@ const developers = [
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4"> Fonctionnalités</h2>
             <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Découvrez toutes les fonctionnalités qui rendent AlumniDocs indispensable pour les étudiants de 3IAC.
+              Découvrez toutes les fonctionnalités qui rendent AlumniDocs indispensable pour vos étudiants .
             </p>
           </div>
 
@@ -220,14 +220,14 @@ const developers = [
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="bg-white p-2 rounded-lg">
+                <div className="bg-white p-2 rounded-full">
                   {/* <FontAwesomeIcon icon={faBookOpen} className="w-6 h-6 text-white" /> */}
                     <img src={logo_alumnidocs} alt="logo" className='w-24 h-24 scale-110' />
                 </div>
                 {/* <span className="text-2xl font-bold">AlumniDocs</span> */}
               </div>
               <p className="text-gray-400">
-                Simplifier la gestion documentaire des étudiants de l'IUC
+                Simplifier la collecte des informations des étudiants 
               </p>
             </div>
             

@@ -127,7 +127,7 @@ const RequeteAdmin: React.FC = () => {
       }
       const result=await response.text();
       console.log(result)
-      alert(result)
+      // alert(result)
       // actualiser la liste 
       getRequetes();
       // envoyer les notifications a l'etudiant conserner
@@ -159,7 +159,7 @@ const RequeteAdmin: React.FC = () => {
       }
       const result=await response.text();
       console.log(result)
-      alert(result)
+      // alert(result)
       //mettre a jour la liste
       getRequetes();
       // envoyer les notifications a l'etudiant

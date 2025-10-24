@@ -31,11 +31,13 @@ import DetailEtudiant from "./pages/admni/DetailEtudiant";
 import UpdloadDocumentComponent from "./Components/uploadDocument";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import AdminRoute from "./Components/AdminRoute";
+import TestResponsive from "./pages/test_responsive";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/test-responsive" element={<TestResponsive />} />
         <Route path="/" element={<App />} />
         <Route path="/uploadTest" element={<UpdloadDocumentComponent />} />
         <Route path="/register" element={<RegisterPage />} />

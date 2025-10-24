@@ -5,6 +5,7 @@ import AnnouncementCard from '../../Components/annonces';
 import { AnnonceType } from '../../types/annonceType';
 import constant from '../../data/constant';
 import IclassInfo from '../../types/IclasseInfo';
+import annonce_image from '../../assets/annonce_img.jpg'
 
 const AnnonceDetailsPage: React.FC = () => {
   const [annonces, setAnnonces] = useState<AnnonceType[]>([]);
@@ -25,7 +26,7 @@ const AnnonceDetailsPage: React.FC = () => {
     }
     const annonceData = await response.json();
     setAnnonces(annonceData);
-    console.log(annonceData)
+    // console.log(annonceData)
   };
 
   const getDetailAnnonce = async () => {
@@ -39,7 +40,7 @@ const AnnonceDetailsPage: React.FC = () => {
     }
     const annonceData = await response.json();
     setDetailAnnonces(annonceData);
-    console.log(annonceData)
+    console.log("%o",annonceData)
   };
 
   return (
@@ -48,15 +49,20 @@ const AnnonceDetailsPage: React.FC = () => {
 
       {/* Contenu principal centré */}
       <div className="max-w-4xl mx-auto w-full bg-white shadow-lg mt-10 p-6 rounded-lg">
-        <h2 className="text-xl font-bold text-center bg-red-800 text-white py-2 rounded">
+        {/* <h2 className="text-xl font-medium text-center bg-red-800 text-white py-2 rounded">
           ANNONCES/DETAILS
-        </h2>
+        </h2> */}
 
         {detailAnnonces && (
           <>
-            <h3 className="text-2xl font-bold text-center my-4">{detailAnnonces[0].libelle}</h3>
-            <img
+            <h3 className="text-2xl font-bold text-center my-4 capitalize text-red-800">{detailAnnonces[0].libelle}</h3>
+            {/* <img
               src={`${constant.img_annonce_path}/${detailAnnonces[0].image}`}
+              alt="Annonce"
+              className="w-full h-64 object-cover rounded-lg"
+            /> */}
+            <img
+              src={annonce_image}
               alt="Annonce"
               className="w-full h-64 object-cover rounded-lg"
             />
@@ -72,7 +78,7 @@ const AnnonceDetailsPage: React.FC = () => {
 
       {/* Section Annonces Similaires */}
       <div className="max-w-4xl w-full mx-auto bg-white shadow-lg mt-6 p-6 rounded-lg">
-        <h3 className="text-xl font-bold mb-4">Annonces similaires</h3>
+        <h3 className="text-xl font-bold mb-4">Annonces récentes</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {annonces.map((annonce) => (
             <AnnouncementCard
@@ -80,7 +86,7 @@ const AnnonceDetailsPage: React.FC = () => {
               imageSrc={annonce.image}
               title={annonce.libelle}
               description={annonce.description.substring(0, 80)}
-              date={new Date(annonce.date_publication).toISOString().split('T')[0]}
+              date={new Date(annonce.date_publication).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
               time={annonce.heure_publication}
               id_annonce={annonce.id_annonce}
             />

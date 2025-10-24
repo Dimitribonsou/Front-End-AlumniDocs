@@ -148,7 +148,7 @@ const getAnnonces = async ()=>{
                    imageSrc={annonce.image}
                    title={annonce.libelle}
                    description={annonce.description.substring(0,30)}
-                   date={new Date(annonce.date_publication).toISOString().split('T')[0]}
+                   date={new Date(annonce.date_publication).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                    time={annonce.heure_publication}
                    id_annonce={annonce.id_annonce}
                  />

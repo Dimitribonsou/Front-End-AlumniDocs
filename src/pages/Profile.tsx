@@ -53,6 +53,27 @@ const ProfilePage: React.FC = () => {
       
       
   }
+  // fonction pour identifier l'annee scolaire en cours
+  function obtenirAnneeScolaire() {
+    const dateActuelle = new Date();
+    const moisActuel = dateActuelle.getMonth() + 1; // Les mois commencent à 0
+    const annnee = dateActuelle.getFullYear();
+    const anneeActuelle =  parseInt(annnee.toLocaleString().substring(3,5));
+    // la fonction substring fonction avec n+1 caractere avec comme premier index 0  
+    //  console.log(anneeActuelle)
+    let anneeScolaire;
+  
+    if (moisActuel >= 9) {
+      // Si nous sommes en août ou après, l'année scolaire commence cette année
+      anneeScolaire = `${anneeActuelle}${anneeActuelle + 1}`;
+    } else {
+      // Sinon, l'année scolaire a commencé l'année dernière
+      anneeScolaire = `${anneeActuelle - 1}${anneeActuelle}`;
+    }
+    // console.log(anneeScolaire)
+    return anneeScolaire;
+  }
+ 
   // Fonction utilitaire pour nettoyer les strings (enlever espaces, accents, etc.)
   const slugify = (str: string="") =>
     (str || "")
@@ -71,8 +92,10 @@ const ProfilePage: React.FC = () => {
       const nomSlug = slugify(dataLogin.nom);
       const prenomSlug = slugify(dataLogin.prenom);
       const typeSlug = type ? slugify(type) : slugify(name);
-
-      const expectedName = `${classeSlug}_${nomSlug}_${prenomSlug}_${typeSlug}.pdf`;
+      
+      //recuperer l'annee scolaire en cours pour 2025/2026 on prendra 2526
+      const anneeScolaire= obtenirAnneeScolaire();
+      const expectedName = `${classeSlug}_${anneeScolaire}_${nomSlug}_${prenomSlug}_${typeSlug}.pdf`;
       if (file.name.toUpperCase().trim() !== expectedName.trim().toUpperCase()) {
         // Si le nom du fichier ne correspond pas au format attendu, marquer le format comme invalide
         setValidFormat(false);
@@ -173,7 +196,7 @@ const ProfilePage: React.FC = () => {
                       type={doc.type}
                     />
                     {fileErrors[doc.name] && (
-                      <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>
+                      <div className="text-red-600 text-sm mt-1  w-full text-wrap break-words">{fileErrors[doc.name]}</div>
                     )}
                   </div>
                 ))}
@@ -201,7 +224,9 @@ const ProfilePage: React.FC = () => {
                       type={doc.type}
                     />
                     {fileErrors[doc.name] && (
-                      <span className="text-red-600 text-sm mt-2">{fileErrors[doc.name]}</span>
+                      
+                        <div className="text-red-600 text-sm mt-1  w-full text-wrap break-words">{fileErrors[doc.name]}</div>
+                      
                     )}
                   </div>
                 ))}

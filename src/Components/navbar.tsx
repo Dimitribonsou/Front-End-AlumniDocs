@@ -52,14 +52,14 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-[#1e2494] py-2 px-4 shadow-lg">
+    <nav className="bg-[#1e2494] py-4 px-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <a href="/home" className="text-white text-2xl font-bold">
+        <a href="/home" className="text-white text-2xl font-bold ">
           <img
             src="/assets/logo_1_alumnidocs.png"
             alt="Logo"
-            className="h-14 w-20  scale-150 object-contain"
+            className=" h-10 w-10 sm:h-14 sm:w-14  scale-150 object-contain bg-white rounded-full"
           />
         </a>
 
@@ -134,8 +134,8 @@ const Navbar = () => {
             <p className="px-4 py-2 text-italic text-center text-xs border-b">
               {email_etudiant}
             </p>
-            <a href="/compte" className="block px-4 py-2 hover:bg-gray-200">
-              <FontAwesomeIcon icon={faEdit} className="mr-2" /> Modifier
+            <a href="/notifications" className="block px-4 py-2 hover:bg-gray-200">
+              <FontAwesomeIcon icon={faBell} className="mr-2" /> Notifications
             </a>
             <a
               onClick={logOut}

@@ -42,7 +42,9 @@ const FileInput: React.FC<FileInputProps> = ({ label, name, onChange, required =
       setIsTooBig(false);
     }
   };
+  
 useEffect(() => {
+  //verifier si le document est deja envoyer en faisant le test sur l'attribut disabled passer en parametre au composant
   if(disabled===true)
     setSuccessMsg("Document déja envoyé ! " );
   }, [disabled]);

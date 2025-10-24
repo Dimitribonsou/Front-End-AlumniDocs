@@ -50,21 +50,25 @@ const LoginPage = () => {
     <div className="relative min-h-screen flex items-center justify-center">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/assets/iuc-bg.jpg"
-          alt="background"
-          className="w-full h-full object-cover object-center  brightness-75"
-        />
+        
+            <img
+              src="/assets/iuc-bg.jpg"
+              alt="background"
+              className="w-full h-full object-cover object-center  brightness-75"
+            />
+        
         <div className="absolute inset-0 "></div>
       </div>
 
       {/* Centered login card */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow-2xl">
-        <img
-          src="/assets/logo_1_alumnidocs.png"
-          alt="Logo"
-          className="h-24 mb-6"
-        />
+          <a href="/">
+            <img
+              src="/assets/logo_1_alumnidocs.png"
+              alt="Logo"
+              className="h-24 mb-6"
+            />
+          </a>
         <h2 className="text-3xl font-bold text-[#161B70] mb-2 text-center">Connexion</h2>
         <p className="text-gray-500 mb-6 text-center">Connectez-vous à votre espace AlumniDocs</p>
         {error && (
