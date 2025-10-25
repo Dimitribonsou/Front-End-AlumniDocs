@@ -32,12 +32,14 @@ import UpdloadDocumentComponent from "./Components/uploadDocument";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import AdminRoute from "./Components/AdminRoute";
 import TestResponsive from "./pages/test_responsive";
+import MaintenancePage from "./pages/maintenance";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         <Route path="/test-responsive" element={<TestResponsive />} />
+        <Route path="/test-maintenance" element={<MaintenancePage />} />
         <Route path="/" element={<App />} />
         <Route path="/uploadTest" element={<UpdloadDocumentComponent />} />
         <Route path="/register" element={<RegisterPage />} />

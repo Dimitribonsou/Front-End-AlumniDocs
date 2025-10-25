@@ -6,7 +6,7 @@ import profil_photo from '../assets/profil.webp';
 import linkind from '../assets/linkind.jpg';
 import github from '../assets/github.jpg';
 import portfolio from '../assets/site web.jpg';
-import profil_jamila from '../assets/profil.png';
+import profil_jamila from '../assets/JAMILA 1.jpg';
 // import { faGithubAlt, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 
@@ -61,7 +61,7 @@ const developers = [
         image: profil_jamila,
         linkedin: "https://www.linkedin.com/in/jamila-beulguibe-248672272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
         github: "https://github.com/bjaminous",
-        portfolio: "https://portfolio.com"
+        portfolio: "https://github.com/bjaminous"
     }
 ];
 
@@ -131,14 +131,19 @@ const developers = [
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
-                <a href="/login">
+            {/* <button className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
+                 <a href="/login">
+                  Se Connecter
+                </a> 
+                </button> */}
+                <a href="/test-maintenance" className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
                   Se Connecter
                 </a>
-            </button>
-            <button className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">
-                <a href="#about">En Savoir Plus</a>
-            </button>
+            {/* <button className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">
+                <a href="#about" className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">En Savoir Plus</a>
+            </button> */}
+            <a href="#about" className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">En Savoir Plus</a>
+            
           </div>
         </div>
       </section>
