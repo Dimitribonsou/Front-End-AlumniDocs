@@ -13,6 +13,56 @@ const RegisterPage = () => {
   const [gender, setGender] = useState("");
   const [serverMessage, setServerMessage] = useState("");
   //renitialiser le contenu du formulaire
+  // envoyer les donnees du formulaire au back-end
+  
+    const [isFormValid, setIsFormValid] = useState(false);
+  
+    useEffect(() => {
+      const isValid = validateForm();
+      setIsFormValid(isValid);
+    }, [password,confirmPassword]);
+  
+    const handlesupmit = async () => {
+      if (!isFormValid) return;
+        // recuperer les donnees saisi dans le formulaire
+        const data = {
+          nom: nom,
+          prenom: prenom,
+          email: email,
+          telephone: phone,
+          password: password,
+          genre: gender,
+          message: "",
+        };
+        try {
+          const response = await fetch(`${constant.host}/AlumniDocs-API/NewAccount`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+    
+          if (!response.ok) {
+            setServerMessage("Une erreur est survenue réessayer plus tard .");
+            throw new Error('la reponse du serveur est pas correct.');
+          }
+    
+          const result = await response.text();
+          console.log(result);
+          // mettre a jour le message retourner par le serveur
+          setServerMessage(result);
+          // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
+          resetFormData();
+          window.location.href = "/login";
+          // Handle success as needed
+          // alert('Votre compte a été créé avec succès!');
+        } catch (error) {
+          setServerMessage("Une erreur est survenue réessayer plus tard .");
+          console.log('There was a problem with the fetch operation:', error);
+          // Handle error as needed
+        }
+    };
   const resetFormData= ()=>{
   setEmail("");
   setNom("");
@@ -22,56 +72,6 @@ const RegisterPage = () => {
   setConfirmPassword("");
   setGender("");
   }
-// envoyer les donnees du formulaire au back-end
-
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  useEffect(() => {
-    const isValid = validateForm();
-    setIsFormValid(isValid);
-  }, [password,confirmPassword]);
-
-  const handlesupmit = async () => {
-    if (!isFormValid) return;
-      // recuperer les donnees saisi dans le formulaire
-      const data = {
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        telephone: phone,
-        password: password,
-        genre: gender,
-        message: "",
-      };
-      try {
-        const response = await fetch(`${constant.host}/AlumniDocs-API/NewAccount`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-  
-        if (!response.ok) {
-          setServerMessage("Une erreur est survenue réessayer plus tard .");
-          throw new Error('la reponse du serveur est pas correct.');
-        }
-  
-        const result = await response.text();
-        console.log(result);
-        // mettre a jour le message retourner par le serveur
-        setServerMessage(result);
-        // renitialiser les champs du formulaire et rediriger vers le formulaire de cob
-        resetFormData();
-        window.location.href = "/login";
-        // Handle success as needed
-        // alert('Votre compte a été créé avec succès!');
-      } catch (error) {
-        setServerMessage("Une erreur est survenue réessayer plus tard .");
-        console.log('There was a problem with the fetch operation:', error);
-        // Handle error as needed
-      }
-  };
   const validateForm = () => {
     let isValid = true;
 
