@@ -131,14 +131,14 @@ const developers = [
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* <button className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
+            <button className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
                  <a href="/login">
                   Se Connecter
                 </a> 
-                </button> */}
-                <a href="/test-maintenance" className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
+                </button>
+                {/* <a href="/test-maintenance" className="bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition shadow-xl">
                   Se Connecter
-                </a>
+                </a> */}
             {/* <button className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">
                 <a href="#about" className="bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition">En Savoir Plus</a>
             </button> */}
