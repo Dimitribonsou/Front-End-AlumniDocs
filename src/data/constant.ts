@@ -1,7 +1,7 @@
 
 const constant={
    //host:'http://localhost:5000',
-    host:"https://linen-chicken-155684.hostingersite.com/",
+    host:"https://linen-chicken-155684.hostingersite.com",
     // img_annonce_path:"http://localhost:5000/public/Fichiers/Annonces",
     img_annonce_path:"https://drive.google.com/uc?export=view",
     // doc_path:"http://localhost:5000/public/Fichiers/Documents",
